@@ -1,0 +1,41 @@
+# OS X and Windows-related files
+.DS_Store
+Thumbs.db
+
+storage/search/
+public/img/upload/
+
+# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio
+
+*.iml
+
+## Directory-based project format:
+.idea/
+
+# Composer/Laravel-related
+vendor/
+node_modules/
+
+## File-based project format:
+*.ipr
+*.iws
+
+# Composer/Laravel-related
+Homestead.yaml
+.env
+
+## Plugin-specific files:
+
+# IntelliJ
+/out/
+
+# mpeltonen/sbt-idea plugin
+.idea_modules/
+
+# JIRA plugin
+atlassian-ide-plugin.xml
+
+# Crashlytics plugin (for Android Studio and IntelliJ)
+com_crashlytics_export_strings.xml
+crashlytics.properties
+crashlytics-build.properties
