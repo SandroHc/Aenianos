@@ -102,7 +102,7 @@
 							@endif
 						</td>
 						<td>
-							<button class="mdl-button mdl-js-button mdl-button--icon" onclick="window.location='{!! action('AdminController@showAnimeEpisodeEditor', [ 'id' => $data->id, 'type' => $episode->type, 'num' => $episode->num ]) !!}'">
+							<button class="mdl-button mdl-js-button mdl-button--icon" onclick="window.location='{!! action('AdminController@showEpisodeEditor', [ 'id' => $data->id, 'type' => $episode->type, 'num' => $episode->num ]) !!}'">
 								<i class="material-icons">edit</i>
 							</button>
 							<button class="mdl-button mdl-js-button mdl-button--icon" onclick="window.location='{!! action('AdminController@deleteEpisodePrompt', [ 'id' => $data->id, 'type' => $episode->type, 'num' => $episode->num ]) !!}'">
