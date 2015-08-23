@@ -53,6 +53,31 @@ class News extends Model {
 		$this->attributes['title'] = ucfirst($value);
 
 		if(!$this->slug)
-			$this->attributes['slug'] = Str::slug($value);
+			$this->attributes['slug'] = News::createUniqueSlug($value);
+	}
+
+	/**
+	 * Creates a slugs that's guaranteed to be unique in the dataset.
+	 *
+	 * The result is accomplished by concatenating an incrementing number at the end of the string and check for
+	 * duplicates in the DB.
+	 *
+	 * @param  string $value	The value to be converted to slug
+	 * @return string	The unique slug
+	 */
+	private static function createUniqueSlug($value) {
+		$original = Str::slug($value);
+		$slug = $original;
+
+		$i = 2;
+		// Check if there is any entry if the current slug.
+		while(News::where('slug', '=', $slug)->count() > 0) {
+			// Concatenate the value with the incremental variable, so we may get a unique name
+			$slug = $original .'-'. $i;
+			$i++;
+		}
+
+		// Finally, we have a unique slug!
+		return $slug;
 	}
 }
