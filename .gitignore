@@ -21,6 +21,7 @@ node_modules/
 *.iws
 
 # Composer/Laravel-related
+composer.phar
 Homestead.yaml
 .env
 

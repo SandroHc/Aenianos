@@ -70,7 +70,7 @@ class News extends Model {
 		$slug = $original;
 
 		$i = 2;
-		// Check if there is any entry if the current slug.
+		// Check if there is any entry for the current slug.
 		while(News::where('slug', '=', $slug)->count() > 0) {
 			// Concatenate the value with the incremental variable, so we may get a unique name
 			$slug = $original .'-'. $i;

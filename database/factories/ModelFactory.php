@@ -25,8 +25,8 @@ $factory->define(App\Models\News::class, function ($faker) {
 		'title' => $faker->sentence(),
 		'text' => $faker->realText(),
 		'id_category' => $faker->numberBetween(1, 2),
-		'created_by' => $faker->numberBetween(1, 2),
-		'updated_by' => $faker->numberBetween(1, 2),
+		'created_by' => $faker->numberBetween(1, 1),
+		'updated_by' => $faker->numberBetween(1, 1),
 	];
 });
 
@@ -34,7 +34,7 @@ $factory->define(App\Models\Anime::class, function ($faker) {
 	return [
 		'title' => $faker->name,
 		'synopsis' => $faker->text,
-		'status' => 'Concluído',
+		'status' => $faker->randomElement([ 'Concluído', 'Em andamento' ]),
 	];
 });
 
@@ -43,17 +43,16 @@ $factory->define(App\Models\Episode::class, function ($faker) {
 		'anime_id' => $faker->numberBetween(1, 3),
 		'num' => $faker->numberBetween(1, 20),
 		'type' => $faker->randomElement([ 'episodio', 'filme', 'especial' ]),
-		'synopsis' => $faker->text,
-		'status' => $faker->randomElement([ 'Concluído', 'Em andamento' ]),
 	];
 });
 
 $factory->define(App\Models\Download::class, function ($faker) {
 	return [
-		'episode_id' => $faker->numberBetween(1, 3),
+		'episode_id' => $faker->numberBetween(1, 30),
 		'host_name' => $faker->randomElement([ 'MEGA', 'Google Drive' ]),
-		'hot_link' => $faker->url,
+		'host_link' => $faker->randomElement([ 'http://mega.nz', 'https://drive.google.com/file/d/0B8KL1BNoXI0jblotVS1YQkE3TEE/view?usp=sharing' ]),
 		'quality' => $faker->randomElement([ 'BD', 'HD', 'SD' ]),
 		'size' => $faker->biasedNumberBetween(50, 500),
 	];
 });
+

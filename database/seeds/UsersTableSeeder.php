@@ -6,14 +6,10 @@ use App\User;
 class UsersTableSeeder extends Seeder {
 
 	public function run() {
-		Eloquent::unguard();
-
 		User::create([
-			'name' => 'SandroHc',
-			'email' => 'sandro123iv@gmail.com',
-			'password' => Hash::make('biscoitos123'),
+			'name' => 'admin',
+			'email' => 'admin@mail.com',
+			'password' => Hash::make('admin'),
 		]);
-
-		Eloquent::reguard();
 	}
 }
