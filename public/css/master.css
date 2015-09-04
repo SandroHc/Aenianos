@@ -18,6 +18,9 @@ h6 {
 .mdl-card__width-fix {
   padding-top: 0;
 }
+.mdl-card__supporting-text a {
+  text-decoration: none;
+}
 .drawer-navigation {
   flex-grow: 1;
 }
@@ -69,43 +72,63 @@ h6 {
 }
 #spotlight {
   width: 100%;
-  height: 250px;
+  background-color: #424242;
+  color: white;
   overflow: hidden;
   white-space: nowrap;
-  font-size: 0;
+  font-size: 14px;
 }
-#spotlight .spotlight-content {
+#spotlight p {
+  margin: 16px;
+  font-size: 2em;
+  font-style: italic;
+  text-transform: capitalize;
+}
+.spotlight-content {
   width: auto;
-  height: 100%;
+  height: 250px;
+  background-color: rgba(0, 0, 0, 0.3);
   position: relative;
   display: inline-block;
   overflow: hidden;
-  font-size: 14px;
 }
-#spotlight .spotlight-content .spotlight-description {
-  height: 20px;
+.spotlight-content:hover .spotlight-overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.spotlight-description {
   position: absolute;
   bottom: 0;
   right: 0;
   left: 0;
-  background-color: rgba(16, 34, 47, 0.7);
-  padding: 15px;
-  -webkit-transition: all 250ms ease-out;
-  -moz-transition: all 250ms ease-out;
-  -ms-transition: all 250ms ease-out;
-  -o-transition: all 250ms ease-out;
+  background-color: #7aab00;
+  padding: 10px;
+  -webkit-transition: all 200ms ease-out;
+  -moz-transition: all 200ms ease-out;
+  -ms-transition: all 200ms ease-out;
+  -o-transition: all 200ms ease-out;
 }
-#spotlight .spotlight-content:hover .spotlight-description {
-  background-color: rgba(10, 10, 10, 0.8);
-  height: 50px;
+.spotlight-episode {
+  font-weight: bold;
+  text-align: right;
 }
-#spotlight .spotlight-link {
+.spotlight-link {
   text-decoration: none;
   color: white;
 }
-#spotlight .spotlight-img {
+.spotlight-img {
   width: auto;
   height: 100%;
+}
+.spotlight-overlay {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  -webkit-transition: all 100ms ease-in;
+  -moz-transition: all 100ms ease-in;
+  -ms-transition: all 100ms ease-in;
+  -o-transition: all 100ms ease-in;
 }
 /** Anime **/
 .anime-link {
