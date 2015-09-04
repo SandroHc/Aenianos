@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Anime;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Redirect;
 
 class AnimeController extends Controller
 {
@@ -18,7 +19,7 @@ class AnimeController extends Controller
 		try {
 			$data = Anime::findOrFail($id);
 
-			return view('anime.anime_page', ['data' => $data ]);
+			return Redirect::action('AnimeController@showDetailSlug', [ 'slug' => $data->slug ]);
 		} catch(ModelNotFoundException $e) {
 			return App::abort(404);
 		}

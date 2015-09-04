@@ -6,6 +6,7 @@ use App\Models\News;
 use App\Models\NewsCategory;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Redirect;
 
 class NewsController extends Controller {
 	/**
@@ -20,7 +21,7 @@ class NewsController extends Controller {
 			// Collect all the needed information about the news article
 			$data = News::findOrFail($id);
 
-			return view('news.news_page', ['data' => $data ]);
+			return Redirect::action('NewsController@showDetailSlug', [ 'slug' => $data->slug ]);
 		} catch(ModelNotFoundException $e) {
 			return App::abort(404);
 		}

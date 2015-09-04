@@ -29,8 +29,9 @@ class Episode extends Model {
 	}
 
 	/**
-	 * @param $id	Anime ID
-	 * @param $num	Episode number
+	 * @param $id	string Anime ID
+	 * @param $type	string Episode type
+	 * @param $num	string Episode number
 	 *
 	 * @return mixed
 	 */

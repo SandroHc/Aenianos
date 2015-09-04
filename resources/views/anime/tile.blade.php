@@ -5,7 +5,7 @@
 
 	<div class="mdl-card__title" style="padding-bottom:7px">
 		<h2 class="mdl-card__title-text">
-			<a href="{!! URL::action('AnimeController@showDetail', [ 'id' => $data->id ]) !!}" target="_self" style="text-decoration: none">{{ $data->title }}</a>
+			<a href="{!! URL::action('AnimeController@showDetailSlug', [ 'slug' => $data->slug ]) !!}" target="_self" style="text-decoration: none">{{ $data->title }}</a>
 		</h2>
 
 		@if(Auth::check())
