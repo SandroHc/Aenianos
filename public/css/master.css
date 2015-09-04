@@ -21,6 +21,19 @@ h6 {
 .mdl-card__supporting-text a {
   text-decoration: none;
 }
+.navigation-header {
+  background-color: rgba(122, 171, 0, 0.6);
+}
+.navigation-header .mdl-navigation__link {
+  background-color: transparent;
+  -webkit-transition: all 80ms ease-out;
+  -moz-transition: all 80ms ease-out;
+  -ms-transition: all 80ms ease-out;
+  -o-transition: all 80ms ease-out;
+}
+.navigation-header .mdl-navigation__link:hover {
+  background-color: rgba(122, 171, 0, 0.6);
+}
 .drawer-navigation {
   flex-grow: 1;
 }

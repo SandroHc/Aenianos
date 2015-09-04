@@ -23,6 +23,20 @@ h1, h2, h3, h4, h5, h6 {
 	text-decoration: none;
 }
 
+.navigation-header {
+	background-color: rgba(122, 171, 0, .6);
+}
+
+.navigation-header .mdl-navigation__link {
+	background-color: transparent;
+
+	.transition(all 80ms ease-out);
+
+	&:hover {
+		background-color: rgba(122, 171, 0, .6);
+	}
+}
+
 .drawer-navigation {
 	flex-grow: 1;
 }

@@ -54,7 +54,7 @@
 		<div class="mdl-layout__header-row">
 			<div class="mdl-layout-spacer"></div>
 			<!-- Navigation -->
-			<nav class="waterfall-demo-header-nav mdl-navigation">
+			<nav class="waterfall-demo-header-nav mdl-navigation navigation-header">
 				<a class="link-home mdl-navigation__link" href="/">Home</a>
 				<a class="link-projetos mdl-navigation__link" href="/anime">Projetos</a>
 				@if(Auth::check())
