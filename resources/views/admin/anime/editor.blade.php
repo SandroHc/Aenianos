@@ -57,9 +57,10 @@
 
 	<h5>Estado</h5>
 
-	@foreach([ 'Em andamento', 'Concluído' ] as $cur)
+	<?php $values = [ 'Em lançamento', 'Em tradução', 'Concluído' ]; ?>
+	@foreach($values as $cur)
 		<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="status-{{ $cur }}">
-			<input type="radio" id="status-{{ $cur }}" class="mdl-radio__button" name="status" value="{{ $cur }}" {{ (!isset($data) && $cur == 'Em andamento') || (isset($data) && $data->status == $cur) ? 'checked' : '' }} />
+			<input type="radio" id="status-{{ $cur }}" class="mdl-radio__button" name="status" value="{{ $cur }}" {{ (!isset($data) && $cur === $values[0]) || (isset($data) && $data->status === $cur) ? 'checked' : '' }} />
 			<span class="mdl-radio__label">{{ $cur }}</span>
 		</label>
 		<br>

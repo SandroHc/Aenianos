@@ -32,9 +32,10 @@
 
 	<h5>Tipo</h5>
 
-	@foreach([ [ 'value' => 'episodio', 'visible' => 'Série'], [ 'value' => 'filme', 'visible' => 'Filme' ], [ 'value' => 'especial', 'visible' => 'Especial' ] ] as $cur)
+	<?php $values = [ [ 'value' => 'episodio', 'visible' => 'Série'], [ 'value' => 'filme', 'visible' => 'Filme' ], [ 'value' => 'especial', 'visible' => 'Especial' ] ]; ?>
+	@foreach($values as $cur)
 		<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="type-{{ $cur['value'] }}">
-			<input type="radio" id="type-{{ $cur['value'] }}" class="mdl-radio__button" name="type" value="{{ $cur['value'] }}" {{ (!isset($data) && $cur['value'] == 'episodio') || (isset($data) && $data->type == $cur['value']) ? 'checked' : '' }} />
+			<input type="radio" id="type-{{ $cur['value'] }}" class="mdl-radio__button" name="type" value="{{ $cur['value'] }}" {{ (!isset($data) && $values[0]['value'] === $cur['value']) || (isset($data) && $data->type === $cur['value']) ? 'checked' : '' }} />
 			<span class="mdl-radio__label">{{ $cur['visible'] }}</span>
 		</label>
 		<br>
