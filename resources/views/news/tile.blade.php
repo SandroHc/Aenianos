@@ -30,11 +30,21 @@
 		</span>
 		@if($data->updated_at != $data->created_at)
 			<div class="mdl-tooltip" for="date-created-{{ $data->id }}">
-				editado pela última vez<br>{{ $data->updated_by > 0 ? 'por '. \App\User::find($data->updated_by)->name : '' }} <strong>{{ $data->updated_at->diffForHumans() }}</strong>
+				editado
+				@if($data->updated_by > 0)
+					<?php $user = \App\User::find($data->updated_by); ?>
+					@if($user)
+						por {{ $user->name }}
+					@endif
+				@endif
+				<strong>{{ $data->updated_at->diffForHumans() }}</strong>
 			</div>
 		@endif
 		@if($data->created_by > 0)
-			por {{ \App\User::find($data->created_by)->name }}
+			<?php $user = \App\User::find($data->created_by); ?>
+			@if($user)
+				por {{ $user->name }}
+			@endif
 		@endif
 		em <a href="{!! action('NewsController@showCategoryListSlug', [ 'slug' => $category->slug ]) !!}">{{ $category->name }}</a>
 	</div>
@@ -44,16 +54,10 @@
 	</div>
 
 	@if(isset($show_comments))
-		<div id="disqus_thread"></div>
-		<script type="text/javascript">
-			(function() {
-				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true; dsq.src = '//aenianos.disqus.com/embed.js';
-				document.getElementsByTagName('head')[0].appendChild(dsq);
-			})();
-		</script>
+		@include("discus")
 	@else
 		<div style="position:absolute; right:16px; bottom:16px">
-			<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" onclick="window.location='{!! action('NewsController@showDetail', [ 'id' => $data->id ]) !!}'">
+			<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" onclick="window.location='{!! action('NewsController@showDetailSlug', [ 'slug' => $data->slug ]) !!}'">
 				<i class="material-icons">comment</i>
 			</button>
 		</div>

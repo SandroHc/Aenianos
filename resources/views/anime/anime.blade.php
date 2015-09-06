@@ -45,7 +45,7 @@
 					@foreach($data->hostList('episodio', $quality->quality) as $host)
 						<div class="mdl-grid mdl-cell mdl-cell--12-col episode-spacing">
 							<div class="mdl-cell mdl-cell--3-col">
-								<img src="http://www.google.com/s2/favicons?domain={{ \App\Util::getHostDomain($host->host_name) }}" class="download-link-icon"> {{ $host->host_name }}
+								<img src="http://www.google.com/s2/favicons?domain={{ get_host_domain($host->host_name) }}" class="download-link-icon"> {{ $host->host_name }}
 							</div>
 
 							<div class="mdl-cell mdl-cell--9-col">
@@ -75,14 +75,14 @@
 					@foreach($data->hostList('filme', $quality->quality) as $host)
 						<div class="mdl-grid mdl-cell mdl-cell--12-col episode-spacing">
 							<div class="mdl-cell mdl-cell--3-col">
-								<img src="http://www.google.com/s2/favicons?domain={{ \App\Util::getHostDomain($host->host_name) }}" class="download-link-icon"> {{ $host->host_name }}
+								<img src="http://www.google.com/s2/favicons?domain={{ get_host_domain($host->host_name) }}" class="download-link-icon"> {{ $host->host_name }}
 							</div>
 
 							<div class="mdl-cell mdl-cell--9-col">
 								@foreach($data->episodeList('filme', $quality->quality, $host->host_name) as $episode)
 									<a href="{{ $episode->host_link }}" class="anime-link">
 										@if($episode->num > 0)
-											{{ $episode->num < 10 ? '0'. $episode->num : $episode->num }}
+											{{ trailing_zeros($episode->num) }}
 										@else
 											Torrent
 										@endif
@@ -105,7 +105,7 @@
 					@foreach($data->hostList('especial', $quality->quality) as $host)
 						<div class="mdl-grid mdl-cell mdl-cell--12-col episode-spacing">
 							<div class="mdl-cell mdl-cell--3-col">
-								<img src="http://www.google.com/s2/favicons?domain={{ \App\Util::getHostDomain($host->host_name) }}" class="download-link-icon"> {{ $host->host_name }}
+								<img src="http://www.google.com/s2/favicons?domain={{ get_host_domain($host->host_name) }}" class="download-link-icon"> {{ $host->host_name }}
 							</div>
 
 							<div class="mdl-cell mdl-cell--9-col">
@@ -126,11 +126,5 @@
 		@endif
 	</div>
 
-	<div id="disqus_thread"></div>
-	<script type="text/javascript">
-		(function() {
-			var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true; dsq.src = '//aenianos.disqus.com/embed.js';
-			document.getElementsByTagName('head')[0].appendChild(dsq);
-		})();
-	</script>
+	@include("discus")
 </div>
