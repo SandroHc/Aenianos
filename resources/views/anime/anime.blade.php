@@ -126,5 +126,5 @@
 		@endif
 	</div>
 
-	@include("discus")
+	@include("disqus")
 </div>

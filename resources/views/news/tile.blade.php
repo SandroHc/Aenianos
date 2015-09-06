@@ -54,7 +54,7 @@
 	</div>
 
 	@if(isset($show_comments))
-		@include("discus")
+		@include("disqus")
 	@else
 		<div style="position:absolute; right:16px; bottom:16px">
 			<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" onclick="window.location='{!! action('NewsController@showDetailSlug', [ 'slug' => $data->slug ]) !!}'">
