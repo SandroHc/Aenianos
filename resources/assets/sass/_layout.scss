@@ -1,0 +1,44 @@
+.mdl-layout__header {
+	background: url('../img/bg.jpg') center / cover;
+}
+
+.mdl-layout__drawer-button {
+	@media screen and (max-width: 1024px) {
+		background-color: $theme;
+	}
+}
+
+.mdl-card {
+	overflow: visible;
+}
+
+.mdl-card__width-fix {
+	padding-top: 0;
+	//width: calc(100% - 32px);
+}
+
+.mdl-card__supporting-text a {
+	text-decoration: none;
+}
+
+.navigation-header {
+	background-color: $theme-60;
+}
+
+.navigation-header .mdl-navigation__link {
+	background-color: transparent;
+	@include transition(all 80ms ease-out);
+
+	&:hover {
+		background-color: $theme-60;
+	}
+}
+
+.drawer-navigation {
+	flex-grow: 1;
+}
+
+.mdl-grid-wide {
+	max-width: 1200px;
+	position: relative;
+}

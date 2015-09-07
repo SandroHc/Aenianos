@@ -1,51 +1,3 @@
-body {
-	font-family: 'Roboto', 'Helvetica', sans-serif;
-}
-
-h1, h2, h3, h4, h5, h6 {
-	width: 100%;
-}
-
-.mdl-layout__header {
-	background: url('../img/bg.jpg') center / cover;
-}
-
-.mdl-card {
-	overflow: visible;
-}
-
-.mdl-card__width-fix {
-	padding-top: 0;
-	//width: calc(100% - 32px);
-}
-
-.mdl-card__supporting-text a {
-	text-decoration: none;
-}
-
-.navigation-header {
-	background-color: rgba(122, 171, 0, .6);
-}
-
-.navigation-header .mdl-navigation__link {
-	background-color: transparent;
-
-	.transition(all 80ms ease-out);
-
-	&:hover {
-		background-color: rgba(122, 171, 0, .6);
-	}
-}
-
-.drawer-navigation {
-	flex-grow: 1;
-}
-
-.mdl-grid-wide {
-	max-width: 1200px;
-	position: relative;
-}
-
 .download-link-icon {
 	height: 16px;
 }
@@ -98,20 +50,47 @@ h1, h2, h3, h4, h5, h6 {
 	background-color: #d6d6ef;
 }
 
+.page-content {
+	position: relative;
+}
+
 #spotlight {
-	width: 100%;
+	width: 200%;
+	z-index: 100;
+	@extend .clearfix;
+	@include transition(all 200ms ease-in);
+}
+
+.spotlight-change {
+	@include transform(translateX(-50%));
+}
+
+.spotlight-cell {
+	width: 50%;
+	float: left;
+	overflow-y: hidden;
+	overflow-x: auto;
+	white-space: nowrap;
 	background-color: rgb(66, 66, 66);
 	color: white;
-	overflow: hidden;
-	white-space: nowrap;
 	font-size: 14px;
+	cursor: default;
+}
 
-	p {
-		margin: 16px;
-		font-size: 2em;
-		font-style: italic;
-		text-transform: uppercase;
-	}
+.spotlight-cell-title {
+	margin: 16px;
+	font-size: 2em;
+	font-style: italic;
+	text-transform: uppercase;
+}
+
+.spotlight-cell-btn {
+	position: absolute;
+	top: 15px;
+	right: 15px;
+	color: white;
+	cursor: pointer;
+	z-index: 110;
 }
 
 .spotlight-content {
@@ -134,14 +113,14 @@ h1, h2, h3, h4, h5, h6 {
 	bottom: 0;
 	right: 0;
 	left: 0;
-	background-color: rgb(122, 171, 0);
+	background-color: $theme-90;
 	padding: 10px;
-
-	.transition(all 200ms ease-out);
+	font-weight: bold;
+	@include transition(all 200ms ease-out);
 }
 
 .spotlight-episode {
-	font-weight: bold;
+	font-weight: normal;
 	text-align: right;
 }
 
@@ -161,8 +140,22 @@ h1, h2, h3, h4, h5, h6 {
 	width: 100%;
 	height: 100%;
 	background-color: transparent;
+	@include transition(all 100ms ease-in);
+}
 
-	.transition(all 100ms ease-in);
+.calendar-label {
+	height: 250px;
+	margin: 10px;
+	text-align: right;
+	font-size: 1.5em;
+	display: inline;
+	cursor: default;
+	@include writing-mode(vertical-rl, tb-rl);
+	@include transform(rotate(180deg));
+
+	span {
+		color: darkgray;
+	}
 }
 
 /** Anime **/
@@ -172,12 +165,11 @@ h1, h2, h3, h4, h5, h6 {
 	display: inline-block;
 	text-decoration: none;
 	padding: 10px;
+	@include transition(all 200ms ease-in);
 
-	.transition(all 200ms ease-in);
-}
-
-.anime-link:hover {
-	background-color: #1976d2;
+	&:hover {
+		background-color: #1976d2;
+	}
 }
 
 .episode-spacing {
@@ -198,10 +190,13 @@ h1, h2, h3, h4, h5, h6 {
 	height: 250px;
 }
 
-/** Mixins **/
-.transition(@transition) {
-	-webkit-transition: @transition;
-	-moz-transition: @transition;
-	-ms-transition: @transition;
-	-o-transition: @transition;
+.clearfix {
+	&:before,
+	&:after {
+		content: " "; // 1
+		display: table; // 2
+	}
+	&:after {
+		clear: both;
+	}
 }

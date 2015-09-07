@@ -1,2 +1,15 @@
-// @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+// Utilities
+@import "colors";
+@import "mixins";
 
+// Layout
+@import "layout";
+@import "spotlight";
+
+body {
+	font-family: 'Roboto', 'Helvetica', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	width: 100%;
+}
