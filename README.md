@@ -7,7 +7,7 @@ Aenianos is a website written using the framework [Laravel](http://laravel.com/)
 - Apache (other HTTP servers can be used)
 - MySQL (other databases can be used)
 - [Composer](https://getcomposer.org/download/)
-- [Node](https://nodejs.org) (to compile assets using Gulp)
+- [Node](https://nodejs.org) (to compile assets using Laravel's Elixir)
 
 ##Configuration
 - Run the command `composer install` from the repo folder;

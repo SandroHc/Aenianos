@@ -18,8 +18,22 @@ class CreateAnimeTable extends Migration {
 			$table->string('cover')->default('');
 			$table->string('cover_offset')->default(0);
 			$table->string('official_cover')->default('');
-			$table->string('status', 100)->default('Em andamento');
-			$table->unsignedInteger('episodios_total')->default(0);
+
+			$table->string('status', 100)->default('Em lançamento');
+			$table->date('airing_date');
+			$table->string('airing_week_day', 20)->default('');
+
+			$table->unsignedInteger('episodes')->default(0);
+			$table->string('genres', 100);
+
+			$table->string('producer', 100);
+			$table->string('director', 100);
+			$table->string('website', 255);
+
+			$table->string('codec_video', 100);
+			$table->string('codec_audio', 100);
+			$table->string('subtitles_type', 50);
+			$table->unsignedInteger('coordinator');
 			$table->timestamps();
 			$table->softDeletes();
 		});

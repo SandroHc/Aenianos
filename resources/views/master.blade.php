@@ -13,7 +13,7 @@
 	{{-- Import some external libraries. --}}
 	{{-- Material Design Lite - http://getmdl.io --}}
 	{{-- jQuery - https://jquery.com --}}
-	@if(Config::get('debug') == true)
+	@if(Config::get('app.debug') == true)
 		<link rel="stylesheet" href="{{ asset('dev-env/material.blue-indigo.min.css') }}">
 		<script src="{{ asset('dev-env/material.min.js') }}"></script>
 
@@ -24,10 +24,6 @@
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 	@endif
-
-	<script>
-		console.log("Debug = {{ Config::get('debug') == true }}");
-	</script>
 
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
