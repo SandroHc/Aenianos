@@ -34,7 +34,7 @@ $factory->define(App\Models\Anime::class, function ($faker) {
 	return [
 		'title' => $faker->name,
 		'synopsis' => $faker->text,
-		'status' => $faker->randomElement([ 'Concluído', 'Em andamento' ]),
+		'status' => $faker->randomElement([ 'Em lançamento', 'Em tradução', 'Concluído' ]),
 	];
 });
 

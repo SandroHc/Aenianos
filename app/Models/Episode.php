@@ -40,11 +40,13 @@ class Episode extends Model {
 	}
 
 	public static function getLatestEpisodes($number = 11) {
-		return Download::join('episodes', 'episodes.id', '=', 'downloads.episode_id')
-			->join('anime', 'anime.id', '=', 'episodes.anime_id')
-			->select('anime.id', 'anime.slug', 'anime.title', 'anime.cover', 'anime.official_cover', DB::raw('max(downloads.updated_at) AS latest')) // episodes.num
-			->groupBy('anime.id')
-			->orderBy('latest', 'DESC')
+//		return Episode::join('anime', 'anime.id', '=', 'episodes.anime_id')
+//			->select('anime.id', 'anime.slug', 'anime.title', 'anime.cover', 'anime.official_cover', 'episodes.num')
+//			->groupBy('anime.id')
+//			->orderBy('episodes.created_at', 'DESC')
+//			->limit($number)
+//			->get();
+		return Episode::orderBy('episodes.created_at', 'DESC')
 			->limit($number)
 			->get();
 	}

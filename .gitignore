@@ -4,6 +4,8 @@ Thumbs.db
 
 storage/search/
 public/img/upload/
+public/css/app.css
+_ide_helper.php
 
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio
 
@@ -22,6 +24,7 @@ node_modules/
 
 # Composer/Laravel-related
 composer.phar
+composer.lock
 Homestead.yaml
 .env
 

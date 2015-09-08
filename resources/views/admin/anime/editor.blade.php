@@ -21,14 +21,74 @@
 
 	{!! Form::textarea('synopsis', isset($data) ? $data->synopsis : '', [ 'id' => 'text' ]) !!}
 
+	<br>
+
+	<h4>Outras informações</h4>
+	<h5>Estado</h5>
+
+	<?php $values = [ 'Em lançamento', 'Em tradução', 'Concluído' ]; ?>
+	@foreach($values as $cur)
+		<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="status-{{ $cur }}">
+			<input type="radio" id="status-{{ $cur }}" class="mdl-radio__button" name="status" value="{{ $cur }}" {{ (!isset($data) && $values[0] === $cur) || (isset($data) && $data->status === $cur) ? 'checked' : '' }} />
+			<span class="mdl-radio__label">{{ $cur }}</span>
+		</label>
+		<br>
+	@endforeach
+
+	<br>
+
 	<div class="mdl-textfield mdl-js-textfield">
-		<input class="mdl-textfield__input" type="text" id="episodios_total" name="episodios_total" value="{{ isset($data) ? $data->episodios_total : '' }}" />
-		<label class="mdl-textfield__label" for="episodios_total"># de episódios...</label>
+		<input class="mdl-textfield__input" type="text" id="airing_date" name="airing_date" value="{{ isset($data) ? $data->airing_date->toDateString() : '' }}" />
+		<label class="mdl-textfield__label" for="airing_date">Data de lançamento...</label>
 	</div>
 
 	<br>
 
-	<h5><label for="capa">Capa</label></h5>
+	<div class="mdl-textfield mdl-js-textfield">
+		<input class="mdl-textfield__input" type="text" id="airing_week_day" name="airing_week_day" value="{{ isset($data) ? $data->airing_week_day : '' }}" />
+		<label class="mdl-textfield__label" for="airing_week_day">Lançamentos semanais...</label>
+	</div>
+
+	<br>
+
+	<div class="mdl-textfield mdl-js-textfield">
+		<input class="mdl-textfield__input" type="text" id="episodes" name="episodes" value="{{ isset($data) ? $data->episodes : '' }}" />
+		<label class="mdl-textfield__label" for="episodes">Episódios...</label>
+	</div>
+
+	<br>
+
+	<div class="mdl-textfield mdl-js-textfield">
+		<input class="mdl-textfield__input" type="text" id="genres" name="genres" value="{{ isset($data) ? $data->genres : '' }}" />
+		<label class="mdl-textfield__label" for="genres">Géneros...</label>
+	</div>
+
+	<br>
+
+	<h5>Produção</h5>
+
+	<div class="mdl-textfield mdl-js-textfield">
+		<input class="mdl-textfield__input" type="text" id="producer" name="producer" value="{{ isset($data) ? $data->producer : '' }}" />
+		<label class="mdl-textfield__label" for="producer">Produtor...</label>
+	</div>
+
+	<br>
+
+	<div class="mdl-textfield mdl-js-textfield">
+		<input class="mdl-textfield__input" type="text" id="director" name="director" value="{{ isset($data) ? $data->director : '' }}" />
+		<label class="mdl-textfield__label" for="director">Diretor...</label>
+	</div>
+
+	<br>
+
+	<div class="mdl-textfield mdl-js-textfield">
+		<input class="mdl-textfield__input" type="text" id="website" name="website" value="{{ isset($data) ? $data->website : '' }}" />
+		<label class="mdl-textfield__label" for="website">Website...</label>
+	</div>
+
+	<br>
+
+	<h5>Capa</h5>
 
 	<p>
 		<input type="file" id="cover" name="cover" />
@@ -53,20 +113,7 @@
 		<img class="editor-capa" src="{{ $data->official_cover }}">
 	@endif
 
-	<br>
-
-	<h5>Estado</h5>
-
-	<?php $values = [ 'Em lançamento', 'Em tradução', 'Concluído' ]; ?>
-	@foreach($values as $cur)
-		<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="status-{{ $cur }}">
-			<input type="radio" id="status-{{ $cur }}" class="mdl-radio__button" name="status" value="{{ $cur }}" {{ (!isset($data) && $cur === $values[0]) || (isset($data) && $data->status === $cur) ? 'checked' : '' }} />
-			<span class="mdl-radio__label">{{ $cur }}</span>
-		</label>
-		<br>
-	@endforeach
-
-	<br>
+	<br><br>
 
 	<button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
 		{{ isset($data) ? 'Atualizar' : 'Inserir' }}
@@ -92,12 +139,12 @@
 				<tbody>
 				@foreach(\App\Models\Episode::getEpisodeList($data->id) as $episode)
 					<tr>
-						<td>
+						<td class="mdl-data-table__cell--non-numeric">
 							{{ $episode->typeToStr() }}
 						</td>
-						<td class="mdl-data-table__cell--non-numeric">
+						<td>
 							@if($episode->num > 0)
-								#{{ $episode->num }} {{ $episode->title }}
+								{{ $episode->num }}
 							@else
 								Torrent
 							@endif

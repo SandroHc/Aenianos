@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Redirect;
 
 class AdminController extends Controller {
 
+	const UPLOAD_PATH = "img/pload/";
+
 	/**
 	 * Shows the administration dashboard.
 	 *
@@ -170,6 +172,9 @@ class AdminController extends Controller {
 			'status' => 'required',
 			'cover' => 'max:10000',
 			'official_cover' => 'max:5000',
+			//'airing_date' => 'date',
+			'airing_week_day' => 'in:segunda,terça,quarta,quinta,sexta,sábado,domingo',
+			'episodes' => 'integer',
 		];
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -184,24 +189,34 @@ class AdminController extends Controller {
 
 			$data->title = Input::get('title');
 			$data->synopsis = Input::get('synopsis');
-			$data->episodios_total = Input::get('episodios_total');
-			$data->status = Input::get('status');
+			$data->episodes = Input::get('episodes');
 
 			$cover = Input::file('cover');
 			if($cover != null && $cover->isValid()) {
-				$cover->move('img/upload', $cover->getClientOriginalName()); // uploading file to given path
+				$cover->move(AdminController::UPLOAD_PATH, $cover->getClientOriginalName()); // uploading file to given path
 
-				$data->cover = '/img/upload/'. $cover->getClientOriginalName();
+				$data->cover = '/'. AdminController::UPLOAD_PATH .'/'. $cover->getClientOriginalName();
 			}
 
 			$data->cover_offset = Input::get('cover_offset');
 
 			$cover = Input::file('official_cover');
 			if($cover != null && $cover->isValid()) {
-				$cover->move('img/upload', $cover->getClientOriginalName()); // uploading file to given path
+				$cover->move(AdminController::UPLOAD_PATH, $cover->getClientOriginalName()); // uploading file to given path
 
-				$data->official_cover = '/img/upload/'. $cover->getClientOriginalName();
+				$data->official_cover = '/'. AdminController::UPLOAD_PATH .'/'. $cover->getClientOriginalName();
 			}
+
+			$data->status = Input::get('status');
+			$data->airing_date = Input::get('airing_date');
+			$data->airing_week_day = Input::get('airing_week_day');
+
+			$data->episodes = Input::get('episodes');
+			$data->genres = Input::get('genres');
+
+			$data->producer = Input::get('producer');
+			$data->director = Input::get('director');
+			$data->website = Input::get('website');
 
 
 			// Save the changes to the DB

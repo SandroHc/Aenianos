@@ -12,9 +12,9 @@ class Anime extends Model {
 
 	protected $table = 'anime';
 
-	protected $fillable = ['title', 'slug', 'synopsis', 'status', 'cover', 'cover_offset', 'official_cover', 'episodios_total'];
+	protected $fillable = [ 'title', 'slug', 'synopsis', 'cover', 'cover_offset', 'official_cover', 'status', 'airing_date', 'airing_week_day', 'episodes', 'genres', 'producer', 'director', 'website', 'codec_video', 'codec_audio', 'subtitles_type', 'coordinator' ];
 
-	protected $dates = ['deleted_at'];
+	protected $dates = [ 'deleted_at', 'airing_date' ];
 
 	public function save(array $options = []) {
 		parent::save($options);
@@ -32,6 +32,7 @@ class Anime extends Model {
 				'title' => $this['title'],
 				'synopsis' => $this['synopsis'],
 				'status' => $this['status'],
+				'genres' => $this['genres'],
 			],
 			[
 				'db_id' => $this['id'],
@@ -52,6 +53,7 @@ class Anime extends Model {
 	public function setTitleAttribute($value) {
 		$this->attributes['title'] = $value;
 
+		// Prevent the slug from changing, if already created.
 		if(!$this->slug)
 			$this->attributes['slug'] = Anime::createUniqueSlug($value);
 	}

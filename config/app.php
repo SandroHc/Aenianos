@@ -149,6 +149,7 @@ return [
 		 */
 		Collective\Html\HtmlServiceProvider::class,
 		Mmanos\Search\SearchServiceProvider::class,
+		Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class, // Laravel IDE helper
 	],
 
 	/*
