@@ -103,35 +103,29 @@ class Anime extends Model {
 	}
 
 	private function hasEpisodesFrom($type) {
-		return Episode::where('anime_id', '=', $this['id'])->where('type', '=', $type)->first() !== NULL;
+		return Episode::where('anime_id', '=', $this['id'])->where('type', '=', $type)->exists();
 	}
 
 	public function qualityList($type) {
-		return Anime::where('anime.id', '=', $this['id'])
-			->join('episodes', 'anime.id', '=', 'episodes.anime_id')
+		return Episode::where('anime_id', '=', $this['id'])
 			->where('type', '=', $type)
-			->join('downloads', 'downloads.episode_id', '=', 'episodes.id')
 			->groupBy('quality')
 			->get(['quality']);
 	}
 
 	public function hostList($type, $quality) {
-		return Anime::where('anime.id', '=', $this['id'])
-			->join('episodes', 'anime.id', '=', 'episodes.anime_id')
+		return Episode::where('anime_id', '=', $this['id'])
 			->where('type', '=', $type)
-			->join('downloads', 'downloads.episode_id', '=', 'episodes.id')
 			->where('quality', '=', $quality)
 			->groupBy('host_name')
 			->get(['host_name']);
 	}
 
 	public function episodeList($type, $quality, $host) {
-		return Anime::where('anime.id', '=', $this['id'])
-			->join('episodes', 'anime.id', '=', 'episodes.anime_id')
+		return Episode::where('anime_id', '=', $this['id'])
 			->where('type', '=', $type)
-			->join('downloads', 'downloads.episode_id', '=', 'episodes.id')
 			->where('quality', '=', $quality)
 			->where('host_name', '=', $host)
-			->get(['episodes.num', 'episodes.title', 'downloads.host_link', 'downloads.notes']);
+			->get(['num', 'link', 'notes']);
 	}
 }

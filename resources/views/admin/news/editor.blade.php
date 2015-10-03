@@ -12,16 +12,17 @@
 	{!! Form::open([ 'url' => 'admin/noticias/'. (isset($data) ? $data->id : 'novo'), 'files' => true, 'style' => 'width:100%' ]) !!}
 	<h3>Notícias</h3>
 
-	<div class="mdl-textfield mdl-js-textfield">
-		<input class="mdl-textfield__input" type="text" name="title" value="{{ old('title', isset($data) ? $data->title : '')  }}" required="" />
-		<label class="mdl-textfield__label" for="title">Título...</label>
+	<div class="mdl-grid">
+		<div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--6-col">
+			Título
+			<input class="mdl-textfield__input" type="text" name="title" value="{{ old('title', $data->title ?? '')  }}" required="" />
+			<label class="mdl-textfield__label" for="title"></label>
+		</div>
 	</div>
 
-	<br>
+	{!! Form::textarea('text', $data->text ?? '', [ 'id' => 'text' ]) !!}
 
-	{!! Form::textarea('text', isset($data) ? $data->text : '', [ 'id' => 'text' ]) !!}
-
-	<br>
+	<h4>Categoria</h4>
 
 	@foreach(\App\Models\NewsCategory::all() as $category)
 		<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="category-{{ $category->id }}">

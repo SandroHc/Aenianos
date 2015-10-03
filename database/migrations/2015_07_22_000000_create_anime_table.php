@@ -20,8 +20,8 @@ class CreateAnimeTable extends Migration {
 			$table->string('official_cover')->default('');
 
 			$table->string('status', 100)->default('Em lançamento');
-			$table->date('airing_date');
-			$table->string('airing_week_day', 20)->default('');
+			$table->date('airing_date')->nullable();
+			$table->string('airing_week_day', 20)->nullable();
 
 			$table->unsignedInteger('episodes')->default(0);
 			$table->string('genres', 100);

@@ -13,8 +13,9 @@
 	<h3><span class="navigation-parent"><a class="navigation-parent-link" href="{!! action('AdminController@showAnimeList') !!}" target="_self">Projetos</a> ></span> {{ isset($data) ? $data->title : 'Novo' }}</h3>
 
 	<div class="mdl-textfield mdl-js-textfield">
+		Título
 		<input class="mdl-textfield__input" type="text" name="title" value="{{ old('title', isset($data) ? $data->title : '')  }}" required="" />
-		<label class="mdl-textfield__label" for="title">Título...</label>
+		<label class="mdl-textfield__label" for="title"></label>
 	</div>
 
 	<br>
@@ -35,58 +36,53 @@
 		<br>
 	@endforeach
 
-	<br>
+	<div class="mdl-grid">
+		<div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--4-col">
+			Episódios
+			<input class="mdl-textfield__input" type="text" id="episodes" name="episodes" value="{{ $data->episodes ?? '' }}" />
+			<label class="mdl-textfield__label" for="episodes"></label>
+		</div>
 
-	<div class="mdl-textfield mdl-js-textfield">
-		<input class="mdl-textfield__input" type="text" id="airing_date" name="airing_date" value="{{ isset($data) ? $data->airing_date->toDateString() : '' }}" />
-		<label class="mdl-textfield__label" for="airing_date">Data de lançamento...</label>
+		<div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--4-col">
+			Lançamentos semanais
+			<input class="mdl-textfield__input" type="text" id="airing_week_day" name="airing_week_day" value="{{ $data->airing_week_day ?? '' }}" />
+			<label class="mdl-textfield__label" for="airing_week_day"></label>
+		</div>
+
+		<div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--4-col">
+			Data de lançamento
+			<input class="mdl-textfield__input" type="text" id="airing_date" name="airing_date" value="{{ isset($data->airing_date) ? $data->airing_date->toDateString() : '' }}" />
+			<label class="mdl-textfield__label" for="airing_date"></label>
+		</div>
+
+		<div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--4-col">
+			Géneros
+			<input class="mdl-textfield__input" type="text" id="genres" name="genres" value="{{ $data->genres ?? '' }}" />
+			<label class="mdl-textfield__label" for="genres"></label>
+		</div>
 	</div>
-
-	<br>
-
-	<div class="mdl-textfield mdl-js-textfield">
-		<input class="mdl-textfield__input" type="text" id="airing_week_day" name="airing_week_day" value="{{ isset($data) ? $data->airing_week_day : '' }}" />
-		<label class="mdl-textfield__label" for="airing_week_day">Lançamentos semanais...</label>
-	</div>
-
-	<br>
-
-	<div class="mdl-textfield mdl-js-textfield">
-		<input class="mdl-textfield__input" type="text" id="episodes" name="episodes" value="{{ isset($data) ? $data->episodes : '' }}" />
-		<label class="mdl-textfield__label" for="episodes">Episódios...</label>
-	</div>
-
-	<br>
-
-	<div class="mdl-textfield mdl-js-textfield">
-		<input class="mdl-textfield__input" type="text" id="genres" name="genres" value="{{ isset($data) ? $data->genres : '' }}" />
-		<label class="mdl-textfield__label" for="genres">Géneros...</label>
-	</div>
-
-	<br>
 
 	<h5>Produção</h5>
 
-	<div class="mdl-textfield mdl-js-textfield">
-		<input class="mdl-textfield__input" type="text" id="producer" name="producer" value="{{ isset($data) ? $data->producer : '' }}" />
-		<label class="mdl-textfield__label" for="producer">Produtor...</label>
+	<div class="mdl-grid">
+		<div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--4-col">
+			Produtor
+			<input class="mdl-textfield__input" type="text" id="producer" name="producer" value="{{ $data->producer ?? '' }}" />
+			<label class="mdl-textfield__label" for="producer"></label>
+		</div>
+
+		<div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--4-col">
+			Diretor
+			<input class="mdl-textfield__input" type="text" id="director" name="director" value="{{ $data->director ?? '' }}" />
+			<label class="mdl-textfield__label" for="director"></label>
+		</div>
+
+		<div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--4-col">
+			Website
+			<input class="mdl-textfield__input" type="text" id="website" name="website" value="{{ $data->website ?? '' }}" />
+			<label class="mdl-textfield__label" for="website"></label>
+		</div>
 	</div>
-
-	<br>
-
-	<div class="mdl-textfield mdl-js-textfield">
-		<input class="mdl-textfield__input" type="text" id="director" name="director" value="{{ isset($data) ? $data->director : '' }}" />
-		<label class="mdl-textfield__label" for="director">Diretor...</label>
-	</div>
-
-	<br>
-
-	<div class="mdl-textfield mdl-js-textfield">
-		<input class="mdl-textfield__input" type="text" id="website" name="website" value="{{ isset($data) ? $data->website : '' }}" />
-		<label class="mdl-textfield__label" for="website">Website...</label>
-	</div>
-
-	<br>
 
 	<h5>Capa</h5>
 
@@ -135,32 +131,7 @@
 		</h4>
 
 		@if(isset($data))
-			<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
-				<tbody>
-				@foreach(\App\Models\Episode::getEpisodeList($data->id) as $episode)
-					<tr>
-						<td class="mdl-data-table__cell--non-numeric">
-							{{ $episode->typeToStr() }}
-						</td>
-						<td>
-							@if($episode->num > 0)
-								{{ $episode->num }}
-							@else
-								Torrent
-							@endif
-						</td>
-						<td>
-							<button class="mdl-button mdl-js-button mdl-button--icon" onclick="window.location='{!! action('AdminController@showEpisodeEditor', [ 'id' => $data->id, 'type' => $episode->type, 'num' => $episode->num ]) !!}'">
-								<i class="material-icons">edit</i>
-							</button>
-							<button class="mdl-button mdl-js-button mdl-button--icon" onclick="window.location='{!! action('AdminController@deleteEpisodePrompt', [ 'id' => $data->id, 'type' => $episode->type, 'num' => $episode->num ]) !!}'">
-								<i class="material-icons">delete</i>
-							</button>
-						</td>
-					</tr>
-				@endforeach
-				</tbody>
-			</table>
+			{{-- Mostrar lista de episódios adicionados --}}
 		@else
 			<p>Guarde o anime antes de adicionar episódios.</p>
 		@endif

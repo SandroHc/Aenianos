@@ -8,27 +8,28 @@
 	{!! Form::open([ 'url' => 'admin/anime/'. $id .'/'. $type .'/'. (isset($num) ? $num : 'novo'), 'style' => 'width:100%' ]) !!}
 	<h3><span class="navigation-parent"><a class="navigation-parent-link" href="{!! URL::action('AnimeController@showDetail', [ 'id' => $id ]) !!}" target="_self">{{ \App\Models\Anime::find($id)->title }}</a> > </span> {{ isset($data) ? (($data->num > 0 ? '#'. $data->num : 'Outro') .' '. $data->title) : 'Novo' }}</h3>
 
-	<div class="mdl-textfield mdl-js-textfield">
-		<input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="num" value="{{ isset($data) ? $data->num : ($num != 'novo' ? $num : (($ep_num = \App\Models\Episode::where('anime_id', '=', $id)->orderBy('num', 'DESC')->first()) != NULL ? $ep_num->num + 1 : 1)) }}" />
-		<label class="mdl-textfield__label" for="num">#</label>
-		<span class="mdl-textfield__error">Insira um número válido!</span>
+	<div class="mdl-grid">
+		<div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--3-col">
+			#
+			<input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="num" value="{{ isset($data) ? $data->num : ($num != 'novo' ? $num : (($ep_num = \App\Models\Episode::where('anime_id', '=', $id)->orderBy('num', 'DESC')->first()) != NULL ? $ep_num->num + 1 : 1)) }}" />
+			<label class="mdl-textfield__label" for="num"></label>
+			<span class="mdl-textfield__error">Insira um número válido!</span>
+		</div>
+
+		<div class="mdl-textfield mdl-cell mdl-cell--2-col">
+			<br>
+			<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="torrent" alt="Não é possível alterar esta propriedade em episódios guardados. Elimine este episódio caso necessário.">
+				<input type="checkbox" id="torrent" name="torrent" class="mdl-checkbox__input" {{ isset($data) ? 'disabled' : '' }} {{ $num === '0' ? 'checked' : '' }} />
+				<span class="mdl-checkbox__label">Torrent?</span>
+			</label>
+		</div>
+
+		<div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--7-col">
+			Título
+			<input class="mdl-textfield__input" type="text" name="title" value="{{ $data->title ?? '' }}" />
+			<label class="mdl-textfield__label" for="titulo"></label>
+		</div>
 	</div>
-
-	<div class="mdl-textfield" style="padding-left: 20px">
-		<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="torrent" alt="Não é possível alterar esta propriedade em episódios guardados. Elimine este episódio caso necessário.">
-			<input type="checkbox" id="torrent" name="torrent" class="mdl-checkbox__input" {{ isset($data) ? 'disabled' : '' }} {{ $num === '0' ? 'checked' : '' }} />
-			<span class="mdl-checkbox__label">Torrent?</span>
-		</label>
-	</div>
-
-	<br>
-
-	<div class="mdl-textfield mdl-js-textfield">
-		<input class="mdl-textfield__input" type="text" name="title" value="{{ isset($data) ? $data->title : '' }}" />
-		<label class="mdl-textfield__label" for="titulo">Título...</label>
-	</div>
-
-	<br>
 
 	<h5>Tipo</h5>
 

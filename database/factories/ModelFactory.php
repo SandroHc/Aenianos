@@ -41,18 +41,11 @@ $factory->define(App\Models\Anime::class, function ($faker) {
 $factory->define(App\Models\Episode::class, function ($faker) {
 	return [
 		'anime_id' => $faker->numberBetween(1, 3),
-		'num' => $faker->numberBetween(1, 20),
 		'type' => $faker->randomElement([ 'episodio', 'filme', 'especial' ]),
-	];
-});
-
-$factory->define(App\Models\Download::class, function ($faker) {
-	return [
-		'episode_id' => $faker->numberBetween(1, 30),
+		'num' => $faker->numberBetween(1, 20),
+		'link' => $faker->randomElement([ 'http://mega.nz', 'https://drive.google.com/file/d/0B8KL1BNoXI0jblotVS1YQkE3TEE/view?usp=sharing' ]),
 		'host_name' => $faker->randomElement([ 'MEGA', 'Google Drive' ]),
-		'host_link' => $faker->randomElement([ 'http://mega.nz', 'https://drive.google.com/file/d/0B8KL1BNoXI0jblotVS1YQkE3TEE/view?usp=sharing' ]),
 		'quality' => $faker->randomElement([ 'BD', 'HD', 'SD' ]),
 		'size' => $faker->biasedNumberBetween(50, 500),
 	];
 });
-

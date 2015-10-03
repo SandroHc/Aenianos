@@ -13,19 +13,10 @@ class CreateEpisodeTable extends Migration {
 		Schema::create('episodes', function(Blueprint $table) {
 			$table->increments('id');
 			$table->unsignedInteger('anime_id');
-			$table->string('type');
-			$table->integer('num');
-			$table->string('title')->default('');
-			$table->timestamps();
-
-			//$table->foreign('anime_id')->references('id')->on('anime');
-		});
-
-		Schema::create('downloads', function(Blueprint $table) {
-			$table->increments('id');
-			$table->unsignedInteger('episode_id');
+			$table->string('type', 20);
+			$table->unsignedInteger('num');
 			$table->string('host_name')->default('');
-			$table->string('host_link');
+			$table->string('link');
 			$table->string('quality')->default('');
 			$table->string('size')->default('');
 			$table->string('notes')->default('');
@@ -42,6 +33,5 @@ class CreateEpisodeTable extends Migration {
 	 */
 	public function down() {
 		Schema::drop('episodes');
-		Schema::drop('downloads');
 	}
 }

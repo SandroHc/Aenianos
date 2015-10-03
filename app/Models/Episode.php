@@ -3,60 +3,33 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 
 class Episode extends Model {
-	protected $table = 'episodes';
+    protected $table = 'episodes';
 
-	protected $fillable = ['anime_id', 'title', 'num', 'type'];
+    protected $fillable = ['anime_id', 'type', 'num', 'link', 'host_name', 'quality', 'size', 'notes'];
 
 	/**
-	 * Get the anime associated with the episode.
+	 * Get the episode associated with the download.
 	 */
 	public function anime() {
 		return $this->belongsTo('\App\Models\Anime');
 	}
 
-	/**
-	 * Get the downloads for the episode.
-	 */
-	public function downloads() {
-		return $this->hasMany('App\Models\Download');
+	public static function getList($id) {
+		return Episode::where([ 'anime_id' => $id ])->get();
 	}
 
-	public static function getEpisodeList($animeId) {
-		return Episode::where([ 'anime_id' => $animeId ])->orderBy('type', 'ASC')->orderBy('num', 'ASC')->get();
+	public static function getLatest($limit = 11) {
+		return Episode::groupBy([ 'type', 'num' ])->orderBy('created_at', 'DESC')->limit($limit);
 	}
 
-	/**
-	 * @param $id	string Anime ID
-	 * @param $type	string Episode type
-	 * @param $num	string Episode number
-	 *
-	 * @return mixed
-	 */
-	public static function getByNumber($id, $type, $num) {
-		return Episode::where('anime_id', '=', $id)->where('type', '=', $type)->where('num', '=', $num);
-	}
-
-	public static function getLatestEpisodes($number = 11) {
-//		return Episode::join('anime', 'anime.id', '=', 'episodes.anime_id')
-//			->select('anime.id', 'anime.slug', 'anime.title', 'anime.cover', 'anime.official_cover', 'episodes.num')
-//			->groupBy('anime.id')
-//			->orderBy('episodes.created_at', 'DESC')
-//			->limit($number)
-//			->get();
-		return Episode::orderBy('episodes.created_at', 'DESC')
-			->limit($number)
-			->get();
-	}
-
-	public function typeToStr() {
+	public function getType() {
 		switch($this['type']) {
 			case 'episodio':	return 'Episódio';
 			case 'filme':		return 'Filme';
 			case 'especial':	return 'Especial';
-			default:			return 'Desconhecido';
+			default:			return '?';
 		}
 	}
 }

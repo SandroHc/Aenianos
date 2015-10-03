@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Redirect;
 
 class AdminController extends Controller {
 
-	const UPLOAD_PATH = "img/pload/";
+	const UPLOAD_PATH = "img/upload/";
 
 	/**
 	 * Shows the administration dashboard.
@@ -208,8 +208,12 @@ class AdminController extends Controller {
 			}
 
 			$data->status = Input::get('status');
-			$data->airing_date = Input::get('airing_date');
-			$data->airing_week_day = Input::get('airing_week_day');
+
+			$temp = Input::get('airing_date');
+			$data->airing_date = empty($temp) ? NULL : $temp;
+
+			$temp = Input::get('airing_week_day');
+			$data->airing_week_day = empty($temp) ? NULL : $temp;
 
 			$data->episodes = Input::get('episodes');
 			$data->genres = Input::get('genres');
@@ -348,9 +352,6 @@ class AdminController extends Controller {
 	public function deleteEpisode($id, $type, $num) {
 		$episode = Episode::getByNumber($id, $type, $num)->first();
 		$episode->delete($id);
-
-		// Delete all links within this episode
-		Download::where('episode_id', '=', $episode->id)->delete();
 
 		return Redirect::action('AdminController@showAnimeList');
 	}
