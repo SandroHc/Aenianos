@@ -195,7 +195,7 @@ class AdminController extends Controller {
 			if($cover != null && $cover->isValid()) {
 				$cover->move(AdminController::UPLOAD_PATH, $cover->getClientOriginalName()); // uploading file to given path
 
-				$data->cover = '/'. AdminController::UPLOAD_PATH .'/'. $cover->getClientOriginalName();
+				$data->cover = '/'. AdminController::UPLOAD_PATH . $cover->getClientOriginalName();
 			}
 
 			$data->cover_offset = Input::get('cover_offset');
@@ -204,7 +204,7 @@ class AdminController extends Controller {
 			if($cover != null && $cover->isValid()) {
 				$cover->move(AdminController::UPLOAD_PATH, $cover->getClientOriginalName()); // uploading file to given path
 
-				$data->official_cover = '/'. AdminController::UPLOAD_PATH .'/'. $cover->getClientOriginalName();
+				$data->official_cover = '/'. AdminController::UPLOAD_PATH . $cover->getClientOriginalName();
 			}
 
 			$data->status = Input::get('status');
