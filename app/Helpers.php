@@ -27,6 +27,16 @@ function trailing_zeros($num, $digits = 2) {
 	return $num;
 }
 
+const UPLOAD_PATH = "img/upload/";
+
+function store_upload(Symfony\Component\HttpFoundation\File\UploadedFile $file) {
+	if(!empty($file) && $file->isValid()) {
+		$file->move(UPLOAD_PATH, $file->getClientOriginalName()); // uploading file to given path
+
+		return '/'. UPLOAD_PATH . $file->getClientOriginalName();
+	}
+}
+
 function get_hostname($url) {
 	$_list = _get_domain_list();
 	$domain = url_to_domain($url);

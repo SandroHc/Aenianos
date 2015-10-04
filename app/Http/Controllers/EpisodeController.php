@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Episode;
-use App\Models\Download;
-use App\Util;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Validator;
@@ -18,7 +16,7 @@ class EpisodeController extends Controller {
 	 *
 	 * @param  int $id		Anime ID
 	 * @param  int $num		Episode number
-	 * @param null $info
+	 * @param array $info
 	 *
 	 * @return Response
 	 */

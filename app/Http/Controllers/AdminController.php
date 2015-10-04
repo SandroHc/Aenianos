@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\News;
 use App\Models\Anime;
 use App\Models\Episode;
-use App\Models\Download;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\App;
@@ -14,8 +13,6 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 
 class AdminController extends Controller {
-
-	const UPLOAD_PATH = "img/upload/";
 
 	/**
 	 * Shows the administration dashboard.
@@ -191,21 +188,10 @@ class AdminController extends Controller {
 			$data->synopsis = Input::get('synopsis');
 			$data->episodes = Input::get('episodes');
 
-			$cover = Input::file('cover');
-			if($cover != null && $cover->isValid()) {
-				$cover->move(AdminController::UPLOAD_PATH, $cover->getClientOriginalName()); // uploading file to given path
 
-				$data->cover = '/'. AdminController::UPLOAD_PATH . $cover->getClientOriginalName();
-			}
-
+			$data->official_cover = store_upload(Input::file('official_cover'));
+			$data->cover = store_upload(Input::file('cover'));
 			$data->cover_offset = Input::get('cover_offset');
-
-			$cover = Input::file('official_cover');
-			if($cover != null && $cover->isValid()) {
-				$cover->move(AdminController::UPLOAD_PATH, $cover->getClientOriginalName()); // uploading file to given path
-
-				$data->official_cover = '/'. AdminController::UPLOAD_PATH . $cover->getClientOriginalName();
-			}
 
 			$data->status = Input::get('status');
 
