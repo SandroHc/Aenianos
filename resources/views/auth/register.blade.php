@@ -1,9 +1,9 @@
 @extends('master')
 
-@section('title', 'Login - Aenianos Fansub')
+@section('title', 'Registar - Aenianos Fansub')
 
 @section('content')
-	{!! Form::open([ 'url' => 'admin/utilizadores/registar', 'style' => 'margin:0 auto' ]) !!}
+	{!! Form::open([ 'url' => URL::action('Auth\AuthController@postRegister'), 'style' => 'margin:0 auto' ]) !!}
 
 	<h3>Registar</h3>
 

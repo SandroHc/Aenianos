@@ -3,7 +3,7 @@
 @section('title', 'Login - Aenianos Fansub')
 
 @section('content')
-	{!! Form::open([ 'url' => 'login', 'style' => 'margin:0 auto' ]) !!}
+	{!! Form::open([ 'url' => URL::action('Auth\AuthController@postLogin'), 'style' => 'margin:0 auto' ]) !!}
 
 	<h3>Login</h3>
 

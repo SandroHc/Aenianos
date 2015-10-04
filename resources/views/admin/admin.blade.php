@@ -40,15 +40,10 @@
 		<div class="mdl-cell mdl-cell--8-col">
 			{{ \App\User::count() }} utilizadores ativos<br>
 		</div>
-		<div class="mdl-cell mdl-cell--3-col">
+		<div class="mdl-cell mdl-cell--4-col">
 			<a href="{{ URL::action('UsersController@showUsersList') }}">Gerir Utilizadores</a>
 			<br>
 			<a href="{{ URL::action('UsersController@showPreferences') }}">Editar Perfil</a>
-		</div>
-		<div class="mdl-cell mdl-cell--1-col">
-			<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" onclick="window.location='{{ URL::action('Auth\AuthController@getRegister') }}'">
-				<i class="material-icons">add</i>
-			</button>
 		</div>
 	</div>
 @endsection

@@ -31,9 +31,17 @@
 
 					<input type="hidden" name="id" value="{{ $user->id }}">
 
-					<button type="submit" class="mdl-button mdl-js-button mdl-button--icon" {{ Auth::id() == $user->id ? 'disabled' : '' }}>
+					<button type="submit" id="disable-{{ $user->id }}" class="mdl-button mdl-js-button mdl-button--icon" {{ Auth::id() == $user->id ? 'disabled' : '' }}>
 						<i class="material-icons">{{ $user->trashed() ? 'checked' : 'delete' }}</i>
 					</button>
+
+					@if(Auth::id() !== $user->id)
+						<div class="mdl-tooltip" for="disable-{{ $user->id }}">
+							{{ $user->trashed() ? 'Ativar' : 'Desativar' }}
+						</div>
+						@else
+						{{ dd(Auth::user()) }}
+					@endif
 
 					{!! Form::close() !!}
 				</td>

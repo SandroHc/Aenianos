@@ -63,7 +63,9 @@
 			<nav class="waterfall-demo-header-nav mdl-navigation navigation-header">
 				<a class="link-home mdl-navigation__link" href="/">Home</a>
 				<a class="link-projetos mdl-navigation__link" href="/anime">Projetos</a>
-				@if(Auth::check())
+
+				<?php $user = Auth::user() ?>
+				@if($user !== NULL && $user->admin)
 					<a class="link-contacto mdl-navigation__link" href="/admin">Administração</a>
 				@endif
 			</nav>
@@ -79,11 +81,14 @@
 			<a class="mdl-navigation__link" href="/doacoes">Doações</a>
 			<a class="mdl-navigation__link" href="/contato">Contato</a>
 			<div class="mdl-layout-spacer"></div>
-			@if(Auth::check())
-				<a class="mdl-navigation__link" href="/admin">Administração</a>
+			@if($user !== NULL)
+				@if($user->admin)
+					<a class="mdl-navigation__link" href="/admin">Administração</a>
+				@endif
 				<a class="mdl-navigation__link" href="/logout">Sair</a>
 			@else
 				<a class="mdl-navigation__link" href="/login">Login</a>
+				<a class="mdl-navigation__link" href="/registar">Registar</a>
 			@endif
 		</nav>
 	</div>

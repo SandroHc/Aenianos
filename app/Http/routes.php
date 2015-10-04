@@ -72,17 +72,7 @@ Route::group([ 'before' => 'auth', 'prefix' => 'admin' ], function() {
 	Route::delete('anime/{id}/{type}/{num}', 'EpisodeController@deleteLink');
 
 	/** Users **/
-	Route::get('utilizadores', 'UsersController@showUsersList');
-
-	Route::get('utilizadores/registar', 'Auth\AuthController@getRegister');
-	Route::post('utilizadores/registar', 'Auth\AuthController@postRegister');
-
-	Route::get('utilizadores/perfil',			'UsersController@showPreferences');
-	Route::post('utilizadores/perfil/geral',	'UsersController@savePreferencesGeneral');
-	Route::post('utilizadores/perfil/password',	'UsersController@savePreferencesPassword');
-	Route::post('utilizadores/perfil/email',	'UsersController@savePreferencesEmail');
-
-	Route::post('utilizadores/{id}/desativar', 'UsersController@disableUser');
+	Route::get('utilizador', 'UsersController@showUsersList');
 
 	/** Misc **/
 	Route::post('upload', 'GeneralController@upload');
@@ -92,6 +82,16 @@ Route::group([ 'before' => 'auth', 'prefix' => 'admin' ], function() {
 Route::get('login', 'Auth\AuthController@getLogin');
 Route::post('login', 'Auth\AuthController@postLogin');
 Route::get('logout', 'Auth\AuthController@getLogout');
+
+Route::get('registar', 'Auth\AuthController@getRegister');
+Route::post('registar', 'Auth\AuthController@postRegister');
+
+Route::get('utilizador/perfil',			'UsersController@showPreferences');
+Route::post('utilizador/perfil/geral',	'UsersController@savePreferencesGeneral');
+Route::post('utilizador/perfil/password',	'UsersController@savePreferencesPassword');
+Route::post('utilizador/perfil/email',	'UsersController@savePreferencesEmail');
+
+Route::post('utilizador/{id}/desativar', 'UsersController@disableUser');
 
 // Password reset link request routes...
 Route::get('login/resetar', 'Auth\PasswordController@getEmail');
