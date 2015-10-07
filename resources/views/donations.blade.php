@@ -1,6 +1,6 @@
 @extends('master')
 
-@section('title', 'Doação - Aenianos Fansub')
+<?php $current_section = "Doação" ?>
 
 @section('content')
 	<h3>Doação</h3>

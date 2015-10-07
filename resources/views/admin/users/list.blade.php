@@ -1,8 +1,6 @@
 @extends('master')
 
-@section('title')
-	Utilizadores - Aenianos Fansub
-@endsection
+<?php $current_section = "Utilizadores" ?>
 
 @section('content')
 	<div style="position: absolute; right:16px; top: 24px">

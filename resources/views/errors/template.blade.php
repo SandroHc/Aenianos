@@ -1,9 +1,5 @@
 @extends('master')
 
-@section('title')
-	@yield('error') - Aenianos Fansub
-@endsection
-
 @section('head')
 	<link href="//fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
 

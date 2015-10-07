@@ -1,8 +1,6 @@
 @extends('master')
 
-@section('title')
-	Editar {{ isset($data) ? (($data->num > 0 ? '#'. $data->num : 'Outro') .' '. $data->title) : 'novo episódio' }} - Aenianos Fansub
-@endsection
+<?php $current_section = "Editar ". (isset($data) ? ($data->num > 0 ? '#'. $data->num : 'Outro') : 'novo episódio') ?>
 
 @section('content')
 	{!! Form::open([ 'url' => 'admin/anime/'. $id .'/'. $type .'/'. (isset($num) ? $num : 'novo'), 'style' => 'width:100%' ]) !!}

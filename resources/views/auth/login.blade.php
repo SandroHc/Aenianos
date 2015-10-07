@@ -1,6 +1,6 @@
 @extends('master')
 
-@section('title', 'Login - Aenianos Fansub')
+<?php $current_section = "Login" ?>
 
 @section('content')
 	{!! Form::open([ 'url' => URL::action('Auth\AuthController@postLogin'), 'style' => 'margin:0 auto' ]) !!}

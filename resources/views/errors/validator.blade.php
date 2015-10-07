@@ -1,8 +1,6 @@
 @extends('master')
 
-@section('title')
-	Erro de validação - Aenianos Fansub
-@endsection
+<?php $current_section = "Erro de validação" ?>
 
 @section('content')
 	<h3>Ocorreu um erro ao validar o formulário</h3>

@@ -1,8 +1,6 @@
 @extends('master')
 
-@section('title')
-	Editar {{ isset($data) ? $data->title : 'novo projeto' }} - Aenianos Fansub
-@endsection
+<?php $current_section = "Editar ". ($data->title ?? 'novo projeto') ?>
 
 @section('head')
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/redactor.css') }}">

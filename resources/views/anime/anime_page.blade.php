@@ -1,8 +1,6 @@
 @extends('master')
 
-@section('title')
-	{{ $data->title }} - Aenianos Fansub
-@endsection
+<?php $current_section = $data->title ?>
 
 @section('content')
 	@include('anime.anime', [ 'data' => $data ])

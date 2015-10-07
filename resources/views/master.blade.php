@@ -6,7 +6,16 @@
 	<meta name="description" content="O Aenianos é um fansubber brasileiro de anime">
 	<meta name="keywords" content="aenianos,fansub,pt,br,séries,animes,filmes">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>@yield("title")</title>
+	<title>
+		@if(isset($title))
+			{{ $title }}
+		@else
+			@if(isset($current_section))
+				{{ $current_section }} /
+			@endif
+			 {{ env('APP_NAME', 'Aenianos') }}
+		@endif
+	</title>
 
 	<link rel="icon" type="image/png" href="{{ asset('favicon.png') }}" />
 

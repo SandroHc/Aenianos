@@ -1,6 +1,6 @@
 @extends('master')
 
-@section('title', 'Resetar password - Aenianos Fansub')
+<?php $current_section = "Resetar password" ?>
 
 @section('content')
 	{!! Form::open([ 'url' => 'login/resetar', 'style' => 'margin:0 auto' ]) !!}

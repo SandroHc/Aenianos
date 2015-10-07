@@ -1,8 +1,6 @@
 @extends('master')
 
-@section('title')
-	Editar episódios em massa - Aenianos Fansub
-@endsection
+<?php $current_section = "Episódios em massa" ?>
 
 @section('content')
 	{!! Form::open([ 'url' => 'admin/anime/'. $id .'/raw', 'style' => 'width:100%' ]) !!}

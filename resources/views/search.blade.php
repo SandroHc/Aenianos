@@ -1,8 +1,6 @@
 @extends('master')
 
-@section('title')
-	Procurar por {{ $search }} - Aenianos Fansub
-@endsection
+<?php $current_section = $search ?>
 
 @section('content')
 	<h3>Pesquisa</h3>

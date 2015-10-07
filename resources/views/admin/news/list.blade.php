@@ -1,8 +1,6 @@
 @extends('master')
 
-@section('title')
-	Notícias - Aenianos Fansub
-@endsection
+<?php $current_section = "Notícias" ?>
 
 @section('content')
 	<div style="position: absolute; right:16px; top: 24px">

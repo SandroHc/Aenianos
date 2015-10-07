@@ -1,9 +1,6 @@
 @extends('master')
 
-@section('title')
-	Eliminar #{{ $data->num }} {{ $data->title }} - Aenianos Fansub
-@endsection
-
+<?php $current_section = "Eliminar #". $data->num ?>
 
 @section('content')
 	{!! Form::open([ 'url' => 'admin/anime/'. $data->anime_id .'/'. $data->type .'/'. $data->num .'/eliminar', 'style' => 'width:100%' ]) !!}

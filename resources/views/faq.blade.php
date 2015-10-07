@@ -1,6 +1,6 @@
 @extends('master')
 
-@section('title', 'FAQ - Aenianos Fansub')
+<?php $current_section = "FAQ" ?>
 
 @section('content')
 	<h3>Perguntas frequentes</h3>

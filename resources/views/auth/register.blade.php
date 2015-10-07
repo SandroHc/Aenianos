@@ -1,6 +1,6 @@
 @extends('master')
 
-@section('title', 'Registar - Aenianos Fansub')
+<?php $current_section = "Registar" ?>
 
 @section('content')
 	{!! Form::open([ 'url' => URL::action('Auth\AuthController@postRegister'), 'style' => 'margin:0 auto' ]) !!}

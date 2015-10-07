@@ -1,8 +1,6 @@
 @extends('master')
 
-@section('title')
-	{{ $data->name }} - Aenianos Fansub
-@endsection
+<?php $current_section = $data->name ?>
 
 @section('content')
 	<h4><span class="navigation-parent"><a href="{{ action('NewsController@showList') }}" target="_self">Notícias</a> ></span> {{ $data->name }}</h4>

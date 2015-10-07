@@ -1,6 +1,6 @@
 @extends('master')
 
-@section('title', 'Preferências - Aenianos Fansub')
+<?php $current_section = "Preferências" ?>
 
 @section('content')
 	<h3>Perfil</h3>

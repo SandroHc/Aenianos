@@ -1,7 +1,5 @@
 @extends('master')
 
-@section('title', 'Aenianos Fansub')
-
 @section('content-before')
 	@include('spotlight')
 @endsection

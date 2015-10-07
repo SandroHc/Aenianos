@@ -1,6 +1,6 @@
 @extends('master')
 
-@section('title', 'Contato - Aenianos Fansub')
+<?php $current_section = "Contato" ?>
 
 @section('content')
 	{!! Form::open([ 'url' => 'contato', 'style' => 'margin:0 auto' ]) !!}
