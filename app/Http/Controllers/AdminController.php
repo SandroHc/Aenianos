@@ -188,9 +188,14 @@ class AdminController extends Controller {
 			$data->synopsis = Input::get('synopsis');
 			$data->episodes = Input::get('episodes');
 
+			$temp = store_upload(Input::file('official_cover'));
+			if($temp !== NULL)
+				$data->official_cover = $temp;
 
-			$data->official_cover = store_upload(Input::file('official_cover'));
-			$data->cover = store_upload(Input::file('cover'));
+			$temp = store_upload(Input::file('cover'));
+			if($temp !== NULL)
+				$data->cover = $temp;
+			
 			$data->cover_offset = Input::get('cover_offset');
 
 			$data->status = Input::get('status');
