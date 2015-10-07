@@ -195,7 +195,7 @@ class AdminController extends Controller {
 			$temp = store_upload(Input::file('cover'));
 			if($temp !== NULL)
 				$data->cover = $temp;
-			
+
 			$data->cover_offset = Input::get('cover_offset');
 
 			$data->status = Input::get('status');

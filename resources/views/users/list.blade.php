@@ -37,7 +37,7 @@
 						<div class="mdl-tooltip" for="disable-{{ $user->id }}">
 							{{ $user->trashed() ? 'Ativar' : 'Desativar' }}
 						</div>
-						@else
+					@else
 						{{ dd(Auth::user()) }}
 					@endif
 
