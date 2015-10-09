@@ -29,11 +29,13 @@ function trailing_zeros($num, $digits = 2) {
 
 const UPLOAD_PATH = "img/upload/";
 
-function store_upload(Symfony\Component\HttpFoundation\File\UploadedFile $file) {
-	if(!empty($file) && $file->isValid()) {
+function store_upload(Symfony\Component\HttpFoundation\File\UploadedFile $file = null) {
+	if($file !== NULL && $file->isValid()) {
 		$file->move(UPLOAD_PATH, $file->getClientOriginalName()); // uploading file to given path
 
 		return '/'. UPLOAD_PATH . $file->getClientOriginalName();
+	} else {
+		return NULL;
 	}
 }
 

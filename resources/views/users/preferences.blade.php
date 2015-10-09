@@ -10,8 +10,9 @@
 	{!! Form::open([ 'url' => URL::action('UsersController@savePreferencesGeneral'), 'files' => true ]) !!}
 
 	<div class="mdl-textfield mdl-js-textfield">
+		Nickname
 		<input class="mdl-textfield__input" type="text" id="name" name="name" required="" value="{{ $user->name }}" />
-		<label class="mdl-textfield__label" for="name">Nome...</label>
+		<label class="mdl-textfield__label" for="name"></label>
 	</div>
 
 	<br>
@@ -40,22 +41,25 @@
 	{!! Form::open([ 'url' => URL::action('UsersController@savePreferencesPassword') ]) !!}
 
 	<div class="mdl-textfield mdl-js-textfield">
+		Password atual
 		<input class="mdl-textfield__input" type="password" id="password" name="password" required="" />
-		<label class="mdl-textfield__label" for="password">Password atual...</label>
+		<label class="mdl-textfield__label" for="password"></label>
 	</div>
 
 	<br>
 
 	<div class="mdl-textfield mdl-js-textfield">
+		Nova password
 		<input class="mdl-textfield__input" type="password" id="password_new" name="password_new" required="" />
-		<label class="mdl-textfield__label" for="password_new">Nova password...</label>
+		<label class="mdl-textfield__label" for="password_new"></label>
 	</div>
 
 	<br>
 
 	<div class="mdl-textfield mdl-js-textfield">
+		Confirmar password
 		<input class="mdl-textfield__input" type="password" name="password_new_confirmation" required="" />
-		<label class="mdl-textfield__label" for="password_new_confirmation">Confirmar password...</label>
+		<label class="mdl-textfield__label" for="password_new_confirmation"></label>
 	</div>
 
 	<br>
@@ -72,15 +76,17 @@
 	{!! Form::open([ 'url' => URL::action('UsersController@savePreferencesEmail') ]) !!}
 
 	<div class="mdl-textfield mdl-js-textfield">
+		E-mail
 		<input class="mdl-textfield__input" type="email" id="email" name="email" required="" value="{{ $user->email }}" />
-		<label class="mdl-textfield__label" for="name">E-mail...</label>
+		<label class="mdl-textfield__label" for="name"></label>
 	</div>
 
 	<br>
 
 	<div class="mdl-textfield mdl-js-textfield">
+		Novo e-mail
 		<input class="mdl-textfield__input" type="email" id="email_new" name="email_new" required="" />
-		<label class="mdl-textfield__label" for="email_new">Novo e-mail...</label>
+		<label class="mdl-textfield__label" for="email_new"></label>
 	</div>
 
 	<br>

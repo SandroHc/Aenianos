@@ -46,7 +46,7 @@ class UsersController extends Controller {
 	 * @return \Illuminate\View\View
 	 */
 	public function showPreferences() {
-		return view('admin.users.preferences', [ 'user' => Auth::user() ]);
+		return view('users.preferences', [ 'user' => Auth::user() ]);
 	}
 
 	public function savePreferencesGeneral() {
@@ -63,12 +63,9 @@ class UsersController extends Controller {
 
 			$data->name = Input::get('name');
 
-			$avatar = Input::file('avatar');
-			if($avatar != null && $avatar->isValid()) {
-				$avatar->move('img/upload', $avatar->getClientOriginalName()); // uploading file to given path
-
-				$data->avatar = '/img/upload/'. $avatar->getClientOriginalName();
-			}
+			$temp = store_upload(Input::file('avatar'));
+			if($temp !== NULL)
+				$data->avatar = $temp;
 
 			// Save the changes to the DB
 			$data->save();

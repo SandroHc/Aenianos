@@ -69,7 +69,7 @@ Route::group([ 'before' => 'auth', 'prefix' => 'admin' ], function() {
 	Route::delete('anime/{slug}/{type}/{num}', 'EpisodeController@deleteLink');
 
 	/** Users **/
-	Route::get('utilizador', 'UsersController@showUsersList');
+	Route::get('utilizadores', 'UsersController@showUsersList');
 
 	/** Misc **/
 	Route::post('upload', 'GeneralController@upload');
@@ -83,10 +83,10 @@ Route::get('logout', 'Auth\AuthController@getLogout');
 Route::get('registar', 'Auth\AuthController@getRegister');
 Route::post('registar', 'Auth\AuthController@postRegister');
 
-Route::get('utilizador/perfil',			'UsersController@showPreferences');
-Route::post('utilizador/perfil/geral',	'UsersController@savePreferencesGeneral');
-Route::post('utilizador/perfil/password',	'UsersController@savePreferencesPassword');
-Route::post('utilizador/perfil/email',	'UsersController@savePreferencesEmail');
+Route::get('perfil', 'UsersController@showPreferences');
+Route::post('perfil/geral', 'UsersController@savePreferencesGeneral');
+Route::post('perfil/password', 'UsersController@savePreferencesPassword');
+Route::post('perfil/email', 'UsersController@savePreferencesEmail');
 
 Route::post('utilizador/{id}/desativar', 'UsersController@disableUser');
 

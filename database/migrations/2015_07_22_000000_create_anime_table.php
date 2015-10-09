@@ -15,9 +15,9 @@ class CreateAnimeTable extends Migration {
 			$table->string('title');
 			$table->string('slug');
 			$table->text('synopsis')->default('');
-			$table->string('cover')->default('');
+			$table->string('official_cover')->nullable();
+			$table->string('cover')->nullable();
 			$table->string('cover_offset')->default(0);
-			$table->string('official_cover')->default('');
 
 			$table->string('status', 100)->default('Em lançamento');
 			$table->date('airing_date')->nullable();

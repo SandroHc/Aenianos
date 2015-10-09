@@ -1,7 +1,6 @@
 <?php
 
-return array(
-
+return [
 	/*
 	|--------------------------------------------------------------------------
 	| Default Search Driver
@@ -39,28 +38,28 @@ return array(
 	|
 	*/
 
-	'connections' => array(
+	'connections' => [
 
-		'zend' => array(
+		'zend' => [
 			'driver' => 'zend',
 			'path'   => storage_path().'/search',
-		),
+		],
 
-		'elasticsearch' => array(
+		'elasticsearch' => [
 			'driver' => 'elasticsearch',
-			'config' => array(
-				'hosts' => array('localhost:9200'),
-			),
-		),
+			'config' => [
+				'hosts' => [
+					'localhost:9200'
+				],
+			],
+		],
 
-		'algolia' => array(
+		'algolia' => [
 			'driver' => 'algolia',
-			'config' => array(
+			'config' => [
 				'application_id' => '',
 				'admin_api_key'  => '',
-			),
-		),
-
-	),
-
-);
+			],
+		],
+	],
+];
