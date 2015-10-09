@@ -4,7 +4,7 @@
 
 @section('content')
 	{!! Form::open([ 'url' => 'admin/anime/'. $id .'/raw', 'style' => 'width:100%' ]) !!}
-	<h3><span class="navigation-parent"><a class="navigation-parent-link" href="{!! URL::action('AnimeController@showDetail', [ 'id' => $id ]) !!}" target="_self">{{ $name = \App\Models\Anime::find($id)->title }}</a> > </span> Adicionar episódios em massa</h3>
+	<h3><span class="navigation-parent"><a class="navigation-parent-link" href="{!! URL::action('AnimeController@showAnimePage', [ 'slug' => $id ]) !!}" target="_self">{{ $name = \App\Models\Anime::find($id)->title }}</a> > </span> Adicionar episódios em massa</h3>
 
 	<div class="mdl-textfield mdl-js-textfield" style="width:100%">
 		<textarea class="mdl-textfield__input" rows="6" name="raw_text" required=""></textarea>

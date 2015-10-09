@@ -13,6 +13,18 @@ use Illuminate\Support\Facades\Hash;
 use Auth;
 
 class UsersController extends Controller {
+
+    public function showUser($username) {
+        try {
+            // Collect all the needed information about the news article
+            $data = User::where('username', '=', $username)->firstOrFail();
+
+            return view('user.page', ['data' => $data ]);
+        } catch(ModelNotFoundException $e) {
+            return App::abort(404);
+        }
+    }
+
 	/**
 	 * Shows a view with all the active and inactive users.
 	 * @return \Illuminate\View\View

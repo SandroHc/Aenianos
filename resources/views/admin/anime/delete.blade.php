@@ -3,7 +3,7 @@
 <?php $current_section = "Eliminar ". $data->title ?>
 
 @section('content')
-	{!! Form::open([ 'url' => 'admin/anime/'. $data->id .'/eliminar', 'style' => 'width:100%' ]) !!}
+	{!! Form::open([ 'url' => 'admin/anime/'. $data->slug .'/eliminar', 'style' => 'width:100%' ]) !!}
 	<h3>Projetos</h3>
 
 	<p>Pretende mesmo eliminar <b>{{ $data->title }}</b>?</p>

@@ -152,7 +152,7 @@ class EpisodeController extends Controller {
 					}
 				}
 
-				return Redirect::action('AnimeController@showDetail', [ 'id' => $id ]);
+				return Redirect::action('AnimeController@showAnimePage', [ 'slug' => $id ]);
 			} else {
 				// Show the validation error page the the validator failed
 				return view('errors.validator', [ 'validation' => $validator->messages() ]);

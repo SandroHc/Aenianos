@@ -89,7 +89,7 @@ class AdminController extends Controller {
 			// Save the changes to the DB
 			$data->save();
 
-			return Redirect::action('NewsController@showDetail', [ 'id' => $data->id ]);
+			return Redirect::action('NewsController@showNewsPage', [ 'slug' => $data->slug ]);
 		} else {
 			// Show the validation error page the the validator failed
 			return view('errors.validator', [ 'validation' => $validator->messages() ]);
@@ -139,15 +139,15 @@ class AdminController extends Controller {
 	 * Shows a editor for the anime with ID $id.
 	 * Only accessible to administrators.
 	 *
-	 * @param $id
+	 * @param $slug
 	 * @return \Illuminate\View\View
 	 */
-	public function showAnimeEditor($id) {
+	public function showAnimeEditor($slug) {
 		try {
-			if($id === 'novo') {
+			if($slug === 'novo') {
 				return view('admin.anime.editor');
 			} else {
-				$data = Anime::findOrFail($id);
+				$data = Anime::where('slug', '=', $slug)->firstOrFail();
 
 				return view('admin.anime.editor', ['data' => $data]);
 			}
@@ -159,10 +159,10 @@ class AdminController extends Controller {
 	/**
 	 * Update the information on the DB about the anime with ID $id.
 	 *
-	 * @param $id
+	 * @param $slug
 	 * @return \Illuminate\View\View
 	 */
-	public function updateAnime($id) {
+	public function updateAnime($slug) {
 		// Check if the form was correctly filled
 		$rules = [
 			'title' => 'required|min:1',
@@ -178,10 +178,10 @@ class AdminController extends Controller {
 
 		if(!$validator->fails()) {
 			// If the variable $id equals 'novo', create a new model
-			if($id === 'novo') {
+			if($slug === 'novo') {
 				$data = new Anime();
 			} else {
-				$data = Anime::find($id);
+				$data = Anime::where('slug', '=', $slug)->first();
 			}
 
 			$data->title = Input::get('title');
@@ -226,10 +226,10 @@ class AdminController extends Controller {
 	 * @param $id
 	 * @return \Illuminate\View\View
 	 */
-	public function deleteAnimePrompt($id) {
+	public function deleteAnimePrompt($slug) {
 		try {
 			// Collect all the needed information about the news article
-			$data = Anime::findOrFail($id);
+			$data = Anime::where('slug', '=', $slug)->firstOrFail();
 
 			return view('admin.anime.delete', ['data' => $data ]);
 		} catch(ModelNotFoundException $e) {
@@ -240,14 +240,14 @@ class AdminController extends Controller {
 	/**
 	 * Delete the anime with ID $id from the DB.
 	 *
-	 * @param $id
+	 * @param $slug
 	 * @return mixed
 	 */
-	public function deleteAnime($id) {
-		Anime::destroy($id);
+	public function deleteAnime($slug) {
+		Anime::where('slug', '=', $slug)->destroy();
 
 		// Don't delete any episode/links as the anime will only be 'soft-deleted'.
-		// This means that the anime will still be on the DB and thus the episodes atay
+		// This means that the anime will still be on the DB and thus the episodes should also stay.
 
 		return Redirect::action('AdminController@showAnimeList');
 	}

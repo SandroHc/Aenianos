@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Anime;
@@ -7,31 +6,15 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Redirect;
 
-class AnimeController extends Controller
-{
-	/**
-	 * Show the details of the specified anime.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function showDetail($id) {
-		try {
-			$data = Anime::findOrFail($id);
-
-			return Redirect::action('AnimeController@showDetailSlug', [ 'slug' => $data->slug ]);
-		} catch(ModelNotFoundException $e) {
-			return App::abort(404);
-		}
-	}
+class AnimeController extends Controller {
 
 	/**
-	 * Same as the function showDetail($id), but using the slug instead of the ID.
+	 * Show the page of the specified anime.
 	 *
 	 * @param  string $slug
 	 * @return Response
 	 */
-	public function showDetailSlug($slug) {
+	public function showAnimePage($slug) {
 		try {
 			// Collect all the needed information about the news article
 			$data = Anime::where('slug', '=', $slug)->firstOrFail();

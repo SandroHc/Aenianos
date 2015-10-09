@@ -9,32 +9,19 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Redirect;
 
 class NewsController extends Controller {
-	/**
-	 * Show the details of the specified news article.
-	 *
-	 * @param  int  $id
-	 *
-	 * @return Response
-	 */
-	public function showDetail($id) {
-		try {
-			// Collect all the needed information about the news article
-			$data = News::findOrFail($id);
 
-			return Redirect::action('NewsController@showDetailSlug', [ 'slug' => $data->slug ]);
-		} catch(ModelNotFoundException $e) {
-			return App::abort(404);
-		}
+	public function showNewsList() {
+		return view('news.list');
 	}
 
 	/**
-	 * Same as the function showDetail($id), but using the slug instead of the ID.
+	 * Show the page for the news article.
 	 *
 	 * @param  string $slug
 	 *
 	 * @return Response
 	 */
-	public function showDetailSlug($slug) {
+	public function showNewsPage($slug) {
 		try {
 			// Collect all the needed information about the news article
 			$data = News::where('slug', '=', $slug)->firstOrFail();
@@ -46,31 +33,13 @@ class NewsController extends Controller {
 	}
 
 	/**
-	 * Show a list of news by category ID.
-	 *
-	 * @param $id
-	 *
-	 * @return Response
-	 */
-	public function showCategoryList($id) {
-		try {
-			// Collect all the needed information about the news article
-			$data = NewsCategory::findOrFail($id);
-
-			return view('news.category', ['data' => $data ]);
-		} catch(ModelNotFoundException $e) {
-			return App::abort(404);
-		}
-	}
-
-	/**
-	 * Same as showCategoryList($id), but using the slug instead of the ID.
+	 * Show a list of news grouped by category.
 	 *
 	 * @param  string $slug
 	 *
 	 * @return Response
 	 */
-	public function showCategoryListSlug($slug) {
+	public function showNewsByCategory($slug) {
 		try {
 			// Collect all the needed information about the news article
 			$data = NewsCategory::where('slug', '=', $slug)->firstOrFail();
@@ -79,9 +48,5 @@ class NewsController extends Controller {
 		} catch(ModelNotFoundException $e) {
 			return App::abort(404);
 		}
-	}
-
-	public function showList() {
-		return view('news.list');
 	}
 }

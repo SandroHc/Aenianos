@@ -7,7 +7,7 @@
 
 		@foreach(\App\Models\Anime::where('status', '=', 'Em lançamento')->where('airing_week_day', '=', $day)->orderBy('title', 'ASC')->get([ 'title', 'slug', 'cover', 'official_cover' ]) as $data)
 			<div class="spotlight-content">
-				<a class="spotlight-link" href="{!! URL::action('AnimeController@showDetailSlug', [ 'slug' => $data->slug ]) !!}" target="_self">
+				<a class="spotlight-link" href="{!! URL::action('AnimeController@showAnimePage', [ 'slug' => $data->slug ]) !!}" target="_self">
 					<img class="spotlight-img" src="{{ !empty($data->official_cover) ? $data->official_cover : (!empty($data->cover) ? $data->cover : '/img/unknown.png') }}">
 					<div class="spotlight-overlay"></div>
 

@@ -4,7 +4,7 @@
 			@if(isset($show_comments))
 				{{ $data->title }}
 			@else
-				<a href="{!! action('NewsController@showDetailSlug', [ 'slug' => $data->slug ]) !!}" target="_self" style="text-decoration: none">{{ $data->title }}</a>
+				<a href="{!! action('NewsController@showNewsPage', [ 'slug' => $data->slug ]) !!}" target="_self" style="text-decoration: none">{{ $data->title }}</a>
 			@endif
 		</h2>
 
@@ -57,7 +57,7 @@
 		@include("disqus")
 	@else
 		<div style="position:absolute; right:16px; bottom:16px">
-			<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" onclick="window.location='{!! action('NewsController@showDetailSlug', [ 'slug' => $data->slug ]) !!}'">
+			<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" onclick="window.location='{!! action('NewsController@showNewsPage', [ 'slug' => $data->slug ]) !!}'">
 				<i class="material-icons">comment</i>
 			</button>
 		</div>

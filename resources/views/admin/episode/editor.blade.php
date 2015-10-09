@@ -4,7 +4,7 @@
 
 @section('content')
 	{!! Form::open([ 'url' => 'admin/anime/'. $id .'/'. $type .'/'. (isset($num) ? $num : 'novo'), 'style' => 'width:100%' ]) !!}
-	<h3><span class="navigation-parent"><a class="navigation-parent-link" href="{!! URL::action('AnimeController@showDetail', [ 'id' => $id ]) !!}" target="_self">{{ \App\Models\Anime::find($id)->title }}</a> > </span> {{ isset($data) ? (($data->num > 0 ? '#'. $data->num : 'Outro') .' '. $data->title) : 'Novo' }}</h3>
+	<h3><span class="navigation-parent"><a class="navigation-parent-link" href="{!! URL::action('AnimeController@showAnimePage', [ 'slug' => $id ]) !!}" target="_self">{{ \App\Models\Anime::find($id)->title }}</a> > </span> {{ isset($data) ? (($data->num > 0 ? '#'. $data->num : 'Outro') .' '. $data->title) : 'Novo' }}</h3>
 
 	<div class="mdl-grid">
 		<div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--3-col">

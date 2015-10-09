@@ -23,14 +23,11 @@ Route::any('home', function() {
 
 // Anime-realted routes
 Route::any('anime', 'AnimeController@showList');
-Route::any('anime/{id}', 'AnimeController@showDetail');
-Route::any('anime/{slug}', 'AnimeController@showDetailSlug');
+Route::any('anime/{slug}', 'AnimeController@showAnimePage');
 
 // News-related routes
 Route::any('noticias', 'NewsController@showList');
-Route::any('noticias/{id}', 'NewsController@showDetail');
-Route::any('noticias/{slug}', 'NewsController@showDetailSlug');
-Route::any('noticias/categoria/{id}', 'NewsController@showCategoryList');
+Route::any('noticias/{slug}', 'NewsController@showNewsPage');
 Route::any('noticias/categoria/{slug}', 'NewsController@showCategoryListSlug');
 
 // Administration routes
@@ -50,26 +47,26 @@ Route::group([ 'before' => 'auth', 'prefix' => 'admin' ], function() {
 	/** Anime **/
 	Route::get('anime', 'AdminController@showAnimeList');
 	// Edit
-	Route::get('anime/{id}', 'AdminController@showAnimeEditor')->where('id', '[a-z0-9-]+');
-	Route::post('anime/{id}', 'AdminController@updateAnime')->where('id', '[a-z0-9-]+');
+	Route::get('anime/{slug}', 'AdminController@showAnimeEditor');
+	Route::post('anime/{slug}', 'AdminController@updateAnime');
 	// Delete
-	Route::get('anime/{id}/eliminar', 'AdminController@deleteAnimePrompt');
-	Route::post('anime/{id}/eliminar', 'AdminController@deleteAnime');
+	Route::get('anime/{slug}/eliminar', 'AdminController@deleteAnimePrompt');
+	Route::post('anime/{slug}/eliminar', 'AdminController@deleteAnime');
 
 	/** Episodes **/
 	// Edit
-	Route::get('anime/{id}/{type}/{num}', 'AdminController@showEpisodeEditor');
-	Route::post('anime/{id}/{type}/{num}', 'AdminController@updateEpisode');
+	Route::get('anime/{slug}/{type}/{num}', 'AdminController@showEpisodeEditor');
+	Route::post('anime/{slug}/{type}/{num}', 'AdminController@updateEpisode');
 	// Delete
-	Route::get('anime/{id}/{type}/{num}/eliminar', 'AdminController@deleteEpisodePrompt');
-	Route::post('anime/{id}/{type}/{num}/eliminar', 'AdminController@deleteEpisode');
+	Route::get('anime/{slug}/{type}/{num}/eliminar', 'AdminController@deleteEpisodePrompt');
+	Route::post('anime/{slug}/{type}/{num}/eliminar', 'AdminController@deleteEpisode');
 
 	/** Episode downloads */
-	Route::get('anime/{id}/raw', 'AdminController@showEpisodeRaw');
-	Route::post('anime/{id}/raw', 'EpisodeController@parseRawEpisodeDownloads');
+	Route::get('anime/{slug}/raw', 'AdminController@showEpisodeRaw');
+	Route::post('anime/{slug}/raw', 'EpisodeController@parseRawEpisodeDownloads');
 
-	Route::put('anime/{id}/{type}/{num}', 'EpisodeController@addLink');
-	Route::delete('anime/{id}/{type}/{num}', 'EpisodeController@deleteLink');
+	Route::put('anime/{slug}/{type}/{num}', 'EpisodeController@addLink');
+	Route::delete('anime/{slug}/{type}/{num}', 'EpisodeController@deleteLink');
 
 	/** Users **/
 	Route::get('utilizador', 'UsersController@showUsersList');
