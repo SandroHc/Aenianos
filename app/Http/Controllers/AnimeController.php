@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Anime;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\View;
+use Illuminate\View\View;
 
 class AnimeController extends Controller {
 

@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-	{!! Form::open([ 'url' => URL::action('AdminController@updateAnime', [ 'id' => isset($data) ? $data->id : 'novo' ]), 'files' => true, 'style' => 'width:100%' ]) !!}
+	{!! Form::open([ 'url' => URL::action('AdminController@updateAnime', [ 'slug' => $data->slug ?? 'novo' ]), 'files' => true, 'style' => 'width:100%' ]) !!}
 	<h3><span class="navigation-parent"><a class="navigation-parent-link" href="{!! action('AdminController@showAnimeList') !!}" target="_self">Projetos</a> ></span> {{ isset($data) ? $data->title : 'Novo' }}</h3>
 
 	<div class="mdl-textfield mdl-js-textfield">

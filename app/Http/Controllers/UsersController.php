@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\View;
+use Illuminate\View\View;
 
 class UsersController extends Controller {
 

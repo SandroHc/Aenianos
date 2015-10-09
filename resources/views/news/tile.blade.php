@@ -47,7 +47,7 @@
 				por {{ $user->name }}
 			@endif
 		@endif
-		em <a href="{!! action('NewsController@showCategoryListSlug', [ 'slug' => $category->slug ]) !!}">{{ $category->name }}</a>
+		em <a href="{!! action('NewsController@showNewsByCategory', [ 'slug' => $category->slug ]) !!}">{{ $category->name }}</a>
 	</div>
 
 	<div class="mdl-card__supporting-text mdl-card__width-fix">

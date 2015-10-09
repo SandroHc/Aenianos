@@ -28,7 +28,7 @@ Route::any('anime/{slug}', 'AnimeController@showAnimePage');
 // News-related routes
 Route::any('noticias', 'NewsController@showList');
 Route::any('noticias/{slug}', 'NewsController@showNewsPage');
-Route::any('noticias/categoria/{slug}', 'NewsController@showCategoryListSlug');
+Route::any('noticias/categoria/{slug}', 'NewsController@showNewsByCategory');
 
 // Administration routes
 Route::group([ 'before' => 'auth', 'prefix' => 'admin' ], function() {
