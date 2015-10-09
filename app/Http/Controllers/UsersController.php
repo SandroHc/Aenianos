@@ -2,32 +2,32 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\User;
-use App\Util;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Hash;
-use Auth;
+use Illuminate\Support\Facades\View;
 
 class UsersController extends Controller {
 
-    public function showUser($username) {
-        try {
-            // Collect all the needed information about the news article
-            $data = User::where('username', '=', $username)->firstOrFail();
+	public function showUser($username) {
+		try {
+			// Collect all the needed information about the news article
+			$data = User::where('username', '=', $username)->firstOrFail();
 
-            return view('user.page', ['data' => $data ]);
-        } catch(ModelNotFoundException $e) {
-            return App::abort(404);
-        }
-    }
+			return view('user.page', [ 'data' => $data ]);
+		} catch(ModelNotFoundException $e) {
+			return App::abort(404);
+		}
+	}
 
 	/**
 	 * Shows a view with all the active and inactive users.
-	 * @return \Illuminate\View\View
+	 * @return View
 	 */
 	public function showUsersList() {
 		return view('admin.users.list', [ 'data' => User::withTrashed()->paginate(10) ]);
@@ -35,7 +35,7 @@ class UsersController extends Controller {
 
 	/**
 	 * Shows the registration form.
-	 * @return \Illuminate\View\View
+	 * @return View
 	 */
 	public function showFormRegister() {
 		return view('auth.register');
@@ -43,7 +43,7 @@ class UsersController extends Controller {
 
 	/**
 	 * Shows the preferences form.
-	 * @return \Illuminate\View\View
+	 * @return View
 	 */
 	public function showPreferences() {
 		return view('users.preferences', [ 'user' => Auth::user() ]);

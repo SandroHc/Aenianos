@@ -11,14 +11,14 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\View;
 
 class AdminController extends Controller {
 
 	/**
 	 * Shows the administration dashboard.
 	 *
-	 * @return \Illuminate\View\View
+	 * @return View
 	 */
 	public function index() {
 		return view('admin.admin');
@@ -27,7 +27,7 @@ class AdminController extends Controller {
 	/**
 	 * Shows a view to manage all news articles.
 	 *
-	 * @return Response
+	 * @return View
 	 */
 	public function showNewsList() {
 		return view('admin.news.list', [ 'data' => News::orderBy('created_at', 'DESC')->paginate(10) ]);
@@ -38,7 +38,7 @@ class AdminController extends Controller {
 	 * Only accessible to administrators.
 	 *
 	 * @param string $slug
-	 * @return Response
+	 * @return View
 	 */
 	public function showNewsEditor($slug) {
 		if($slug !== 'novo') {
@@ -58,7 +58,7 @@ class AdminController extends Controller {
 	 * Update the information on the DB about the news article with ID $id.
 	 *
 	 * @param string $slug
-	 * @return Response
+	 * @return View
 	 */
 	public function updateNews($slug) {
 		// Check if the form was correctly filled
@@ -85,8 +85,7 @@ class AdminController extends Controller {
 			$data->id_category = Input::get('category');
 
 			$data->updated_by = Auth::id();
-
-
+			
 			// Save the changes to the DB
 			$data->save();
 
@@ -102,7 +101,7 @@ class AdminController extends Controller {
 	 * Only accessible to administrators.
 	 *
 	 * @param string $slug
-	 * @return Response
+	 * @return View
 	 */
 	public function deleteNewsPrompt($slug) {
 		try {
@@ -119,7 +118,7 @@ class AdminController extends Controller {
 	 * Delete the news article with ID $id from the DB.
 	 *
 	 * @param string $slug
-	 * @return Response
+	 * @return View
 	 */
 	public function deleteNews($slug) {
 		News::where('slug', '=', $slug)->delete();
@@ -130,7 +129,7 @@ class AdminController extends Controller {
 	/**
 	 * Shows a view to manage all anime.
 	 *
-	 * @return Response
+	 * @return View
 	 */
 	public function showAnimeList() {
 		return view('admin.anime.list');
@@ -141,7 +140,7 @@ class AdminController extends Controller {
 	 * Only accessible to administrators.
 	 *
 	 * @param string $slug
-	 * @return Response
+	 * @return View
 	 */
 	public function showAnimeEditor($slug) {
 		if($slug !== 'novo') {
@@ -161,7 +160,7 @@ class AdminController extends Controller {
 	 * Update the information on the DB about the anime with ID $id.
 	 *
 	 * @param $slug
-	 * @return Response
+	 * @return View
 	 */
 	public function updateAnime($slug) {
 		// Check if the form was correctly filled
@@ -170,7 +169,6 @@ class AdminController extends Controller {
 			'status' => 'required',
 			'cover' => 'max:10000',
 			'official_cover' => 'max:5000',
-			//'airing_date' => 'date',
 			'airing_week_day' => 'in:segunda,terça,quarta,quinta,sexta,sábado,domingo',
 			'episodes' => 'integer',
 		];
@@ -178,7 +176,7 @@ class AdminController extends Controller {
 		$validator = Validator::make(Input::all(), $rules);
 
 		if(!$validator->fails()) {
-			// If the variable $id equals 'novo', create a new model
+			// If adding a new anime, create the Model.
 			if($slug === 'novo') {
 				$data = new Anime();
 			} else {
@@ -229,7 +227,7 @@ class AdminController extends Controller {
 	 * Only accessible to administrators.
 	 *
 	 * @param string $slug
-	 * @return Response
+	 * @return View
 	 */
 	public function deleteAnimePrompt($slug) {
 		try {
@@ -246,7 +244,7 @@ class AdminController extends Controller {
 	 * Delete the anime with ID $id from the DB.
 	 *
 	 * @param string $slug
-	 * @return Response
+	 * @return View
 	 */
 	public function deleteAnime($slug) {
 		Anime::where('slug', '=', $slug)->delete();
@@ -320,7 +318,7 @@ class AdminController extends Controller {
 	 * @param int $id
 	 * @param $type
 	 * @param int $num
-	 * @return Response
+	 * @return View
 	 */
 	public function deleteEpisodePrompt($id, $type, $num) {
 		try {
@@ -339,7 +337,7 @@ class AdminController extends Controller {
 	 * @param $id
 	 * @param $type
 	 * @param $num
-	 * @return Response
+	 * @return View
 	 */
 	public function deleteEpisode($id, $type, $num) {
 		$episode = Episode::getByNumber($id, $type, $num)->first();

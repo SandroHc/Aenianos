@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Anime;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\View;
 
 class AnimeController extends Controller {
 
@@ -12,7 +12,7 @@ class AnimeController extends Controller {
 	 * Show the page of the specified anime.
 	 *
 	 * @param  string $slug
-	 * @return Response
+	 * @return View
 	 */
 	public function showAnimePage($slug) {
 		try {

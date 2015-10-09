@@ -6,7 +6,7 @@ use App\Models\News;
 use App\Models\NewsCategory;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\View;
 
 class NewsController extends Controller {
 
@@ -18,8 +18,7 @@ class NewsController extends Controller {
 	 * Show the page for the news article.
 	 *
 	 * @param  string $slug
-	 *
-	 * @return Response
+	 * @return View
 	 */
 	public function showNewsPage($slug) {
 		try {
@@ -36,8 +35,7 @@ class NewsController extends Controller {
 	 * Show a list of news grouped by category.
 	 *
 	 * @param  string $slug
-	 *
-	 * @return Response
+	 * @return View
 	 */
 	public function showNewsByCategory($slug) {
 		try {

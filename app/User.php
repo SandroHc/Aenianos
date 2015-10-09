@@ -9,6 +9,13 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
+/**
+ * @property  string name
+ * @property  string email
+ * @property  string password
+ * @property  string avatar
+ * @property  bool admin
+ */
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract {
 	use Authenticatable, CanResetPassword, SoftDeletes;
 
