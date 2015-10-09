@@ -38,11 +38,11 @@ Route::group([ 'before' => 'auth', 'prefix' => 'admin' ], function() {
 	/** News **/
 	Route::get('noticias', 'AdminController@showNewsList');
 	// Edit
-	Route::get('noticias/{id}', 'AdminController@showNewsEditor')->where('id', '[a-z0-9-]+');
-	Route::post('noticias/{id}', 'AdminController@updateNews')->where('id', '[a-z0-9-]+');
+	Route::get('noticias/{slug}', 'AdminController@showNewsEditor');
+	Route::post('noticias/{slug}', 'AdminController@updateNews');
 	// Delete
-	Route::get('noticias/{id}/eliminar', 'AdminController@deleteNewsPrompt');
-	Route::post('noticias/{id}/eliminar', 'AdminController@deleteNews');
+	Route::get('noticias/{slug}/eliminar', 'AdminController@deleteNewsPrompt');
+	Route::post('noticias/{slug}/eliminar', 'AdminController@deleteNews');
 
 	/** Anime **/
 	Route::get('anime', 'AdminController@showAnimeList');

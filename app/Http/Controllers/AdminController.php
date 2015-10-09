@@ -8,9 +8,10 @@ use App\Models\Episode;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Response;
 
 class AdminController extends Controller {
 
@@ -26,7 +27,7 @@ class AdminController extends Controller {
 	/**
 	 * Shows a view to manage all news articles.
 	 *
-	 * @return \Illuminate\View\View
+	 * @return Response
 	 */
 	public function showNewsList() {
 		return view('admin.news.list', [ 'data' => News::orderBy('created_at', 'DESC')->paginate(10) ]);
@@ -36,30 +37,30 @@ class AdminController extends Controller {
 	 * Shows a editor for the news article with ID $id.
 	 * Only accessible to administrators.
 	 *
-	 * @param $id
-	 * @return \Illuminate\View\View
+	 * @param string $slug
+	 * @return Response
 	 */
-	public function showNewsEditor($id) {
-		try {
-			if($id === 'novo') {
-				return view('admin.news.editor');
-			} else {
-				$data = News::findOrFail($id);
-
-				return view('admin.news.editor', ['data' => $data]);
+	public function showNewsEditor($slug) {
+		if($slug !== 'novo') {
+			try {
+				$data = News::get($slug);
+			} catch(ModelNotFoundException $e) {
+				return App::abort(404);
 			}
-		} catch(ModelNotFoundException $e) {
-			return App::abort(404);
+		} else {
+			$data = NULL;
 		}
+
+		return view('admin.news.editor', ['data' => $data]);
 	}
 
 	/**
 	 * Update the information on the DB about the news article with ID $id.
 	 *
-	 * @param $id
-	 * @return \Illuminate\View\View
+	 * @param string $slug
+	 * @return Response
 	 */
-	public function updateNews($id) {
+	public function updateNews($slug) {
 		// Check if the form was correctly filled
 		$rules = [
 			'title' => 'required|min:5',
@@ -70,13 +71,13 @@ class AdminController extends Controller {
 		$validator = Validator::make(Input::all(), $rules);
 
 		if(!$validator->fails()) {
-			// If the variable $id equals 'novo', create a new model
-			if($id === 'novo') {
+			// If adding a new article, create the Model.
+			if($slug !== 'novo') {
+				$data = News::get($slug);
+			} else {
 				$data = new News();
 
 				$data->created_by = Auth::id();
-			} else {
-				$data = News::find($id);
 			}
 
 			$data->title = Input::get('title');
@@ -100,13 +101,13 @@ class AdminController extends Controller {
 	 * Shows a view to confirm the deletion of the news article with ID $id.
 	 * Only accessible to administrators.
 	 *
-	 * @param $id
-	 * @return \Illuminate\View\View
+	 * @param string $slug
+	 * @return Response
 	 */
-	public function deleteNewsPrompt($id) {
+	public function deleteNewsPrompt($slug) {
 		try {
 			// Collect all the needed information about the news article
-			$data = News::findOrFail($id);
+			$data = News::get($slug);
 
 			return view('admin.news.delete', ['data' => $data ]);
 		} catch(ModelNotFoundException $e) {
@@ -117,11 +118,11 @@ class AdminController extends Controller {
 	/**
 	 * Delete the news article with ID $id from the DB.
 	 *
-	 * @param $id
-	 * @return mixed
+	 * @param string $slug
+	 * @return Response
 	 */
-	public function deleteNews($id) {
-		News::destroy($id);
+	public function deleteNews($slug) {
+		News::where('slug', '=', $slug)->delete();
 
 		return Redirect::action('AdminController@showNewsList');
 	}
@@ -129,7 +130,7 @@ class AdminController extends Controller {
 	/**
 	 * Shows a view to manage all anime.
 	 *
-	 * @return \Illuminate\View\View
+	 * @return Response
 	 */
 	public function showAnimeList() {
 		return view('admin.anime.list');
@@ -139,28 +140,28 @@ class AdminController extends Controller {
 	 * Shows a editor for the anime with ID $id.
 	 * Only accessible to administrators.
 	 *
-	 * @param $slug
-	 * @return \Illuminate\View\View
+	 * @param string $slug
+	 * @return Response
 	 */
 	public function showAnimeEditor($slug) {
-		try {
-			if($slug === 'novo') {
-				return view('admin.anime.editor');
-			} else {
-				$data = Anime::where('slug', '=', $slug)->firstOrFail();
-
-				return view('admin.anime.editor', ['data' => $data]);
+		if($slug !== 'novo') {
+			try {
+				$data = Anime::get($slug);
+			} catch(ModelNotFoundException $e) {
+				return App::abort(404);
 			}
-		} catch(ModelNotFoundException $e) {
-			return App::abort(404);
+		} else {
+			$data = NULL;
 		}
+
+		return view('admin.anime.editor', ['data' => $data]);
 	}
 
 	/**
 	 * Update the information on the DB about the anime with ID $id.
 	 *
 	 * @param $slug
-	 * @return \Illuminate\View\View
+	 * @return Response
 	 */
 	public function updateAnime($slug) {
 		// Check if the form was correctly filled
@@ -181,7 +182,7 @@ class AdminController extends Controller {
 			if($slug === 'novo') {
 				$data = new Anime();
 			} else {
-				$data = Anime::where('slug', '=', $slug)->first();
+				$data = Anime::get($slug);
 			}
 
 			$data->title = Input::get('title');
@@ -213,11 +214,10 @@ class AdminController extends Controller {
 			$data->director = Input::get('director');
 			$data->website = Input::get('website');
 
-
 			// Save the changes to the DB
 			$data->save();
 
-			return Redirect::action('AdminController@showAnimeEditor', [ 'id' => $data->id ]);
+			return Redirect::action('AdminController@showAnimeEditor', [ 'slug' => $data->slug ]);
 		} else {
 			// Show the validation error page the the validator failed
 			return view('errors.validator', [ 'validation' => $validator->messages() ]);
@@ -228,13 +228,13 @@ class AdminController extends Controller {
 	 * Shows a view to confirm the deletion of the anime with ID $id.
 	 * Only accessible to administrators.
 	 *
-	 * @param $id
-	 * @return \Illuminate\View\View
+	 * @param string $slug
+	 * @return Response
 	 */
 	public function deleteAnimePrompt($slug) {
 		try {
 			// Collect all the needed information about the news article
-			$data = Anime::where('slug', '=', $slug)->firstOrFail();
+			$data = Anime::get($slug);
 
 			return view('admin.anime.delete', ['data' => $data ]);
 		} catch(ModelNotFoundException $e) {
@@ -245,11 +245,11 @@ class AdminController extends Controller {
 	/**
 	 * Delete the anime with ID $id from the DB.
 	 *
-	 * @param $slug
-	 * @return mixed
+	 * @param string $slug
+	 * @return Response
 	 */
 	public function deleteAnime($slug) {
-		Anime::where('slug', '=', $slug)->destroy();
+		Anime::where('slug', '=', $slug)->delete();
 
 		// Don't delete any episode/links as the anime will only be 'soft-deleted'.
 		// This means that the anime will still be on the DB and thus the episodes should also stay.
@@ -264,6 +264,7 @@ class AdminController extends Controller {
 			try {
 				$data['data'] = Episode::getByNumber($id, $type, $num)->firstOrFail();
 			} catch(ModelNotFoundException $e) {
+				return App::abort(404);
 			}
 		}
 
@@ -316,10 +317,10 @@ class AdminController extends Controller {
 	 * Shows a view to confirm the deletion of the the episode of type %type and number $id (from anime with ID $id).
 	 * Only accessible to administrators.
 	 *
-	 * @param $id
+	 * @param int $id
 	 * @param $type
-	 * @param $num
-	 * @return \Illuminate\View\View
+	 * @param int $num
+	 * @return Response
 	 */
 	public function deleteEpisodePrompt($id, $type, $num) {
 		try {
@@ -338,7 +339,7 @@ class AdminController extends Controller {
 	 * @param $id
 	 * @param $type
 	 * @param $num
-	 * @return mixed
+	 * @return Response
 	 */
 	public function deleteEpisode($id, $type, $num) {
 		$episode = Episode::getByNumber($id, $type, $num)->first();

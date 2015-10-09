@@ -30,7 +30,6 @@ class RedirectIfAuthenticated {
 	 * @return mixed
 	 */
 	public function handle($request, Closure $next) {
-		// $request->path() != "admin/utilizadores/registar"
 		if($this->auth->check()) {
 			if($this->auth->user()->admin)
 				return redirect('/admin');

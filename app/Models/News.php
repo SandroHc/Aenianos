@@ -7,12 +7,20 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 use Mmanos\Search\Facade as Search;
 
+/**
+ * @property  string title
+ * @property  string slug
+ * @property  string text
+ * @property  int id_category
+ * @property  int created_by
+ * @property  int updated_by
+ */
 class News extends Model {
 	use SoftDeletes;
 
 	protected $table = 'news';
 
-	protected $fillable = [ 'title', 'slug', 'text', 'id_category', 'created_by', 'edited_by' ];
+	protected $fillable = [ 'title', 'slug', 'text', 'id_category', 'created_by', 'updated_by' ];
 
 	protected $dates = [ 'deleted_at' ];
 
@@ -20,6 +28,10 @@ class News extends Model {
 		parent::save($options);
 
 		$this->index();
+	}
+
+	public static function get($slug) {
+		return News::where('slug', '=', $slug)->firstOrFail();
 	}
 
 	/**

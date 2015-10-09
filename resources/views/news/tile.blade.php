@@ -14,13 +14,14 @@
 			</button>
 
 			<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="news-{{ $data->id }}">
-				<a href="{!! action('AdminController@showNewsEditor', [ 'id' => $data->id ]) !!}" target="_self" style="text-decoration: none"><li class="mdl-menu__item">Editar</li></a>
-				<a href="{!! action('AdminController@deleteNewsPrompt', [ 'id' => $data->id ]) !!}" target="_self" style="text-decoration: none"><li class="mdl-menu__item">Remover</li></a>
+				<a href="{!! action('AdminController@showNewsEditor', [ 'slug' => $data->slug ]) !!}" target="_self" style="text-decoration: none"><li class="mdl-menu__item">Editar</li></a>
+				<a href="{!! action('AdminController@deleteNewsPrompt', [ 'slug' => $data->slug ]) !!}" target="_self" style="text-decoration: none"><li class="mdl-menu__item">Remover</li></a>
 			</ul>
 		@endif
 	</div>
 
-	<div class="mdl-card__supporting-text mdl-card__width-fix">{{ ($category = \App\Models\NewsCategory::find($data->id_category)) ? '' : '' }}
+	<div class="mdl-card__supporting-text mdl-card__width-fix">
+		<?php $category = \App\Models\NewsCategory::find($data->id_category); ?>
 		<span id="date-created-{{ $data->id }}">
 			@if($data->created_at->year < \Carbon\Carbon::now()->year) {{-- Show the year if not from the current one --}}
 				{{ utf8_encode($data->created_at->formatLocalized('%A, %d %B, %Y')) }}

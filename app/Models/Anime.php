@@ -7,12 +7,34 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 use Mmanos\Search\Facade as Search;
 
+/**
+ * @property string title
+ * @property string slug
+ * @property string synopsis
+ * @property string cover
+ * @property int cover_offset
+ * @property string official_cover
+ * @property string status
+ * @property string airing_date
+ * @property string airing_week_day
+ * @property int episodes
+ * @property string genres
+ * @property string producer
+ * @property string director
+ * @property string website
+ * @property string codec_video
+ * @property string codec_audio
+ * @property string subtitles_type
+ * @property string coordinator
+ */
 class Anime extends Model {
 	use SoftDeletes;
 
 	protected $table = 'anime';
 
-	protected $fillable = [ 'title', 'slug', 'synopsis', 'cover', 'cover_offset', 'official_cover', 'status', 'airing_date', 'airing_week_day', 'episodes', 'genres', 'producer', 'director', 'website', 'codec_video', 'codec_audio', 'subtitles_type', 'coordinator' ];
+	protected $fillable = [ 'title', 'slug', 'synopsis', 'cover', 'cover_offset', 'official_cover', 'status',
+		'airing_date', 'airing_week_day', 'episodes', 'genres', 'producer', 'director', 'website', 'codec_video',
+		'codec_audio', 'subtitles_type', 'coordinator' ];
 
 	protected $dates = [ 'deleted_at', 'airing_date' ];
 
@@ -20,6 +42,10 @@ class Anime extends Model {
 		parent::save($options);
 
 		$this->index();
+	}
+
+	public static function get($slug) {
+		return Anime::where('slug', '=', $slug)->firstOrFail();
 	}
 
 	/**

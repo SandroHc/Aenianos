@@ -1,13 +1,13 @@
 @extends('master')
 
-<?php $current_section = "Editar " ($data->title ?? 'nova notícia') ?>
+<?php $current_section = "Editar ". ($data->title ?? 'nova notícia') ?>
 
 @section('head')
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/redactor.css') }}">
 @endsection
 
 @section('content')
-	{!! Form::open([ 'url' => 'admin/noticias/'. (isset($data) ? $data->id : 'novo'), 'files' => true, 'style' => 'width:100%' ]) !!}
+	{!! Form::open([ 'url' => 'admin/noticias/'. ($data->slug ?? 'novo'), 'files' => true, 'style' => 'width:100%' ]) !!}
 	<h3>Notícias</h3>
 
 	<div class="mdl-grid">

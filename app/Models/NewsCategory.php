@@ -12,6 +12,10 @@ class NewsCategory extends Model {
 
     public $timestamps = false;
 
+	public static function get($slug) {
+		return NewsCategory::where('slug', '=', $slug)->firstOrFail();
+	}
+
 	/**
 	 * Set the title and the slug attributes.
 	 *
