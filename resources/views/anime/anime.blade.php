@@ -33,110 +33,69 @@
 	<div class="mdl-card__supporting-text mdl-card__width-fix">
 		{!! $data->synopsis !!}
 
-		@if($data->hasSeries())
-			<?php
-			$section = 'episodio';
-			$quality = $data->qualityList($section);
-			?>
-			<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
-				<div class="mdl-tabs__tab-bar">
-					<h4 style="position: absolute; left: 15px; margin: 0; line-height: 49px;">Episódios</h4>
+		<?php
+		$sectionConfig = [
+				[
+						$data->hasSeries(),
+						'episodio',
+						'Episódios',
+				],
+				[
+						$data->hasMovies(),
+						'filme',
+						'Filmes',
+				],
+				[
+						$data->hasSpecials(),
+						'especial',
+						'Especiais',
+				],
+		];
+		?>
+
+		@foreach($sectionConfig as $section)
+			@if($section[0])
+				<?php
+				$quality = $data->qualityList($section[1]);
+				?>
+				<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+					<div class="mdl-tabs__tab-bar">
+						<h4 style="position: absolute; left: 15px; margin: 0; line-height: 49px;">{{ $section[2] }}</h4>
+						@for($i=0; $i < sizeof($quality); $i++)
+							<a href="#episodes-{{ $quality[$i]->quality }}" class="mdl-tabs__tab {{ $i === 0 ? 'is-active' : '' }}">{{ $quality[$i]->quality }}</a>
+						@endfor
+					</div>
+
 					@for($i=0; $i < sizeof($quality); $i++)
-						<a href="#episodes-{{ $quality[$i]->quality }}" class="mdl-tabs__tab {{ $i === 0 ? 'is-active' : '' }}">{{ $quality[$i]->quality }}</a>
+						<div class="mdl-tabs__panel {{ $i === 0 ? 'is-active' : '' }}" id="episodes-{{ $quality[$i]->quality }}">
+							<table>
+								<tbody>
+								@foreach($data->hostList($section[1], $quality[$i]->quality) as $host_id)
+									<tr>
+										<td>
+											<?php $host = \App\Models\Host::find($host_id->host_id) ?>
+											<img style="max-width:100px;max-height:100px" src="{{ $host->icon ?? '/img/unknown_circle.png' }}" alt="{{ $host->name ?? 'Desconhecido' }}">
+										</td>
+										<td>
+											@foreach($data->episodeList($section[1], $quality[$i]->quality, $host_id->host_id) as $episode)
+												<a href="{{ $episode->link }}" class="anime-link">
+													@if($episode->num > 0)
+														{{ trailing_zeros($episode->num) }}
+													@else
+														Torrent
+													@endif
+												</a>
+											@endforeach
+										</td>
+									</tr>
+								@endforeach
+								</tbody>
+							</table>
+						</div>
 					@endfor
 				</div>
-
-				@for($i=0; $i < sizeof($quality); $i++)
-					<div class="mdl-tabs__panel {{ $i === 0 ? 'is-active' : '' }}" id="episodes-{{ $quality[$i]->quality }}">
-						<ul>
-							@foreach($data->hostList($section, $quality[$i]->quality) as $host)
-								<li>
-									@foreach($data->episodeList($section, $quality[$i]->quality, $host->host_name) as $episode)
-										<a href="{{ $episode->host_link }}" class="anime-link">
-											@if($episode->num > 0)
-												{{ trailing_zeros($episode->num) }}
-											@else
-												Torrent
-											@endif
-										</a>
-									@endforeach
-								</li>
-							@endforeach
-						</ul>
-					</div>
-				@endfor
-			</div>
-		@endif
-
-		@if($data->hasMovies())
-			<?php
-			$section = 'filme';
-			$quality = $data->qualityList($section);
-			?>
-			<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
-				<div class="mdl-tabs__tab-bar">
-					<h4 style="position: absolute; left: 15px; margin: 0; line-height: 49px;">Filmes</h4>
-					@for($i=0; $i < sizeof($quality); $i++)
-						<a href="#movies-{{ $quality[$i]->quality }}" class="mdl-tabs__tab {{ $i === 0 ? 'is-active' : '' }}">{{ $quality[$i]->quality }}</a>
-					@endfor
-				</div>
-
-				@for($i=0; $i < sizeof($quality); $i++)
-					<div class="mdl-tabs__panel {{ $i === 0 ? 'is-active' : '' }}" id="movies-{{ $quality[$i]->quality }}">
-						<ul>
-							@foreach($data->hostList($section, $quality[$i]->quality) as $host)
-								<li>
-									@foreach($data->episodeList($section, $quality[$i]->quality, $host->host_name) as $episode)
-										<a href="{{ $episode->host_link }}" class="anime-link">
-											@if($episode->num > 0)
-												{{ trailing_zeros($episode->num) }}
-											@else
-												Torrent
-											@endif
-										</a>
-									@endforeach
-								</li>
-							@endforeach
-						</ul>
-					</div>
-				@endfor
-			</div>
-		@endif
-
-		@if($data->hasSpecials())
-			<?php
-			$section = 'especial';
-			$quality = $data->qualityList($section);
-			?>
-			<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
-				<div class="mdl-tabs__tab-bar">
-					<h4 style="position: absolute; left: 15px; margin: 0; line-height: 49px;">Especiais</h4>
-					@for($i=0; $i < sizeof($quality); $i++)
-						<a href="#specials-{{ $quality[$i]->quality }}" class="mdl-tabs__tab {{ $i === 0 ? 'is-active' : '' }}">{{ $quality[$i]->quality }}</a>
-					@endfor
-				</div>
-
-				@for($i=0; $i < sizeof($quality); $i++)
-					<div class="mdl-tabs__panel {{ $i === 0 ? 'is-active' : '' }}" id="specials-{{ $quality[$i]->quality }}">
-						<ul>
-							@foreach($data->hostList($section, $quality[$i]->quality) as $host)
-								<li>
-									@foreach($data->episodeList($section, $quality[$i]->quality, $host->host_name) as $episode)
-										<a href="{{ $episode->host_link }}" class="anime-link">
-											@if($episode->num > 0)
-												{{ trailing_zeros($episode->num) }}
-											@else
-												Torrent
-											@endif
-										</a>
-									@endforeach
-								</li>
-							@endforeach
-						</ul>
-					</div>
-				@endfor
-			</div>
-		@endif
+			@endif
+		@endforeach
 	</div>
 
 	@include("disqus")

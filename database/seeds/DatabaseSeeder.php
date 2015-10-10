@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder {
 
 		$this->call(AnimeTableSeeder::class);
 		$this->call(EpisodeTableSeeder::class);
+		$this->call(HostTableSeeder::class);
 		$this->call(NewsTableSeeder::class);
 
 		Model::reguard();

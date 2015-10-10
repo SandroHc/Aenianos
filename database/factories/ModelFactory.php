@@ -11,17 +11,17 @@
 |
 */
 
-$factory->define(App\User::class, function ($faker) {
+$factory->define(App\User::class, function($faker) {
     return [
-        'name' => $faker->name,
+        'name' => $faker->userName,
         'email' => $faker->email,
-        'password' => Hash::make(str_random(10)),
-        'remember_token' => Hash::make(str_random(10)),
+        'password' => Hash::make($faker->password),
+        'remember_token' => NULL,
         'admin' => false,
     ];
 });
 
-$factory->define(App\Models\News::class, function ($faker) {
+$factory->define(App\Models\News::class, function($faker) {
 	return [
 		'title' => $faker->sentence(),
 		'text' => $faker->realText(),
@@ -31,22 +31,34 @@ $factory->define(App\Models\News::class, function ($faker) {
 	];
 });
 
-$factory->define(App\Models\Anime::class, function ($faker) {
+$factory->define(App\Models\Anime::class, function($faker) {
+	$cover = $faker->imageUrl(350, 500);
+
 	return [
 		'title' => $faker->name,
 		'synopsis' => $faker->text,
 		'status' => $faker->randomElement([ 'Em lançamento', 'Em tradução', 'Concluído' ]),
+		'cover' => $cover,
+		'official_cover' => $cover,
 	];
 });
 
-$factory->define(App\Models\Episode::class, function ($faker) {
+$factory->define(App\Models\Episode::class, function($faker) {
 	return [
 		'anime_id' => $faker->numberBetween(1, 3),
 		'type' => $faker->randomElement([ 'episodio', 'filme', 'especial' ]),
 		'num' => $faker->numberBetween(1, 20),
 		'link' => $faker->randomElement([ 'http://mega.nz', 'https://drive.google.com/file/d/0B8KL1BNoXI0jblotVS1YQkE3TEE/view?usp=sharing' ]),
-		'host_name' => $faker->randomElement([ 'MEGA', 'Google Drive' ]),
+		'host_id' => $faker->numberBetween(1, 3),
 		'quality' => $faker->randomElement([ 'BD', 'HD', 'SD' ]),
 		'size' => $faker->biasedNumberBetween(50, 500),
+	];
+});
+
+$factory->define(App\Models\Host::class, function($faker) {
+	return [
+		'name' => $faker->company,
+		'icon' => $faker->imageUrl(250, 250),
+		'regex' => NULL,
 	];
 });

@@ -15,7 +15,7 @@ class CreateEpisodeTable extends Migration {
 			$table->unsignedInteger('anime_id');
 			$table->string('type', 20);
 			$table->unsignedInteger('num');
-			$table->string('host_name')->default('');
+			$table->string('host_id');
 			$table->string('link');
 			$table->string('quality')->default('');
 			$table->string('size')->default('');

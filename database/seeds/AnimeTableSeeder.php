@@ -44,6 +44,6 @@ trouxe uma oportunidade para chamar pelo destinado Kirito.
 			'status' => 'Concluído',
 		]);
 
-		factory(App\Models\Anime::class, 10)->create();
+		factory(Anime::class, 10)->create();
 	}
 }

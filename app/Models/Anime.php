@@ -143,15 +143,15 @@ class Anime extends Model {
 		return Episode::where('anime_id', '=', $this['id'])
 			->where('type', '=', $type)
 			->where('quality', '=', $quality)
-			->groupBy('host_name')
-			->get(['host_name']);
+			->groupBy('host_id')
+			->get(['host_id']);
 	}
 
 	public function episodeList($type, $quality, $host) {
 		return Episode::where('anime_id', '=', $this['id'])
 			->where('type', '=', $type)
 			->where('quality', '=', $quality)
-			->where('host_name', '=', $host)
+			->where('host_id', '=', $host)
 			->get(['num', 'link', 'notes']);
 	}
 }
