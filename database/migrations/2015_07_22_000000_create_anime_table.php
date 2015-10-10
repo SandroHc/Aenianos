@@ -13,7 +13,7 @@ class CreateAnimeTable extends Migration {
 		Schema::create('anime', function (Blueprint $table) {
 			$table->increments('id');
 			$table->string('title');
-			$table->string('slug');
+			$table->string('slug')->unique();
 			$table->text('synopsis')->default('');
 			$table->string('official_cover')->nullable();
 			$table->string('cover')->nullable();

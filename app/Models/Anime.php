@@ -129,18 +129,18 @@ class Anime extends Model {
 	}
 
 	private function hasEpisodesFrom($type) {
-		return Episode::where('anime_id', '=', $this['id'])->where('type', '=', $type)->exists();
+		return Episode::where('anime', '=', $this['slug'])->where('type', '=', $type)->exists();
 	}
 
 	public function qualityList($type) {
-		return Episode::where('anime_id', '=', $this['id'])
+		return Episode::where('anime', '=', $this['slug'])
 			->where('type', '=', $type)
 			->groupBy('quality')
 			->get(['quality']);
 	}
 
 	public function hostList($type, $quality) {
-		return Episode::where('anime_id', '=', $this['id'])
+		return Episode::where('anime', '=', $this['slug'])
 			->where('type', '=', $type)
 			->where('quality', '=', $quality)
 			->groupBy('host_id')
@@ -148,10 +148,11 @@ class Anime extends Model {
 	}
 
 	public function episodeList($type, $quality, $host) {
-		return Episode::where('anime_id', '=', $this['id'])
+		return Episode::where('anime', '=', $this['slug'])
 			->where('type', '=', $type)
 			->where('quality', '=', $quality)
 			->where('host_id', '=', $host)
+			->orderBy('num', 'ASC')
 			->get(['num', 'link', 'notes']);
 	}
 }

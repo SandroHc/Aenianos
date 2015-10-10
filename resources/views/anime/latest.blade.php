@@ -1,7 +1,7 @@
 <div id="rencent" class="spotlight-cell">
 	<p class="spotlight-cell-title">LANÇAMENTOS RECENTES</p>
 
-	@foreach(\App\Models\Episode::getLatest()->get([ 'anime_id', 'type', 'num' ]) as $data)
+	@foreach(\App\Models\Episode::getLatest() as $data)
 		<?php $anime = $data->anime()->first() ?>
 		<div class="spotlight-content">
 			<a class="spotlight-link" href="{!! URL::action('AnimeController@showAnimePage', [ 'slug' => $anime->slug ]) !!}" target="_self">

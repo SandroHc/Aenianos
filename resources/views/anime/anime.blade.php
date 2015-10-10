@@ -55,9 +55,7 @@
 
 		@foreach($sectionConfig as $section)
 			@if($section[0])
-				<?php
-				$quality = $data->qualityList($section[1]);
-				?>
+				<?php $quality = $data->qualityList($section[1]); ?>
 				<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
 					<div class="mdl-tabs__tab-bar">
 						<h4 style="position: absolute; left: 15px; margin: 0; line-height: 49px;">{{ $section[2] }}</h4>
@@ -74,7 +72,8 @@
 									<tr>
 										<td>
 											<?php $host = \App\Models\Host::find($host_id->host_id) ?>
-											<img style="max-width:100px;max-height:100px" src="{{ $host->icon ?? '/img/unknown_circle.png' }}" alt="{{ $host->name ?? 'Desconhecido' }}">
+											<img id="{{ $section[1] }}-{{ $quality[$i]->quality }}-{{ $host->name ?? 'unknown' }}" style="max-width:50px;max-height:50px" src="{{ $host->icon ?? '/img/unknown_circle.png' }}">
+											<div class="mdl-tooltip mdl-tooltip--large" for="{{ $section[1] }}-{{ $quality[$i]->quality }}-{{ $host->name ?? 'unknown' }}">{{ $host->name ?? 'Desconhecido' }}</div>
 										</td>
 										<td>
 											@foreach($data->episodeList($section[1], $quality[$i]->quality, $host_id->host_id) as $episode)

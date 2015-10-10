@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Anime;
 use App\Models\Episode;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\App;
@@ -14,76 +15,49 @@ class EpisodeController extends Controller {
 	/**
 	 * Add a link to the episode $num of anime $id
 	 *
-	 * @param  int $id		Anime ID
+	 * @param  string $slug	Anime slug
+	 * @param  string $type	Episode type
 	 * @param  int $num		Episode number
 	 * @param array $info
 	 *
 	 * @return Response
 	 */
-	public function addLink($id, $type, $num, $info = null) {
+	public function addLink($slug, $type, $num, $info = null) {
 		// Bypass validation if the $info variable has the data.
 		// Used by the raw function to add new links
 		if($info != null) {
-			$data = new Download();
-
-			// try to find the episode in teh DB. If no episode is found, create one.
-			try {
-				$episode = Episode::getByNumber($id, $type, $num)->firstOrFail();
-			} catch(ModelNotFoundException $e) {
-				$episode = new Episode();
-				$episode->anime_id = $id;
-				$episode->type = $type;
-				$episode->num = $num;
-				$episode->save();
-			}
-
-			$data->episode_id = $episode->id;
-			$data->host_link = $info['link'];
-			$data->host_name = Util::getHostName($info['link']);
-
-			// Don't store the quality in case it's a "special episode", normally a torrent.
-			$data->quality = $num > 0 ? $info['quality'] : '';
-			$data->size = $info['size'];
-
-			// Save the changes to the DB
-			$data->save();
-
-			return Redirect::action('AdminController@showEpisodeEditor', [ 'id' => $id, 'type' => $type, 'num' => $num ]);
+			// TODO Rewrite raw utility to be independent from "external" links...
 		}
 
 		try {
 			// Check if the form was correctly filled
 			$rules = [
-				'host_link' => 'required',
-				'quality' => 'required'
+				'link' => 'required',
+				'quality' => 'required',
 			];
 
 			$validator = Validator::make(Input::all(), $rules);
 
 			if(!$validator->fails()) {
-				$data = new Download();
+				$data = new Episode();
 
-				$episode = Episode::getByNumber($id, $type, $num)->firstOrFail();
-
-				$data->episode_id = $episode->id;
-				$data->host_link = Input::get('host_link');
-				$data->host_name = Util::getHostName($data->host_link);
-
-				// Don't store the quality in case it's a "special episode", normally a torrent.
-				// This way we can distinguish between separate episodes and torrents.
-				$data->quality = $num > 0 ? Input::get('quality') : '';
+				$data->anime = $slug;
+				$data->type = $type;
+				$data->num = $num;
+				$data->link = Input::get('link');
+				$data->quality = Input::get('quality');
 
 				// Get the filesize and append the suffix
 				$size = Input::get('size', '');
 				if(!empty($size))
-					$size .= ' ' . Input::get('size-suffix', 'MB');
+					$size .= ' '. Input::get('size-suffix', 'MB');
 
 				$data->size = $size;
 
 				// Save the changes to the DB
 				$data->save();
 
-				return Redirect::action('AdminController@showEpisodeEditor', [ 'id' => $id, 'type' => $type, 'num' => $num ]);
+				return Redirect::action('AdminController@showEpisodeEditor', [ 'slug' => $slug, 'type' => $type, 'num' => $num ]);
 			} else {
 				// Show the validation error page the the validator failed
 				return view('errors.validator', [ 'validation' => $validator->messages() ]);
@@ -96,29 +70,17 @@ class EpisodeController extends Controller {
 	/**
 	 * Delete the link to the episode $num of anime $id
 	 *
-	 * @param  int  $id	Anime ID
-	 * @param  int $num	Episode number
+	 * @param  int  $id	Episode ID
 	 * @return Response
 	 */
-	public function deleteLink($id, $num) {
+	public function deleteLink($id) {
 		try {
-			// Check if the form was correctly filled
-			$rules = [
-				'download_id' => 'required',
-			];
+			$data = Episode::findOrFail($id);
 
-			$validator = Validator::make(Input::all(), $rules);
-			if(!$validator->fails()) {
-				$data = Download::findOrFail(Input::get('download_id'));
+			// Remove the link from the DB
+			$data->delete();
 
-				// Remove the link from the DB
-				$data->delete();
-
-				return Redirect::action('AdminController@showEpisodeEditor', [ 'id' => $id, 'num' => $num ]);
-			} else {
-				// Show the validation error page the the validator failed
-				return view('errors.validator', [ 'validation' => $validator->messages() ]);
-			}
+			return Redirect::action('AdminController@showEpisodeEditor', [ 'slug' => $data->anime, 'type' => $data->type, 'num' => $data->num ]);
 		} catch(ModelNotFoundException $e) {
 			return App::abort(404);
 		}

@@ -255,12 +255,12 @@ class AdminController extends Controller {
 		return Redirect::action('AdminController@showAnimeList');
 	}
 
-	public function showEpisodeEditor($id, $type, $num) {
-		$data = ['id' => $id, 'type' => $type, 'num' => $num, 'data' => NULL];
+	public function showEpisodeEditor($slug, $type, $num) {
+		$data = ['slug' => $slug, 'type' => $type, 'num' => $num, 'data' => NULL];
 
 		if($num !== 'novo') {
 			try {
-				$data['data'] = Episode::getByNumber($id, $type, $num)->firstOrFail();
+				$data['data'] = Episode::get($slug, $type, $num);
 			} catch(ModelNotFoundException $e) {
 				return App::abort(404);
 			}
@@ -269,7 +269,7 @@ class AdminController extends Controller {
 		return view('admin.episode.editor', $data);
 	}
 
-	public function updateEpisode($id, $type, $num) {
+	public function updateEpisode($slug, $type, $num) {
 		// Check if the form was correctly filled
 		$rules = [
 			'num' => 'required|integer',
@@ -279,8 +279,6 @@ class AdminController extends Controller {
 		$validator = Validator::make(Input::all(), $rules);
 
 		if(!$validator->fails()) {
-			$isTorrent = Input::get('torrent', false);
-
 			// If the variable $id equals 'novo', create a new model
 			if($num === 'novo') {
 				$data = new Episode();
@@ -315,15 +313,15 @@ class AdminController extends Controller {
 	 * Shows a view to confirm the deletion of the the episode of type %type and number $id (from anime with ID $id).
 	 * Only accessible to administrators.
 	 *
-	 * @param int $id
-	 * @param $type
+	 * @param string $slug
+	 * @param string $type
 	 * @param int $num
 	 * @return View
 	 */
-	public function deleteEpisodePrompt($id, $type, $num) {
+	public function deleteEpisodePrompt($slug, $type, $num) {
 		try {
 			// Collect all the needed information about the news article
-			$data = Episode::getByNumber($id, $type, $num)->firstOrFail();
+			$data = Episode::get($slug, $type, $num);
 
 			return view('admin.episode.delete', ['data' => $data ]);
 		} catch(ModelNotFoundException $e) {

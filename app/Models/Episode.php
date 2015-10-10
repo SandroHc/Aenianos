@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @property int anime_id
+ * @property string anime
  * @property string type
  * @property int num
  * @property string link
@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Model;
 class Episode extends Model {
     protected $table = 'episodes';
 
-    protected $fillable = ['anime_id', 'type', 'num', 'link', 'host_id', 'quality', 'size', 'notes'];
+    protected $fillable = ['anime', 'type', 'num', 'link', 'host_id', 'quality', 'size', 'notes'];
 
 	/**
 	 * Get the episode associated with the download.
@@ -37,15 +37,15 @@ class Episode extends Model {
 		$this->attributes['link'] = $value;
 
 		if(!$this->host_id)
-			$this->attributes['host_id'] = Host::getHostByRegex($value);
+			$this->attributes['host_id'] = Host::getHostByRegex($value)->id ?? NULL;
 	}
 
-	public static function getList($id) {
-		return Episode::where([ 'anime_id' => $id ])->get();
+	public static function get($anime_slug, $episode_type, $episode_number) {
+		return Episode::where('anime', '=', $anime_slug)->where('type', '=', $episode_type)->where('num', '=', $episode_number)->get();
 	}
 
 	public static function getLatest($limit = 11) {
-		return Episode::groupBy([ 'type', 'num' ])->orderBy('created_at', 'DESC')->limit($limit);
+		return Episode::groupBy([ 'type', 'num' ])->orderBy('created_at', 'DESC')->limit($limit)->get([ 'anime', 'type', 'num' ]);
 	}
 
 	public function getType() {

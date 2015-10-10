@@ -38,35 +38,34 @@ Route::group([ 'before' => 'auth', 'prefix' => 'admin' ], function() {
 	/** News **/
 	Route::get('noticias', 'AdminController@showNewsList');
 	// Edit
-	Route::get('noticias/{slug}', 'AdminController@showNewsEditor');
+	Route::get('noticias/{slug}',  'AdminController@showNewsEditor');
 	Route::post('noticias/{slug}', 'AdminController@updateNews');
 	// Delete
-	Route::get('noticias/{slug}/eliminar', 'AdminController@deleteNewsPrompt');
-	Route::post('noticias/{slug}/eliminar', 'AdminController@deleteNews');
+	Route::get('noticias/{slug}/eliminar',	'AdminController@deleteNewsPrompt');
+	Route::post('noticias/{slug}/eliminar',	'AdminController@deleteNews');
 
 	/** Anime **/
 	Route::get('anime', 'AdminController@showAnimeList');
 	// Edit
-	Route::get('anime/{slug}', 'AdminController@showAnimeEditor');
-	Route::post('anime/{slug}', 'AdminController@updateAnime');
+	Route::get('anime/{slug}',	'AdminController@showAnimeEditor');
+	Route::post('anime/{slug}',	'AdminController@updateAnime');
 	// Delete
-	Route::get('anime/{slug}/eliminar', 'AdminController@deleteAnimePrompt');
+	Route::get('anime/{slug}/eliminar',	 'AdminController@deleteAnimePrompt');
 	Route::post('anime/{slug}/eliminar', 'AdminController@deleteAnime');
 
 	/** Episodes **/
 	// Edit
-	Route::get('anime/{slug}/{type}/{num}', 'AdminController@showEpisodeEditor');
-	Route::post('anime/{slug}/{type}/{num}', 'AdminController@updateEpisode');
+	Route::get('anime/{slug}/{type}/{num}',    'AdminController@showEpisodeEditor');
+	Route::post('anime/{slug}/{type}/{num}',   'AdminController@updateEpisode');
+	Route::put('anime/{slug}/{type}/{num}',    'EpisodeController@addLink');
+	Route::delete('anime/{id}', 'EpisodeController@deleteLink');
 	// Delete
-	Route::get('anime/{slug}/{type}/{num}/eliminar', 'AdminController@deleteEpisodePrompt');
+	Route::get('anime/{slug}/{type}/{num}/eliminar',  'AdminController@deleteEpisodePrompt');
 	Route::post('anime/{slug}/{type}/{num}/eliminar', 'AdminController@deleteEpisode');
 
 	/** Episode downloads */
-	Route::get('anime/{slug}/raw', 'AdminController@showEpisodeRaw');
+	Route::get('anime/{slug}/raw',  'AdminController@showEpisodeRaw');
 	Route::post('anime/{slug}/raw', 'EpisodeController@parseRawEpisodeDownloads');
-
-	Route::put('anime/{slug}/{type}/{num}', 'EpisodeController@addLink');
-	Route::delete('anime/{slug}/{type}/{num}', 'EpisodeController@deleteLink');
 
 	/** Users **/
 	Route::get('utilizadores', 'UsersController@showUsersList');
@@ -76,11 +75,11 @@ Route::group([ 'before' => 'auth', 'prefix' => 'admin' ], function() {
 });
 
 // Authentication routes...
-Route::get('login', 'Auth\AuthController@getLogin');
+Route::get('login',  'Auth\AuthController@getLogin');
 Route::post('login', 'Auth\AuthController@postLogin');
 Route::get('logout', 'Auth\AuthController@getLogout');
 
-Route::get('registar', 'Auth\AuthController@getRegister');
+Route::get('registar',  'Auth\AuthController@getRegister');
 Route::post('registar', 'Auth\AuthController@postRegister');
 
 Route::get('perfil', 'UsersController@showPreferences');
@@ -91,7 +90,7 @@ Route::post('perfil/email', 'UsersController@savePreferencesEmail');
 Route::post('utilizador/{id}/desativar', 'UsersController@disableUser');
 
 // Password reset link request routes...
-Route::get('login/resetar', 'Auth\PasswordController@getEmail');
+Route::get('login/resetar',  'Auth\PasswordController@getEmail');
 Route::post('login/resetar', 'Auth\PasswordController@postEmail');
 
 // Password reset routes...

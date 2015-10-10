@@ -4,7 +4,7 @@ Thumbs.db
 
 storage/search/
 public/img/upload/
-public/css/app.css
+public/css/app.css*
 _ide_helper.php
 
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio

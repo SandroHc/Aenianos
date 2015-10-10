@@ -45,7 +45,7 @@ $factory->define(App\Models\Anime::class, function($faker) {
 
 $factory->define(App\Models\Episode::class, function($faker) {
 	return [
-		'anime_id' => $faker->numberBetween(1, 3),
+		'anime' => \App\Models\Anime::find($faker->numberBetween(1, 3))->slug,
 		'type' => $faker->randomElement([ 'episodio', 'filme', 'especial' ]),
 		'num' => $faker->numberBetween(1, 20),
 		'link' => $faker->randomElement([ 'http://mega.nz', 'https://drive.google.com/file/d/0B8KL1BNoXI0jblotVS1YQkE3TEE/view?usp=sharing' ]),

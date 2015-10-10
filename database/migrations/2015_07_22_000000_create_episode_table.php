@@ -12,7 +12,7 @@ class CreateEpisodeTable extends Migration {
 	public function up() {
 		Schema::create('episodes', function(Blueprint $table) {
 			$table->increments('id');
-			$table->unsignedInteger('anime_id');
+			$table->string('anime');
 			$table->string('type', 20);
 			$table->unsignedInteger('num');
 			$table->string('host_id');
