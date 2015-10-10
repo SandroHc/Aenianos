@@ -283,26 +283,22 @@ class AdminController extends Controller {
 			if($num === 'novo') {
 				$data = new Episode();
 			} else {
-				// Try to find the episode on the DB. If no episode is found, create a default.
-				// In case it's a torrent with all the episodes, we assign a special number (zero)
+				// Try to find the episode on the DB. If no episode is found, create one.
 				try {
-					$data = Episode::getByNumber($id, $type, $isTorrent ? 0 : $num)->firstOrFail();
+					$data = Episode::get($slug, $type, $num);
 				} catch(ModelNotFoundException $e) {
 					$data = new Episode();
 				}
 			}
 
-			$data->anime_id = $id;
+			$data->anime = $slug;
 			$data->type = Input::get('type');
-
-			$data->title = Input::get('title', '');
-			// In case this 'episode' is a torrent, assign it zero. This way we know how to differentiate between normal episodes and torrents
-			$data->num = $isTorrent ? 0 : Input::get('num');
+			$data->num = Input::get('num');
 
 			// Save the changes to the DB
 			$data->save();
 
-			return Redirect::action('AdminController@showEpisodeEditor', [ 'id' => $id, 'type' => $data->type, 'num' => $data->num ]);
+			return Redirect::action('AdminController@showEpisodeEditor', [ 'slug' => $slug, 'type' => $data->type, 'num' => $data->num ]);
 		} else {
 			// Show the validation error page the the validator failed
 			return view('errors.validator', [ 'validation' => $validator->messages() ]);
@@ -313,9 +309,9 @@ class AdminController extends Controller {
 	 * Shows a view to confirm the deletion of the the episode of type %type and number $id (from anime with ID $id).
 	 * Only accessible to administrators.
 	 *
-	 * @param string $slug
-	 * @param string $type
-	 * @param int $num
+	 * @param string $slug	Anime slug
+	 * @param string $type	Episode type
+	 * @param int $num		Episode number
 	 * @return View
 	 */
 	public function deleteEpisodePrompt($slug, $type, $num) {
@@ -330,16 +326,16 @@ class AdminController extends Controller {
 	}
 
 	/**
-	 * Delete the episode of type %type and number $id (from anime with ID $id) from the DB.
+	 * Delete the episode of type %type and number $id (from anime with slug $slug) from the DB.
 	 *
-	 * @param $id
-	 * @param $type
-	 * @param $num
+	 * @param string $slug	Anime slug
+	 * @param string $type	Episode type
+	 * @param int $num		Episode number
 	 * @return View
 	 */
-	public function deleteEpisode($id, $type, $num) {
-		$episode = Episode::getByNumber($id, $type, $num)->first();
-		$episode->delete($id);
+	public function deleteEpisode($slug, $type, $num) {
+		$episode = Episode::get($slug, $type, $num)->first();
+		$episode->delete();
 
 		return Redirect::action('AdminController@showAnimeList');
 	}

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\View\View;
 
 class EpisodeController extends Controller {
 	/**
@@ -20,7 +21,7 @@ class EpisodeController extends Controller {
 	 * @param  int $num		Episode number
 	 * @param array $info
 	 *
-	 * @return Response
+	 * @return View
 	 */
 	public function addLink($slug, $type, $num, $info = null) {
 		// Bypass validation if the $info variable has the data.
@@ -71,7 +72,7 @@ class EpisodeController extends Controller {
 	 * Delete the link to the episode $num of anime $id
 	 *
 	 * @param  int  $id	Episode ID
-	 * @return Response
+	 * @return View
 	 */
 	public function deleteLink($id) {
 		try {
@@ -86,7 +87,7 @@ class EpisodeController extends Controller {
 		}
 	}
 
-	public function parseRawEpisodeDownloads($id) {
+	public function parseRawEpisodeDownloads($slug) {
 		try {
 			// Check if the form was correctly filled
 			$rules = [
@@ -110,11 +111,11 @@ class EpisodeController extends Controller {
 						$arr['quality'] = $fields[2];
 						$arr['size'] = sizeof($fields) >= 4 ? $fields[3] : '';
 
-						EpisodeController::addLink($id, $episodeNum, $arr);
+						EpisodeController::addLink($slug, $episodeNum, $arr);
 					}
 				}
 
-				return Redirect::action('AnimeController@showAnimePage', [ 'slug' => $id ]);
+				return Redirect::action('AnimeController@showAnimePage', [ 'slug' => $slug ]);
 			} else {
 				// Show the validation error page the the validator failed
 				return view('errors.validator', [ 'validation' => $validator->messages() ]);

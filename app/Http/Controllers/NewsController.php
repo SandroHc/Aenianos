@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\News;
 use App\Models\NewsCategory;
+use Illuminate\View\View;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\View;
 
 class NewsController extends Controller {
 

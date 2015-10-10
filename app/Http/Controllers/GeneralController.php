@@ -95,11 +95,11 @@ class GeneralController extends Controller {
 		Search::deleteIndex();
 
 		// Index all anime
-		foreach(Anime::get() as $cur)
+		foreach(Anime::all() as $cur)
 			$cur->index();
 
 		// Index all news
-		foreach(News::get() as $cur)
+		foreach(News::all() as $cur)
 			$cur->index();
 
 		return "Índice de pesquisa reconstruído!";
