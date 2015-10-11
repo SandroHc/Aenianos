@@ -118,18 +118,49 @@
 	{!! Form::close() !!}
 
 	<p>
-		<h4>
-			Episódios
+		@if(isset($data))
+			<h4>
+				Episódios
 
-			@if(isset($data))
 				<button class="mdl-button mdl-js-button mdl-button--icon" onclick="window.location='{{ action('AdminController@showEpisodeEditor', [ 'id' => $data->id, 'type' => 'episodio', 'num' => 'novo' ]) }}'">
 					<i class="material-icons">add</i>
 				</button>
-			@endif
-		</h4>
+			</h4>
+			<table class="mdl-data-table mdl-shadow--2dp">
+				<thead>
+				<tr>
+					<td>#</td>
+					<td class="mdl-data-table__cell--non-numeric">Links</td>
+					<td class="mdl-data-table__cell--non-numeric"></td>
+				</tr>
+				</thead>
+				<tbody>
+				<?php $type = 'episodio'; ?>
+					@foreach(\App\Models\Episode::where('anime', '=', $data->slug)->where('type', '=', $type)->groupBy([ 'num' ])->get([ 'num' ]) as $episode)
+						<tr>
+							<td>{{ $episode->num }}</td>
+							<td class="mdl-data-table__cell--non-numeric">
+								@foreach(\App\Models\Episode::where('anime', '=', $data->slug)->where('type', '=', 'episodio')->where('num', '=', $episode->num)->groupBy([ 'host_id' ])->get() as $host)
+									<img src="{{ $host->host()->getResults()->icon ?? '/img/unknown_circle.png' }}" class="download-link-icon">
+								@endforeach
+							</td>
+							<td>
+								<a href="{{ URL::action('AdminController@showEpisodeEditor', [ 'slug' => $data->slug, 'type' => $type, 'num' => $episode->num ]) }}" style="color: black">
+									<button class="mdl-button mdl-js-button mdl-button--icon">
+										<i class="material-icons">edit</i>
+									</button>
+								</a>
 
-		@if(isset($data))
-			{{-- Mostrar lista de episódios adicionados --}}
+								<a href="{{ URL::action('AdminController@deleteEpisodePrompt', [ 'slug' => $data->slug, 'type' => $type, 'num' => $episode->num ]) }}" style="color: black">
+									<button type="submit"  class="mdl-button mdl-js-button mdl-button--icon">
+										<i class="material-icons">delete</i>
+									</button>
+								</a>
+							</td>
+						</tr>
+					@endforeach
+				</tbody>
+			</table>
 		@else
 			<p>Guarde o anime antes de adicionar episódios.</p>
 		@endif

@@ -7,7 +7,7 @@
 	<h3>Notícias</h3>
 
 	<p>Pretende mesmo eliminar o episódio #{{ $data->num }} do anime <b>{{ \App\Models\Anime::get($data->anime)->title }}</b>?</p>
-	<p>Este episódio tem {{ \App\Models\Episode::get($slug, '=', $data->id)->count() }} links ligados a ele. Esses links também serão perdidos.</p>
+	<p>Este episódio tem {{ \App\Models\Episode::get($data->anime, $data->type, $data->num)->count() }} links. Esses links também serão eliminados.</p>
 
 	<br>
 

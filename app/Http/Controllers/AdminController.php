@@ -317,9 +317,9 @@ class AdminController extends Controller {
 	public function deleteEpisodePrompt($slug, $type, $num) {
 		try {
 			// Collect all the needed information about the news article
-			$data = Episode::get($slug, $type, $num);
+			$data = Episode::get($slug, $type, $num)->first();
 
-			return view('admin.episode.delete', ['data' => $data ]);
+			return view('admin.episode.delete', [ 'data' => $data ]);
 		} catch(ModelNotFoundException $e) {
 			return App::abort(404);
 		}

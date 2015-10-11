@@ -113,7 +113,7 @@ class Anime extends Model {
 	 * Get the episodes for the anime.
 	 */
 	public function episodes() {
-		return $this->hasMany('App\Models\Episode');
+		return $this->hasMany('App\Models\Episode', 'slug', 'anime');
 	}
 
 	public function hasMovies() {

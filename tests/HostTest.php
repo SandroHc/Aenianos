@@ -28,7 +28,7 @@ class HostTest extends TestCase {
 			'http://www.mega.nz/#!4px0UKzK!vt8yksoENVLLWqVfCMkMB8Ejpzlru4eNqXSGB8UvOe4',
 		];
 		foreach($links as $link)
-			assertEquals($name, $this->regexHelper($link));
+			$this->assertEquals($name, $this->regexHelper($link));
 
 		// Check against Google Drive
 		$name = 'Google Drive';
@@ -36,7 +36,7 @@ class HostTest extends TestCase {
 			'http://docs.google.com/uc?id=0B8O5z12KKllkMkV4d1ZPS2IzOEk&export=download',
 		];
 		foreach($links as $link)
-			assertEquals($name, $this->regexHelper($link));
+			$this->assertEquals($name, $this->regexHelper($link));
 	}
 
 	private function regexHelper($url) {

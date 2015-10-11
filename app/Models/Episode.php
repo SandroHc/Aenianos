@@ -20,10 +20,17 @@ class Episode extends Model {
     protected $fillable = ['anime', 'type', 'num', 'link', 'host_id', 'quality', 'size', 'notes'];
 
 	/**
-	 * Get the episode associated with the download.
+	 * Get the anime associated with the download.
 	 */
 	public function anime() {
-		return $this->belongsTo('\App\Models\Anime');
+		return $this->belongsTo('\App\Models\Anime', 'anime', 'slug');
+	}
+
+	/**
+	 * Get the host associated with the download.
+	 */
+	public function host() {
+		return $this->hasOne('\App\Models\Host', 'id', 'host_id');
 	}
 
 	/**
