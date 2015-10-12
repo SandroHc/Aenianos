@@ -91,8 +91,8 @@ class AdminController extends Controller {
 
 			return Redirect::action('NewsController@showNewsPage', [ 'slug' => $data->slug ]);
 		} else {
-			// Show the validation error page the the validator failed
-			return view('errors.validator', [ 'validation' => $validator->messages() ]);
+			// Go back to the form and highlight the errors
+			return Redirect::back()->withErrors($validator);
 		}
 	}
 
@@ -217,8 +217,8 @@ class AdminController extends Controller {
 
 			return Redirect::action('AdminController@showAnimeEditor', [ 'slug' => $data->slug ]);
 		} else {
-			// Show the validation error page the the validator failed
-			return view('errors.validator', [ 'validation' => $validator->messages() ]);
+			// Go back to the form and highlight the errors
+			return Redirect::back()->withErrors($validator);
 		}
 	}
 
@@ -300,8 +300,8 @@ class AdminController extends Controller {
 
 			return Redirect::action('AdminController@showEpisodeEditor', [ 'slug' => $slug, 'type' => $data->type, 'num' => $data->num ]);
 		} else {
-			// Show the validation error page the the validator failed
-			return view('errors.validator', [ 'validation' => $validator->messages() ]);
+			// Go back to the form and highlight the errors
+			return Redirect::back()->withErrors($validator);
 		}
 	}
 

@@ -7,6 +7,12 @@
 	{!! Form::open([ 'url' => URL::action('AdminController@updateEpisode', [ 'slug' => $slug, 'type' => $type, 'num' => $num ]), 'style' => 'width:100%' ]) !!}
 	<h3><span class="navigation-parent"><a class="navigation-parent-link" href="{!! URL::action('AnimeController@showAnimePage', [ 'slug' => $slug ]) !!}" target="_self">{{ $anime->title }}</a> > </span> {{ $num !== 'novo' ? '#'. $num : 'Novo' }}</h3>
 
+	@if(!$errors->isEmpty())
+		@foreach($errors->all() as $error)
+			<p>{{ $error }}</p>
+		@endforeach
+	@endif
+
 	<div class="mdl-grid">
 		<div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--3-col">
 			#

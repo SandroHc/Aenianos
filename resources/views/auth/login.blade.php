@@ -7,6 +7,12 @@
 
 	<h3>Login</h3>
 
+	@if(!$errors->isEmpty())
+		@foreach($errors->all() as $error)
+			<p>{{ $error }}</p>
+		@endforeach
+	@endif
+
 	<div class="mdl-grid" style="width:50%; min-width: 300px">
 		<div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--12-col">
 			E-mail

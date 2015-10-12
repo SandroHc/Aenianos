@@ -10,6 +10,12 @@
 	{!! Form::open([ 'url' => 'admin/noticias/'. ($data->slug ?? 'novo'), 'files' => true, 'style' => 'width:100%' ]) !!}
 	<h3>Notícias</h3>
 
+	@if(!$errors->isEmpty())
+		@foreach($errors->all() as $error)
+			<p>{{ $error }}</p>
+		@endforeach
+	@endif
+
 	<div class="mdl-grid">
 		<div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--6-col">
 			Título
