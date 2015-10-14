@@ -31,7 +31,7 @@ Route::any('noticias/{slug}', 'NewsController@showNewsPage');
 Route::any('noticias/categoria/{slug}', 'NewsController@showNewsByCategory');
 
 // Administration routes
-Route::group([ 'before' => 'auth', 'prefix' => 'admin' ], function() {
+Route::group([ 'middleware' => 'admin', 'prefix' => 'admin' ], function() {
 	Route::any('/', 'AdminController@index');
 	Route::any('rebuild_search', 'GeneralController@rebuildSearch');
 

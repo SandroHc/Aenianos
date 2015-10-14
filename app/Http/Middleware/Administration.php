@@ -2,10 +2,11 @@
 
 namespace App\Http\Middleware;
 
+use Auth;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 
-class RedirectIfAuthenticated {
+class Administration {
 	/**
 	 * The Guard implementation.
 	 *
@@ -30,8 +31,12 @@ class RedirectIfAuthenticated {
 	 * @return mixed
 	 */
 	public function handle($request, Closure $next) {
-		if($this->auth->check()) {
-			return redirect('/perfil');
+		if($this->auth->guest() || !Auth::user()->isAdmin()) {
+			if($request->ajax()) {
+				return response('Unauthorized.', 401);
+			} else {
+				return redirect()->guest('/');
+			}
 		}
 
 		return $next($request);
