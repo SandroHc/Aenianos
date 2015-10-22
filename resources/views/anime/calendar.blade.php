@@ -9,7 +9,6 @@
 			<div class="spotlight-content">
 				<a class="spotlight-link" href="{!! URL::action('AnimeController@showAnimePage', [ 'slug' => $data->slug ]) !!}" target="_self">
 					<img class="spotlight-img" src="{{ !empty($data->official_cover) ? $data->official_cover : (!empty($data->cover) ? $data->cover : '/img/unknown.png') }}">
-					<div class="spotlight-overlay"></div>
 
 					<div class="spotlight-description">
 						{{ cut_string($data->title, 20) }}

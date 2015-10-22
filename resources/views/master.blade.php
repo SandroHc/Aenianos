@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="description" content="O Aenianos é um fansubber brasileiro de anime">
-	<meta name="keywords" content="aenianos,fansub,pt,br,séries,animes,filmes">
+	<meta name="keywords" content="aenianos,fansub,pt,br,séries,animes,filmes,mahou shoujo">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>
 		@if(isset($title))

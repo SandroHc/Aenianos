@@ -18,3 +18,8 @@
 	-ms-writing-mode: $mode-is;
 	writing-mode: $mode;
 }
+
+@mixin filter($mode) {
+	-webkit-filter: $mode;
+	filter: $mode;
+}
