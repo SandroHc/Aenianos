@@ -110,7 +110,7 @@
 	</p>
 
 	@if(isset($data) && !empty($data->official_cover))
-		<img class="editor-capa" src="{{ $data->official_cover }}">
+		<img class="editor-capa" src="/{{ $data->official_cover }}">
 	@endif
 
 	<br><br>
@@ -188,7 +188,7 @@
 			var $imageCropper = $('#image-cropper');
 			$imageCropper.cropit({
 				@if(isset($data) && !empty($data->cover))
-				imageState: { src: '{{ $data->cover }}' },
+				imageState: { src: '/{{ $data->cover }}' },
 				onImageLoaded: function() { $imageCropper.cropit('offset', { x: 0, y: {{ $data->cover_offset or 0 }} }) },
 				@endif
 				width: 784,
