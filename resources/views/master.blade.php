@@ -1,3 +1,4 @@
+<?php $debug = Config::get('app.debug') == true ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,47 +14,30 @@
 			@if(isset($current_section))
 				{{ $current_section }} /
 			@endif
-			 {{ env('APP_NAME', 'Aenianos') }}
+			{{ env('APP_NAME', 'Aenianos') }}
 		@endif
 	</title>
 
 	<link rel="icon" type="image/png" href="{{ asset('favicon.png') }}" />
 
-	{{-- Import some external libraries. --}}
-	{{-- Material Design Lite - http://getmdl.io --}}
-	{{-- jQuery - https://jquery.com --}}
-	@if(Config::get('app.debug') == true)
-		<link rel="stylesheet" href="{{ asset('dev-env/material.blue-indigo.min.css') }}">
-		<script src="{{ asset('dev-env/material.min.js') }}"></script>
-
-		<script src="{{ asset('dev-env/jquery.min.js') }}"></script>
-	@else
-		<link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.1/material.blue-indigo.min.css">
-		<script src="https://storage.googleapis.com/code.getmdl.io/1.0.1/material.min.js"></script>
-
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-	@endif
-
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
 	{{-- Minified CSS for the whole app --}}
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
+
+	{{-- Material Design Lite - http://getmdl.io --}}
+	<link rel="stylesheet" href="{{ $debug ? asset('dev-env/material.blue-indigo.min.css') : 'https://storage.googleapis.com/code.getmdl.io/1.0.5/material.blue-indigo.min.css' }}">
 
 	@yield("head")
 </head>
 <body>
 <div class="mdl-layout mdl-js-layout mdl-layout--overlay-drawer-button">
 	<header class="mdl-layout__header mdl-layout__header--waterfall">
-		<!-- Top row, always visible -->
+		{{-- Top row, always visible --}}
 		<div class="mdl-layout__header-row">
-			<!-- Title -->
-			<span class="mdl-layout-title">Aenianos Fansub</span>
+			{{-- Title --}}
+			<span class="mdl-layout-title">{{ env('APP_NAME', 'Aenianos') }}</span>
 			<div class="mdl-layout-spacer"></div>
-			<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
-                  mdl-textfield--floating-label mdl-textfield--align-right">
-				<label class="mdl-button mdl-js-button mdl-button--icon"
-					   for="waterfall-exp">
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
+				<label class="mdl-button mdl-js-button mdl-button--icon" for="waterfall-exp">
 					<i class="material-icons">search</i>
 				</label>
 				<div class="mdl-textfield__expandable-holder">
@@ -65,10 +49,10 @@
 				</div>
 			</div>
 		</div>
-		<!-- Bottom row, not visible on scroll -->
+		{{-- Bottom row, not visible on scroll --}}
 		<div class="mdl-layout__header-row">
 			<div class="mdl-layout-spacer"></div>
-			<!-- Navigation -->
+			{{-- Navigation --}}
 			<nav class="waterfall-demo-header-nav mdl-navigation navigation-header">
 				<a class="link-home mdl-navigation__link" href="/">Home</a>
 				<a class="link-projetos mdl-navigation__link" href="/anime">Projetos</a>
@@ -112,17 +96,19 @@
 	</main>
 </div>
 
-<script>
-	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
+{{-- Import some external libraries. --}}
+<script src="{{ $debug ? asset('dev-env/jquery.min.js') : 'https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js' }}" async></script>
+<script src="{{ $debug ? asset('dev-env/material.min.js') : 'https://storage.googleapis.com/code.getmdl.io/1.0.5/material.min.js' }}" async defer></script>
+
+<script>
 	@if(Auth::check())
-	ga('set', '&uid', '{{ Auth::id() }}');
+		var uid = '{{ Auth::id() }}';
 	@endif
-	ga('create', 'UA-65616234-1', 'auto');
-	ga('send', 'pageview');
 </script>
+<script src="{{ asset('js/analytics.js') }}" async defer></script>
 
 </body>
 </html>
