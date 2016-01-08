@@ -125,7 +125,9 @@ Route::post('editor/upload', function() {
 
 
 // Filters
+/*
 Route::filter('auth', function() {
 	if (Auth::guest())
 		return Redirect::guest('login');
 });
+*/
