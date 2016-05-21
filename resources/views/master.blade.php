@@ -24,7 +24,7 @@
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
 
 	{{-- Material Design Lite - http://getmdl.io --}}
-	<link rel="stylesheet" href="{{ $debug ? asset('dev-env/material.blue-indigo.min.css') : 'https://storage.googleapis.com/code.getmdl.io/1.0.5/material.blue-indigo.min.css' }}">
+	<link rel="stylesheet" href="{{ $debug ? asset('dev-env/material.blue-indigo.min.css') : 'https://storage.googleapis.com/code.getmdl.io/1.1.3/material.blue-indigo.min.css' }}">
 
 	@yield("head")
 </head>
@@ -101,14 +101,16 @@
 
 {{-- Import some external libraries. --}}
 <script src="{{ $debug ? asset('dev-env/jquery.min.js') : 'https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js' }}" async></script>
-<script src="{{ $debug ? asset('dev-env/material.min.js') : 'https://storage.googleapis.com/code.getmdl.io/1.0.5/material.min.js' }}" async defer></script>
+<script src="{{ $debug ? asset('dev-env/material.min.js') : 'https://storage.googleapis.com/code.getmdl.io/1.1.3/material.min.js' }}" async defer></script>
 
+@if(Auth::check())
 <script>
-	@if(Auth::check())
-		var uid = '{{ Auth::id() }}';
-	@endif
+	var uid = '{{ Auth::id() }}';
 </script>
+@endif
 <script src="{{ asset('js/analytics.js') }}" async defer></script>
+
+@yield('scripts')
 
 </body>
 </html>

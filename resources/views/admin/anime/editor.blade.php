@@ -171,8 +171,9 @@
 			<p>Guarde o anime antes de adicionar episódios.</p>
 		@endif
 	</p>
+@endsection
 
-
+@section('scripts')
 	<script type="text/javascript" src="{{ asset('js/redactor.min.js') }}"></script>
 	<script type="text/javascript" src="{{ asset('js/redactor.fontcolor.js') }}"></script>
 
