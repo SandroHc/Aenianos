@@ -1,6 +1,8 @@
 <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--8-col" style="margin: 15px auto">
 	@if(!empty($data->cover))
-		<div style="background: url('{{ $data->cover }}') 0 {{ $data->cover_offset }}px / cover; height: 200px"></div>
+		<a href="{!! URL::action('AnimeController@showAnimePage', [ 'slug' => $data->slug ]) !!}" target="_self">
+			<div style="background: url('{{ $data->cover }}') 0 {{ $data->cover_offset }}% / cover; height: 200px"></div>
+		</a>
 	@endif
 
 	<div class="mdl-card__title" style="padding-bottom:7px">

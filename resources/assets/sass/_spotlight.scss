@@ -116,6 +116,8 @@
 	background-color: $theme-90;
 	padding: 10px;
 	font-weight: bold;
+	overflow: hidden;
+	text-overflow: ellipsis;
 	@include transition(all 200ms ease-out);
 }
 

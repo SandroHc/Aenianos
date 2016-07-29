@@ -190,7 +190,7 @@
 			$imageCropper.cropit({
 				@if(isset($data) && !empty($data->cover))
 				imageState: { src: '/{{ $data->cover }}' },
-				onImageLoaded: function() { $imageCropper.cropit('offset', { x: 0, y: {{ $data->cover_offset or 0 }} }) },
+				onImageLoaded: function() { $imageCropper.cropit('offset', { x: 0, y: {{ $data->cover_offset or 0 }} / 100 * $imageCropper.cropit('imageSize').height }) },
 				@endif
 				width: 784,
 				height: 200,
@@ -199,7 +199,7 @@
 			});
 
 			$('form').submit(function() {
-				$('#cover_offset').val($imageCropper.cropit('offset').y);
+				$('#cover_offset').val((-$imageCropper.cropit('offset').y / $imageCropper.cropit('imageSize').height) * 100);
 			});
 		});
 	</script>
