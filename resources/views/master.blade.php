@@ -20,11 +20,11 @@
 
 	<link rel="icon" type="image/png" href="{{ asset('favicon.png') }}" />
 
-	{{-- Minified CSS for the whole app --}}
-	<link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
-
 	{{-- Material Design Lite - http://getmdl.io --}}
 	<link rel="stylesheet" href="{{ $debug ? asset('dev-env/material.blue-indigo.min.css') : 'https://storage.googleapis.com/code.getmdl.io/1.1.3/material.blue-indigo.min.css' }}">
+
+	{{-- Minified CSS for the whole app --}}
+	<link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
 
 	@yield("head")
 </head>

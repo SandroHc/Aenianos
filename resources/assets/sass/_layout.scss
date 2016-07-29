@@ -10,6 +10,8 @@
 
 .mdl-card {
 	overflow: visible;
+	width: 100%;
+	max-width: 1350px;
 }
 
 .mdl-card__width-fix {
@@ -80,5 +82,5 @@
 
 // Page content
 .page-content {
-	background: url("../img/bg_content.png");
+	background: url("../img/bg_content.jpg");
 }
