@@ -17,22 +17,17 @@
 				<a href="{!! URL::action('AdminController@showAnimeEditor', [ 'slug' => $data->slug ]) !!}" target="_self" style="text-decoration: none"><li class="mdl-menu__item">Editar</li></a>
 				<a href="{!! URL::action('AdminController@deleteAnimePrompt', [ 'slug' => $data->slug ]) !!}" target="_self" style="text-decoration: none"><li class="mdl-menu__item">Remover</li></a>
 			</ul>
-		@endif
 
-		<div style="position:absolute; right:16px; top:24px">
-			@if(Auth::check() && Auth::user()->admin)
+			<div style="position:absolute; right:16px; top:24px">
 				<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" onclick="window.location='{!! URL::action('AdminController@showEpisodeEditor', [ 'id' => $data->id, 'type' => 'episodio', 'num' => 'novo' ]) !!}'">
 					<i class="material-icons">add</i>
 				</button>
-			@endif
-			<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" onclick="window.location='{!! URL::action('AnimeController@showAnimePage', [ 'slug' => $data->slug ]) !!}'">
-				<i class="material-icons">comment</i>
-			</button>
-		</div>
+			</div>
+		@endif
 	</div>
 
 	<div class="mdl-card__supporting-text mdl-card__width-fix">
-		{{ $data->status }}
+		/ {{ $data->status }} /
 	</div>
 
 	<div class="mdl-card__supporting-text mdl-card__width-fix">

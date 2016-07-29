@@ -10,7 +10,7 @@
 			{{ \App\Models\Episode::where('created_at', '>=', \Carbon\Carbon::now()->subMonth())->count() }} episódios lançados no último mês
 		</div>
 		<div class="mdl-cell mdl-cell--3-col">
-			<a href="{{ URL::action('AdminController@showAnimeList') }}">Gerir Projetos</a>
+			<a href="/anime">Gerir Projetos</a>
 		</div>
 		<div class="mdl-cell mdl-cell--1-col">
 			<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" onclick="window.location='{{ URL::action('AdminController@showAnimeEditor', [ 'id' => 'novo' ]) }}'">

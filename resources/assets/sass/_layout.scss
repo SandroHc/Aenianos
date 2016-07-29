@@ -21,17 +21,52 @@
 	text-decoration: none;
 }
 
-.navigation-header {
+
+.mdl-layout__header-row {
+	padding-right: 0 !important;
+}
+
+.navigation-container, .header-search-box {
 	background-color: $theme-60;
 }
 
-.navigation-header .mdl-navigation__link {
-	background-color: transparent;
-	@include transition(all 80ms ease-out);
+.navigation-container {
+	/* Simple hack to make the overflow happen to the left instead... */
+	direction: rtl;
+	-webkit-order: 1;
+	-ms-flex-order: 1;
+	order: 1;
+	//width: 500px;
+	transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+	width 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
-	&:hover {
-		background-color: $theme-60;
+.navigation {
+	/* ... and now make sure the content is actually LTR */
+	direction: ltr;
+	-webkit-justify-content: flex-end;
+	-ms-flex-pack: end;
+	justify-content: flex-end;
+	//width: 800px;
+
+	.mdl-navigation__link {
+		display: inline-block;
+		height: 60px;
+		line-height: 68px;
+		background-color: transparent !important;
+		border-bottom: 4px solid transparent;
 	}
+
+	.mdl-navigation__link:hover {
+		border-bottom: 4px solid #8bc34a;
+	}
+}
+
+.header-search-box {
+	-webkit-order: 2;
+	-ms-flex-order: 2;
+	order: 2;
+	padding-right: 16px !important;
 }
 
 .drawer-navigation {

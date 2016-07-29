@@ -29,14 +29,29 @@
 	@yield("head")
 </head>
 <body>
-<div class="mdl-layout mdl-js-layout mdl-layout--overlay-drawer-button">
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--overlay-drawer-button">
 	<header class="mdl-layout__header mdl-layout__header--waterfall">
 		{{-- Top row, always visible --}}
 		<div class="mdl-layout__header-row">
 			{{-- Title --}}
 			<span class="mdl-layout-title">{{ env('APP_NAME', 'Aenianos') }}</span>
 			<div class="mdl-layout-spacer"></div>
-			<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
+
+			{{-- Navigation --}}
+			<div class="navigation-container">
+				<nav class="mdl-navigation navigation">
+					<a class="mdl-navigation__link mdl-typography--text-uppercase" href="/">Home</a>
+					<a class="mdl-navigation__link mdl-typography--text-uppercase" href="/anime">Projetos</a>
+
+					<?php $user = Auth::user() ?>
+					@if($user !== NULL && $user->admin)
+						<a class="mdl-navigation__link mdl-typography--text-uppercase" href="/admin">Administração</a>
+					@endif
+				</nav>
+			</div>
+
+			{{-- Search --}}
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right header-search-box">
 				<label class="mdl-button mdl-js-button mdl-button--icon" for="waterfall-exp">
 					<i class="material-icons">search</i>
 				</label>
@@ -49,20 +64,6 @@
 				</div>
 			</div>
 		</div>
-		{{-- Bottom row, not visible on scroll --}}
-		<div class="mdl-layout__header-row">
-			<div class="mdl-layout-spacer"></div>
-			{{-- Navigation --}}
-			<nav class="waterfall-demo-header-nav mdl-navigation navigation-header">
-				<a class="link-home mdl-navigation__link" href="/">Home</a>
-				<a class="link-projetos mdl-navigation__link" href="/anime">Projetos</a>
-
-				<?php $user = Auth::user() ?>
-				@if($user !== NULL && $user->admin)
-					<a class="link-contacto mdl-navigation__link" href="/admin">Administração</a>
-				@endif
-			</nav>
-		</div>
 	</header>
 	<div class="mdl-layout__drawer">
 		<span class="mdl-layout-title">Aenianos</span>
@@ -74,6 +75,7 @@
 			<a class="mdl-navigation__link" href="/doacoes">Doações</a>
 			<a class="mdl-navigation__link" href="/contato">Contato</a>
 			<div class="mdl-layout-spacer"></div>
+			<?php $user = Auth::user() ?>
 			@if($user !== NULL)
 				@if($user->admin)
 					<a class="mdl-navigation__link" href="/admin">Administração</a>

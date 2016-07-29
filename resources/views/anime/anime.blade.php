@@ -27,7 +27,7 @@
 	</div>
 
 	<div class="mdl-card__supporting-text mdl-card__width-fix">
-		{{ $data->status }}
+		/ {{ $data->status }} /
 	</div>
 
 	<div class="mdl-card__supporting-text mdl-card__width-fix">
