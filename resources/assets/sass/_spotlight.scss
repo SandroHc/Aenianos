@@ -164,6 +164,10 @@
 }
 
 /** Anime **/
+.mdl-grid {
+	padding: 0 8px;
+}
+
 .anime-link {
 	background-color: #2196f3;
 	color: #FFF;
@@ -180,6 +184,37 @@
 /** Search **/
 .paragraph-full {
 	width: 100%;
+}
+
+/** Anime **/
+.mdl-card__no-margin {
+	margin: 0 auto;
+}
+
+.anime-header {
+	width: 100%;
+	background-color: rgb(66, 66, 66);
+	@extend .clearfix;
+}
+
+.anime-header__sub {
+	width: 100%;
+	margin: 0 auto;
+	@extend .mdl-grid-wide;
+
+	position: relative;
+
+	h1 {
+		color: #FFF;
+	}
+
+	h2 {
+		color: #000;
+	}
+
+	img {
+		width: 200px;
+	}
 }
 
 /** Editor **/
