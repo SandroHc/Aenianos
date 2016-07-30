@@ -110,8 +110,8 @@ Route::any('doacoes', 'GeneralController@donations');
 
 
 Route::post('editor/upload', function() {
-	$validation = Validator::make(Input::all(), [ 'file' => 'image|max:10000' ]);
-	if(!$validation->fails()) {
+	$validator = Validator::make(Input::all(), [ 'file' => 'image|max:10000' ]);
+	if(!$validator->fails()) {
 		$file = Input::file('file');
 
 		if($file->isValid()) {
