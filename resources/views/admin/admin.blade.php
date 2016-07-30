@@ -3,7 +3,7 @@
 @section('title', 'Administração - Aenianos Fansub')
 
 @section('content')
-	<div class="mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+	<div class="mdl-card mdl-grid mdl-shadow--2dp">
 		<div class="mdl-cell mdl-cell--8-col">
 			{{ $numAnime = \App\Models\Anime::count() }} projetos<br>
 			{{ $numEps = \App\Models\Episode::count() }} episódios ({{ $numEps / $numAnime }} por projeto)<br>
@@ -19,7 +19,7 @@
 		</div>
 	</div>
 
-	<div class="mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+	<div class="mdl-card mdl-grid mdl-shadow--2dp">
 		<div class="mdl-cell mdl-cell--8-col">
 			{{ \App\Models\News::count() }} notícias<br>
 			{{ \App\Models\News::where('created_at', '>=', \Carbon\Carbon::now()->subMonth())->count() }} no último mês
@@ -36,7 +36,7 @@
 		</div>
 	</div>
 
-	<div class="mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+	<div class="mdl-card mdl-grid mdl-shadow--2dp">
 		<div class="mdl-cell mdl-cell--8-col">
 			{{ \App\User::count() }} utilizadores ativos<br>
 		</div>

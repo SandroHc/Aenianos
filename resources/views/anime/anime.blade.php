@@ -1,6 +1,6 @@
-<div class="mdl-card mdl-card__no-margin mdl-shadow--2dp mdl-cell mdl-cell--8-col">
+<div class="mdl-card mdl-card--no-margin mdl-shadow--2dp mdl-cell mdl-cell--8-col">
 
-	<div class="mdl-card__supporting-text mdl-card__width-fix">
+	<div class="mdl-card__supporting-text mdl-card--no-padding">
 		<?php
 		$sectionConfig = [
 				[

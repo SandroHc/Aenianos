@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Check if the currently logged on user as Administrator privileges
+ */
+function is_admin() {
+	$user = Auth::user();
+	return $user !== NULL && $user->admin;
+}
+
 function cut_string($text, $maxchar, $end = '...') {
 	if(!empty($text) && strlen($text) > $maxchar) {
 		$words = preg_split('/\s/', $text);

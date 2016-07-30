@@ -50,8 +50,9 @@
 	background-color: #d6d6ef;
 }
 
-.page-content {
-	position: relative;
+#spotlight__container {
+	width: 100%;
+	overflow: hidden;
 }
 
 #spotlight {
@@ -65,7 +66,7 @@
 	@include transform(translateX(-50%));
 }
 
-.spotlight-cell {
+.spotlight__cell {
 	width: 50%;
 	float: left;
 	overflow-y: hidden;
@@ -77,14 +78,14 @@
 	cursor: default;
 }
 
-.spotlight-cell-title {
+.spotlight__cell__title {
 	margin: 16px;
 	font-size: 2em;
 	font-style: italic;
 	text-transform: uppercase;
 }
 
-.spotlight-cell-btn {
+.spotlight__switch {
 	position: absolute;
 	top: 15px;
 	right: 15px;
@@ -93,7 +94,7 @@
 	z-index: 110;
 }
 
-.spotlight-content {
+.spotlight__cell__content {
 	width: auto;
 	height: 250px;
 	background-color: rgba(0, 0, 0, .3);
@@ -108,7 +109,7 @@
 	}
 }
 
-.spotlight-description {
+.spotlight__cell__description {
 	position: absolute;
 	bottom: 0;
 	right: 0;
@@ -121,34 +122,34 @@
 	@include transition(all 200ms ease-out);
 }
 
-.spotlight-episode {
+.spotlight__cell__episode {
 	font-weight: normal;
 	text-align: right;
 }
 
-.spotlight-link {
+.spotlight__cell__link {
 	text-decoration: none;
 	color: white;
 }
 
-.spotlight-img {
+.spotlight__cell__img {
 	width: auto;
 	height: 100%;
 	-ms-interpolation-mode: bicubic; // Fixes image aliasing on IE
 	@include transition(filter 200ms ease-out);
 }
 
-.spotlight-content:hover {
-	.spotlight-description {
+.spotlight__cell__content:hover {
+	.spotlight__cell__description {
 		background-color: $theme;
 	}
 
-	.spotlight-img {
+	.spotlight__cell__img {
 		@include filter(blur(3px));
 	}
 }
 
-.calendar-label {
+.calendar__label {
 	height: 240px;
 	margin: 0 10px;
 	text-align: right;
@@ -164,10 +165,6 @@
 }
 
 /** Anime **/
-.mdl-grid {
-	padding: 0 8px;
-}
-
 .anime-link {
 	background-color: #2196f3;
 	color: #FFF;
@@ -181,14 +178,9 @@
 	}
 }
 
-/** Search **/
-.paragraph-full {
-	width: 100%;
-}
-
-/** Anime **/
-.mdl-card__no-margin {
-	margin: 0 auto;
+.anime-tile__synopsis {
+	max-height: 60px;
+	overflow: hidden;
 }
 
 .anime-header {
@@ -200,21 +192,27 @@
 .anime-header__sub {
 	width: 100%;
 	margin: 0 auto;
-	@extend .mdl-grid-wide;
+	@extend .mdl-grid--wide;
 
 	position: relative;
 
 	h1 {
 		color: #FFF;
-	}
-
-	h2 {
-		color: #000;
+		text-transform: uppercase;
 	}
 
 	img {
 		width: 200px;
 	}
+
+	.mdl-button {
+		margin-right: 12px;
+	}
+}
+
+/** Search **/
+.paragraph-full {
+	width: 100%;
 }
 
 /** Editor **/

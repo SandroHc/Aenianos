@@ -3,9 +3,13 @@
 <?php $current_section = $search ?>
 
 @section('content')
-	<h3>Pesquisa</h3>
+	<div class="mdl-card mdl-card--no-margin mdl-shadow--2dp mdl-cell mdl-cell--8-col">
+		<div class="mdl-card__supporting-text mdl-card--no-padding">
+			<h3>Pesquisa</h3>
 
-	<p class="paragraph-full">Pesquisando pelo termo <b>{{ $search }}</b>.</p>
+			<p class="paragraph-full">Pesquisando pelo termo <b>{{ $search }}</b>.</p>
+		</div>
+	</div>
 
 	@if($paginator != NULL)
 		@forelse($paginator as $cur)

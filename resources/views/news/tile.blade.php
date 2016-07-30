@@ -1,4 +1,4 @@
-<div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--8-col" style="margin: 15px auto">
+<div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--8-col">
 	<div class="mdl-card__title" style="padding-bottom:7px">
 		<h2 class="mdl-card__title-text">
 			@if(isset($show_comments))
@@ -20,7 +20,7 @@
 		@endif
 	</div>
 
-	<div class="mdl-card__supporting-text mdl-card__width-fix">
+	<div class="mdl-card__supporting-text mdl-card--no-padding">
 		<?php $category = \App\Models\NewsCategory::find($data->id_category); ?>
 		<span id="date-created-{{ $data->id }}">
 			@if($data->created_at->year < \Carbon\Carbon::now()->year) {{-- Show the year if not from the current one --}}
@@ -50,7 +50,7 @@
 		em <a href="{!! action('NewsController@showNewsByCategory', [ 'slug' => $category->slug ]) !!}">{{ $category->name }}</a>
 	</div>
 
-	<div class="mdl-card__supporting-text mdl-card__width-fix">
+	<div class="mdl-card__supporting-text mdl-card--no-padding">
 		{!! $data->text !!}
 	</div>
 

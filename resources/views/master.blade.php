@@ -1,4 +1,4 @@
-<?php $debug = Config::get('app.debug') == true ?>
+<?php $debug = Config::get('app.production') == false ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,20 +38,19 @@
 			<div class="mdl-layout-spacer"></div>
 
 			{{-- Navigation --}}
-			<div class="navigation-container">
+			<div class="navigation__container">
 				<nav class="mdl-navigation navigation">
 					<a class="mdl-navigation__link mdl-typography--text-uppercase" href="/">Home</a>
 					<a class="mdl-navigation__link mdl-typography--text-uppercase" href="/anime">Projetos</a>
 
-					<?php $user = Auth::user() ?>
-					@if($user !== NULL && $user->admin)
+					@if(is_admin())
 						<a class="mdl-navigation__link mdl-typography--text-uppercase" href="/admin">Administração</a>
 					@endif
 				</nav>
 			</div>
 
 			{{-- Search --}}
-			<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right header-search-box">
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right header__search">
 				<label class="mdl-button mdl-js-button mdl-button--icon" for="waterfall-exp">
 					<i class="material-icons">search</i>
 				</label>
@@ -88,12 +87,10 @@
 		</nav>
 	</div>
 	<main class="mdl-layout__content">
-		<div class="page-content">
-			@yield('content-before')
+		@yield('content-before')
 
-			<div class="mdl-grid mdl-grid-wide">
-				@yield('content')
-			</div>
+		<div class="mdl-grid mdl-grid--wide">
+			@yield('content')
 		</div>
 	</main>
 </div>
@@ -106,9 +103,9 @@
 <script src="{{ $debug ? asset('dev-env/material.min.js') : 'https://storage.googleapis.com/code.getmdl.io/1.1.3/material.min.js' }}" async defer></script>
 
 @if(Auth::check())
-<script>
-	var uid = '{{ Auth::id() }}';
-</script>
+	<script>
+		var uid = '{{ Auth::id() }}';
+	</script>
 @endif
 <script src="{{ asset('js/analytics.js') }}" async defer></script>
 

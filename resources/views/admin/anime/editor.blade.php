@@ -7,9 +7,9 @@
 @endsection
 
 @section('content')
-	<div class="mdl-card mdl-card__no-margin mdl-shadow--2dp mdl-cell mdl-cell--8-col">
+	<div class="mdl-card mdl-card--no-margin mdl-shadow--2dp mdl-cell mdl-cell--8-col">
 
-		<div class="mdl-card__supporting-text mdl-card__width-fix">
+		<div class="mdl-card__supporting-text mdl-card--no-padding">
 
 			{!! Form::open([ 'url' => URL::action('AdminController@updateAnime', [ 'slug' => $data->slug ?? 'novo' ]), 'files' => true, 'style' => 'width:100%' ]) !!}
 			<h3><span class="navigation-parent"><a class="navigation-parent-link" href="{!! action('AdminController@showAnimeList') !!}" target="_self">Projetos</a> ></span> {{ isset($data) ? $data->title : 'Novo' }}</h3>

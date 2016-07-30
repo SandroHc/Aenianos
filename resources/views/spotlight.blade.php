@@ -1,8 +1,10 @@
-<p class="spotlight-cell-btn" onClick="toggleSpotlight()"><i class="material-icons">assignment</i></p>
+<p class="spotlight__switch" onClick="toggleSpotlight()"><i class="material-icons">assignment</i></p>
 
-<div id="spotlight">
-	@include('anime.latest')
-	@include('anime.calendar')
+<div id="spotlight__container">
+	<div id="spotlight">
+		@include('anime.latest')
+		@include('anime.calendar')
+	</div>
 </div>
 
 <script>

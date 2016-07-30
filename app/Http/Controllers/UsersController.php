@@ -106,8 +106,8 @@ class UsersController extends Controller {
 	public function savePreferencesEmail() {
 		// Check if the form was correctly filled
 		$rules = [
-			'email' => 'required|email',
-			'email_new' => 'required|email|unique:users',
+			'password' => 'required',
+			'email' => 'required|email|unique:users',
 		];
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -115,8 +115,8 @@ class UsersController extends Controller {
 		if(!$validator->fails()) {
 			$data = Auth::user();
 
-			if(Input::get('email') == $data->email) {
-				$data->email = Input::get('email_new');
+			if(Hash::check(Input::get('password'), $data->password)) {
+				$data->email = Input::get('email');
 
 				// Save the changes to the DB
 				$data->save();

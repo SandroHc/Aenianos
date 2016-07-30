@@ -1,4 +1,4 @@
-<div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--8-col" style="margin: 15px auto">
+<div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--8-col">
 	@if(!empty($data->cover))
 		<a href="{!! URL::action('AnimeController@showAnimePage', [ 'slug' => $data->slug ]) !!}" target="_self">
 			<div style="background: url('{{ $data->cover }}') 0 {{ $data->cover_offset }}% / cover; height: 200px"></div>
@@ -28,11 +28,12 @@
 		@endif
 	</div>
 
-	<div class="mdl-card__supporting-text mdl-card__width-fix">
+	<div class="mdl-card__supporting-text mdl-card--no-padding">
 		/ {{ $data->status }} /
 	</div>
 
-	<div class="mdl-card__supporting-text mdl-card__width-fix">
-		Info
+	<div class="anime-tile__synopsis mdl-card__supporting-text mdl-card--no-padding">
+		{{-- TODO: Truncate long synopsis! Currently only hinding overflow --}}
+		{!! $data->synopsis !!}
 	</div>
 </div>

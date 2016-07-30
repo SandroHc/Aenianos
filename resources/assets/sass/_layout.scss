@@ -8,14 +8,38 @@
 	}
 }
 
+.mdl-layout__content {
+	background: url("../img/bg_content.png");
+	position: relative;
+}
+
+// Edited in "Anime"
+.mdl-grid {
+	padding: 0 8px;
+}
+
+.mdl-grid--wide {
+	max-width: 1200px;
+	position: relative;
+}
+
 .mdl-card {
 	overflow: visible;
 	width: 100%;
+	min-height: inherit;
+	margin: 15px auto 0 auto;
 }
 
-.mdl-card__width-fix {
+.mdl-card__no-margin {
+	margin: 0 auto;
+}
+
+.mdl-card--no-padding {
 	padding-top: 0;
-	//width: calc(100% - 32px);
+}
+
+.mdl-card__supporting-text {
+	width: initial;
 }
 
 .mdl-card__supporting-text a {
@@ -27,11 +51,11 @@
 	padding-right: 0 !important;
 }
 
-.navigation-container, .header-search-box {
+.navigation__container, .header__search {
 	background-color: $theme-60;
 }
 
-.navigation-container {
+.navigation__container {
 	/* Simple hack to make the overflow happen to the left instead... */
 	direction: rtl;
 	-webkit-order: 1;
@@ -63,7 +87,7 @@
 	}
 }
 
-.header-search-box {
+.header__search {
 	-webkit-order: 2;
 	-ms-flex-order: 2;
 	order: 2;
@@ -74,12 +98,8 @@
 	flex-grow: 1;
 }
 
-.mdl-grid-wide {
-	max-width: 1200px;
-	position: relative;
-}
-
-// Page content
-.page-content {
-	background: url("../img/bg_content.png");
+// Login
+.login__field {
+	width: 50%;
+	min-width: 400px;
 }
