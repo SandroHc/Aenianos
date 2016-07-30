@@ -13,14 +13,13 @@
 	position: relative;
 }
 
-// Edited in "Anime"
 .mdl-grid {
-	padding: 0 8px;
-}
+	padding: 0 8px; // Edited in "Anime"
 
-.mdl-grid--wide {
-	max-width: 1200px;
-	position: relative;
+	&--wide {
+		max-width: 1200px;
+		position: relative;
+	}
 }
 
 .mdl-card {
@@ -28,22 +27,22 @@
 	width: 100%;
 	min-height: inherit;
 	margin: 15px auto 0 auto;
-}
 
-.mdl-card__no-margin {
-	margin: 0 auto;
-}
+	&--no-margin {
+		margin: 0 auto;
+	}
 
-.mdl-card--no-padding {
-	padding-top: 0;
-}
+	&--no-padding {
+		padding-top: 0;
+	}
 
-.mdl-card__supporting-text {
-	width: initial;
-}
+	&__supporting-text {
+		width: initial;
+	}
 
-.mdl-card__supporting-text a {
-	text-decoration: none;
+	&__supporting-text a {
+		text-decoration: none;
+	}
 }
 
 

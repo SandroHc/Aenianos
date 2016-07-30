@@ -123,7 +123,7 @@
 				{{ isset($data) ? 'Atualizar' : 'Inserir' }}
 			</button>
 
-			<input type="button" class="mdl-button mdl-js-button" onclick="window.location='{{ action('AdminController@showAnimeList') }}'" value="Cancelar">
+			<input type="button" class="mdl-button mdl-js-button" onclick="window.location='{{ URL::action('AnimeController@showAnimePage', [ 'slug' => $data->slug ]) }}'" value="Cancelar">
 
 			{!! Form::close() !!}
 
@@ -181,13 +181,13 @@
 @endsection
 
 @section('scripts')
-	<script type="text/javascript" src="{{ asset('js/redactor.min.js') }}"></script>
-	<script type="text/javascript" src="{{ asset('js/redactor.fontcolor.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('js/redactor.min.js') }}" defer></script>
+	<script type="text/javascript" src="{{ asset('js/redactor.fontcolor.js') }}" defer></script>
 
-	<script type="text/javascript" src="{{ asset('js/jquery.cropit.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('js/jquery.cropit.js') }}" defer></script>
 
-	<script>
-		$(function() {
+	<script defer>
+		$(window).load(function() {
 			$('#text').redactor({
 				imageUpload: '/editor/upload',
 				plugins: ['fontcolor']

@@ -47,11 +47,11 @@
 	{!! Form::close() !!}
 
 
-	<script type="text/javascript" src="{{ asset('js/redactor.min.js') }}"></script>
-	<script type="text/javascript" src="{{ asset('js/redactor.fontcolor.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('js/redactor.min.js') }}" defer></script>
+	<script type="text/javascript" src="{{ asset('js/redactor.fontcolor.js') }}" defer></script>
 
-	<script>
-		$(function() {
+	<script defer>
+		$(window).load(function() {
 			$('#text').redactor({
 				imageUpload: '/editor/upload',
 				plugins: ['fontcolor']

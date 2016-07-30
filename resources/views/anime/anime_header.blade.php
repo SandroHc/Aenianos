@@ -2,11 +2,13 @@
 	<div class="anime-header__sub">
 		<h1>{{ $data->title }} <span style="font-size: 28px; color: #969696; ">/ {{ $data->status }}</span></h1>
 
-		<div style="width: 100%; background-color: rgba(150, 150, 150, 0.5); position: relative; ">
-			@if(!empty($data->cover))
-				<img src="/{{ $data->cover }}">
+		<div class="anime-header__sub__content">
+			@if(!empty($data->official_cover))
+				<div>
+					<img src="/{{ $data->official_cover }}">
+				</div>
 			@endif
-			<div style="width: calc(100% - 280px); padding: 40px; color: #FFF; float: right;">
+			<div class="anime-header__sub__content__synopsis">
 				{!! $data->synopsis !!}
 			</div>
 

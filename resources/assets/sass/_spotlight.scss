@@ -50,16 +50,16 @@
 	background-color: #d6d6ef;
 }
 
-#spotlight__container {
+#spotlight {
 	width: 100%;
 	overflow: hidden;
-}
 
-#spotlight {
-	width: 200%;
-	z-index: 100;
-	@extend .clearfix;
-	@include transition(all 200ms ease-in);
+	&__content {
+		width: 200%;
+		z-index: 100;
+		@extend .clearfix;
+		@include transition(all 200ms ease-in);
+	}
 }
 
 .spotlight-change {
@@ -76,13 +76,63 @@
 	color: white;
 	font-size: 14px;
 	cursor: default;
-}
 
-.spotlight__cell__title {
-	margin: 16px;
-	font-size: 2em;
-	font-style: italic;
-	text-transform: uppercase;
+	&__title {
+		margin: 16px;
+		font-size: 2em;
+		font-style: italic;
+		text-transform: uppercase;
+	}
+
+	&__content {
+		width: auto;
+		height: 250px;
+		background-color: rgba(0, 0, 0, .3);
+		position: relative;
+		display: inline-block;
+		overflow: hidden;
+
+		&:hover {
+			.spotlight__cell__description {
+				background-color: $theme;
+			}
+
+			.spotlight__cell__img {
+				@include filter(blur(3px));
+			}
+		}
+	}
+
+	&__description {
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		left: 0;
+		background-color: $theme-90;
+		padding: 10px;
+		font-weight: bold;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		@include transition(all 200ms ease-out);
+	}
+
+	&__episode {
+		font-weight: normal;
+		text-align: right;
+	}
+
+	&__link {
+		text-decoration: none;
+		color: white;
+	}
+
+	&__img {
+		width: auto;
+		height: 100%;
+		-ms-interpolation-mode: bicubic; // Fixes image aliasing on IE
+		@include transition(filter 200ms ease-out);
+	}
+
 }
 
 .spotlight__switch {
@@ -92,61 +142,6 @@
 	color: white;
 	cursor: pointer;
 	z-index: 110;
-}
-
-.spotlight__cell__content {
-	width: auto;
-	height: 250px;
-	background-color: rgba(0, 0, 0, .3);
-	position: relative;
-	display: inline-block;
-	overflow: hidden;
-
-	&:hover {
-		.spotlight-overlay {
-			background-color: rgba(0, 0, 0, .5);
-		}
-	}
-}
-
-.spotlight__cell__description {
-	position: absolute;
-	bottom: 0;
-	right: 0;
-	left: 0;
-	background-color: $theme-90;
-	padding: 10px;
-	font-weight: bold;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	@include transition(all 200ms ease-out);
-}
-
-.spotlight__cell__episode {
-	font-weight: normal;
-	text-align: right;
-}
-
-.spotlight__cell__link {
-	text-decoration: none;
-	color: white;
-}
-
-.spotlight__cell__img {
-	width: auto;
-	height: 100%;
-	-ms-interpolation-mode: bicubic; // Fixes image aliasing on IE
-	@include transition(filter 200ms ease-out);
-}
-
-.spotlight__cell__content:hover {
-	.spotlight__cell__description {
-		background-color: $theme;
-	}
-
-	.spotlight__cell__img {
-		@include filter(blur(3px));
-	}
 }
 
 .calendar__label {
@@ -190,23 +185,30 @@
 }
 
 .anime-header__sub {
-	width: 100%;
 	margin: 0 auto;
 	@extend .mdl-grid--wide;
 
-	position: relative;
+	.mdl-button {
+		margin-right: 12px;
+	}
 
 	h1 {
 		color: #FFF;
 		text-transform: uppercase;
 	}
 
-	img {
-		width: 200px;
+	&__content {
+		background-color: rgba(150, 150, 150, 0.5);
+		display: flex;
+
+		&__synopsis {
+			padding: 25px;
+			color: white;
+		}
 	}
 
-	.mdl-button {
-		margin-right: 12px;
+	img {
+		width: 200px;
 	}
 }
 

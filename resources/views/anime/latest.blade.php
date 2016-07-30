@@ -9,7 +9,7 @@
 				<img class="spotlight__cell__img" src="{{ !empty($cover) ? get_optimized_path($cover) : '/img/unknown.png' }}">
 
 				<div class="spotlight__cell__description">
-					{{ trim($anime->title, 20) }}<br>
+					{{ $anime->title }}<br>
 
 					<div class="spotlight__cell__episode">
 						{{ $data->getType() }} {{ $data->num }}
