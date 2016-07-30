@@ -13,8 +13,9 @@ env:
 
 before_install:
   - mysql -e 'CREATE DATABASE aenianos;'
-  - composer install
   - ls -la /home/travis/build/SandroHc/Aenianos/bootstrap/
+  - pwd
+  - composer install
   - ls -la /home/travis/build/SandroHc/Aenianos/vendor/
   - npm install
   - php artisan migrate --seed
