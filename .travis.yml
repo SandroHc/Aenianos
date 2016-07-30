@@ -2,6 +2,7 @@ cache:
   directories:
     - vendor
     - node_modules
+    - bower_components
 
 language: php
 
@@ -13,5 +14,7 @@ env:
 before_install:
   - mysql -e 'CREATE DATABASE aenianos;'
   - composer install
+  - ls -la /home/travis/build/SandroHc/Aenianos/bootstrap/
+  - ls -la /home/travis/build/SandroHc/Aenianos/vendor/
   - npm install
   - php artisan migrate --seed
