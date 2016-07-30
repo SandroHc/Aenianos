@@ -38,7 +38,7 @@
 							{{ $user->trashed() ? 'Ativar' : 'Desativar' }}
 						</div>
 					@else
-						{{ dd(Auth::user()) }}
+						{{--{{ Auth::user() }}--}}
 					@endif
 
 					{!! Form::close() !!}

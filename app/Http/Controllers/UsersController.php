@@ -30,7 +30,7 @@ class UsersController extends Controller {
 	 * @return View
 	 */
 	public function showUsersList() {
-		return view('admin.users.list', [ 'data' => User::withTrashed()->paginate(10) ]);
+		return view('users.list', [ 'data' => User::withTrashed()->paginate(10) ]);
 	}
 
 	/**

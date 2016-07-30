@@ -45,7 +45,7 @@ Route::group([ 'middleware' => 'admin', 'prefix' => 'admin' ], function() {
 	Route::post('noticias/{slug}/eliminar',	'AdminController@deleteNews');
 
 	/** Anime **/
-	Route::get('anime', 'AdminController@showAnimeList');
+	Route::get('anime', 'AdminController@showAnimeList'); // FIXME: Use "anime.list" instead.
 	// Edit
 	Route::get('anime/{slug}',	'AdminController@showAnimeEditor');
 	Route::post('anime/{slug}',	'AdminController@updateAnime');

@@ -132,7 +132,8 @@ class AdminController extends Controller {
 	 * @return View
 	 */
 	public function showAnimeList() {
-		return view('admin.anime.list');
+		return App::abort(404);
+		// FIXME: There is no longer a admin view. Use "anime.list" instead. | return view('anime.list');
 	}
 
 	/**
