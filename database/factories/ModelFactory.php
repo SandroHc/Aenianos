@@ -44,13 +44,27 @@ $factory->define(App\Models\Anime::class, function($faker) {
 });
 
 $factory->define(App\Models\Episode::class, function($faker) {
+	static $unique_num = 1;
+
 	return [
-		'anime' => \App\Models\Anime::find($faker->numberBetween(1, 3))->slug,
-		'type' => $faker->randomElement([ 'episodio', 'filme', 'especial' ]),
-		'num' => $faker->numberBetween(1, 20),
-		'link' => $faker->randomElement([ 'http://mega.nz', 'https://drive.google.com/file/d/0B8KL1BNoXI0jblotVS1YQkE3TEE/view?usp=sharing' ]),
-		'host_id' => $faker->numberBetween(1, 3),
-		'quality' => $faker->randomElement([ 'BD', 'HD', 'SD' ]),
+		'anime' => \App\Models\Anime::find($faker->numberBetween(1, 1))->slug,
+		'type' => 'Episódio',//$faker->randomElement([ 'Episódio', 'Especial', 'Filme' ]),
+		'num' => $unique_num++, //$faker->numberBetween(1, 20)
+		'title' => $faker->sentence(),
+	];
+});
+
+$factory->define(App\Models\Download::class, function($faker) {
+	static $hosts = [ 'http://mega.nz/', 'https://drive.google.com/file/d/0B8KL1BNoXI0jblotVS1YQkE3TEE/view?usp=sharing', 'http://example.com' ];
+
+	$host = $faker->numberBetween(1,3);
+	$quality = $faker->randomElement([ 'BD', 'HD', 'SD' ]);
+
+	return [
+		'episode_id' => $faker->numberBetween(1, 25),
+		'link' => $hosts[$host-1] . $quality,
+		'host_id' => $host,
+		'quality' => $quality,
 		'size' => $faker->biasedNumberBetween(50, 500),
 	];
 });

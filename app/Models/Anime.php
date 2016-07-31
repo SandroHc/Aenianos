@@ -32,8 +32,8 @@ class Anime extends Model {
 
 	protected $table = 'anime';
 
-	protected $fillable = [ 'title', 'original', 'slug', 'synopsis', 'cover', 'cover_offset', 'official_cover', 'status',
-		'airing_date', 'airing_week_day', 'episodes', 'genres', 'studio', 'website' ];
+	protected $fillable = [ 'title', 'japanese', 'slug', 'synopsis', 'cover', 'cover_offset', 'official_cover', 'status',
+		'premiered', 'airing_week_day', 'episodes', 'genres', 'studio', 'website' ];
 
 	protected $dates = [ 'deleted_at', 'airing_date' ];
 
@@ -112,19 +112,19 @@ class Anime extends Model {
 	 * Get the episodes for the anime.
 	 */
 	public function episodes() {
-		return $this->hasMany('App\Models\Episode', 'slug', 'anime');
+		return $this->hasMany('App\Models\Episode', 'anime', 'slug');
 	}
 
 	public function hasMovies() {
-		return $this->hasEpisodesFrom('filme');
+		return $this->hasEpisodesFrom('Filme');
 	}
 
 	public function hasSeries() {
-		return $this->hasEpisodesFrom('episodio');
+		return $this->hasEpisodesFrom('Episódio');
 	}
 
 	public function hasSpecials() {
-		return $this->hasEpisodesFrom('especial');
+		return $this->hasEpisodesFrom('Especial');
 	}
 
 	private function hasEpisodesFrom($type) {
@@ -132,26 +132,35 @@ class Anime extends Model {
 	}
 
 	public function qualityList($type) {
-		return Episode::where('anime', '=', $this['slug'])
+		return Download::join('episodes', 'episodes.id', '=', 'downloads.episode_id')
+			->where('anime', '=', $this['slug'])
 			->where('type', '=', $type)
 			->groupBy('quality')
 			->get(['quality']);
 	}
 
-	public function hostList($type, $quality) {
-		return Episode::where('anime', '=', $this['slug'])
+	public function episodeList($type, $quality) {
+		return Episode::join('downloads', 'episodes.id', '=', 'downloads.episode_id')
+			->where('anime', '=', $this['slug'])
 			->where('type', '=', $type)
 			->where('quality', '=', $quality)
-			->groupBy('host_id')
-			->get(['host_id']);
+			->groupBy('num')
+			->orderBy('num', 'ASC')
+			->get(['episodes.*']); // Strip all download data from the result. Only used to filter by quality
 	}
 
-	public function episodeList($type, $quality, $host) {
+	/**
+	 * This ignores the host and quality. Only returns a list of
+	 * @param $type
+	 * @param $quality
+	 * @param $host
+	 * @return mixed
+	 */
+	public function availableEpisodes($type) {
 		return Episode::where('anime', '=', $this['slug'])
 			->where('type', '=', $type)
-			->where('quality', '=', $quality)
-			->where('host_id', '=', $host)
+			->groupBy('num')
 			->orderBy('num', 'ASC')
-			->get(['num', 'link', 'notes']);
+			->get(['num', 'title']);
 	}
 }

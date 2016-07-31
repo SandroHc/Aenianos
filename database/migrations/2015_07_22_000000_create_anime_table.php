@@ -13,7 +13,7 @@ class CreateAnimeTable extends Migration {
 		Schema::create('anime', function (Blueprint $table) {
 			$table->increments('id');
 			$table->string('title');
-			$table->string('original')->nullable();
+			$table->string('japanese')->nullable();
 			$table->string('slug')->unique();
 			$table->text('synopsis'); // ->default('')
 			$table->string('official_cover')->nullable();
@@ -21,7 +21,7 @@ class CreateAnimeTable extends Migration {
 			$table->string('cover_offset')->default(0);
 
 			$table->string('status', 100)->default('Em lançamento');
-			$table->date('airing_date')->nullable();
+			$table->string('premiered', 100);
 			$table->string('airing_week_day', 20)->nullable();
 
 			$table->unsignedInteger('episodes')->default(0);

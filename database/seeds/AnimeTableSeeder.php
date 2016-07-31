@@ -8,6 +8,9 @@ class AnimeTableSeeder extends Seeder {
 	public function run() {
 		Anime::create([
 			'title' => 'Shigatsu wa Kimi no Uso',
+			'japanese' => '四月は君の嘘',
+			'episodes' => '22',
+			'premiered' => 'Outono 2014',
 			'synopsis' => '<p>Arima Kousei é um ex-prodígio musical que perdeu a
 habilidade de tocar piano depois que sua mãe, que também era sua
 instrutora, faleceu.
@@ -44,6 +47,6 @@ trouxe uma oportunidade para chamar pelo destinado Kirito.
 			'status' => 'Concluído',
 		]);
 
-		factory(Anime::class, 10)->create();
+		//factory(Anime::class, 10)->create();
 	}
 }

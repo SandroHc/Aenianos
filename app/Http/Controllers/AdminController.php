@@ -199,9 +199,7 @@ class AdminController extends Controller {
 			$data->cover_offset = Input::get('cover_offset');
 
 			$data->status = Input::get('status');
-
-			$temp = Input::get('airing_date');
-			$data->airing_date = empty($temp) ? NULL : $temp;
+			$data->premiered = Input::get('premiered');
 
 			$temp = Input::get('airing_week_day');
 			$data->airing_week_day = empty($temp) ? NULL : $temp;
@@ -209,7 +207,7 @@ class AdminController extends Controller {
 			$data->episodes = Input::get('episodes');
 			$data->genres = Input::get('genres');
 
-			$data->original = Input::get('original');
+			$data->japanese = Input::get('japanese');
 			$data->studio = Input::get('studio');
 			$data->website = Input::get('website');
 

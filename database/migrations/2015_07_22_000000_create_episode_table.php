@@ -13,16 +13,12 @@ class CreateEpisodeTable extends Migration {
 		Schema::create('episodes', function(Blueprint $table) {
 			$table->increments('id');
 			$table->string('anime');
-			$table->string('type', 20);
+			$table->string('type', 16);
 			$table->unsignedInteger('num');
-			$table->string('host_id');
-			$table->string('link');
-			$table->string('quality')->default('');
-			$table->string('size')->default('');
-			$table->string('notes')->default('');
+			$table->string('title');
 			$table->timestamps();
 
-			//$table->foreign('episode_id')->references('id')->on('anime_episodios');
+			$table->unique([ 'anime', 'type', 'num' ]);
 		});
 	}
 

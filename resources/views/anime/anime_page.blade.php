@@ -9,3 +9,13 @@
 @section('content')
 	@include('anime.anime', [ 'data' => $data ])
 @endsection
+
+@section('scripts')
+	<script>
+		$(window).load(function() {
+			$('.has-dl').click(function(e) {
+				$('#' + this.id + '-dl').toggleClass('hidden');
+			});
+		});
+	</script>
+@endsection

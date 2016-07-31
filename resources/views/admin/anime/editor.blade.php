@@ -58,9 +58,9 @@
 				</div>
 
 				<div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--4-col">
-					Data de lançamento
-					<input class="mdl-textfield__input" type="text" id="airing_date" name="airing_date" value="{{ isset($data->airing_date) ? $data->airing_date->toDateString() : '' }}" />
-					<label class="mdl-textfield__label" for="airing_date"></label>
+					Época de lançamento
+					<input class="mdl-textfield__input" type="text" id="premiered" name="premiered" value="{{ isset($data->premiered) ? $data->premiered : '' }}" />
+					<label class="mdl-textfield__label" for="premiered"></label>
 				</div>
 
 				<div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--4-col">
@@ -75,8 +75,8 @@
 			<div class="mdl-grid">
 				<div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--4-col">
 					Nome original
-					<input class="mdl-textfield__input" type="text" id="original" name="original" value="{{ $data->original ?? '' }}" />
-					<label class="mdl-textfield__label" for="original"></label>
+					<input class="mdl-textfield__input" type="text" id="japanese" name="japanese" value="{{ $data->japanese ?? '' }}" />
+					<label class="mdl-textfield__label" for="japanese"></label>
 				</div>
 
 				<div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--4-col">
@@ -145,13 +145,15 @@
 						</tr>
 						</thead>
 						<tbody>
-						<?php $type = 'episodio'; ?>
-							@foreach(\App\Models\Episode::where('anime', '=', $data->slug)->where('type', '=', $type)->groupBy([ 'num' ])->get([ 'num' ]) as $episode)
+						<?php $type = 'Episódio'; ?>
+							@foreach($data->episodes()->where('type', '=', $type)->groupBy([ 'num' ])->get() as $episode)
 								<tr>
 									<td>{{ $episode->num }}</td>
 									<td class="mdl-data-table__cell--non-numeric">
-										@foreach(\App\Models\Episode::where('anime', '=', $data->slug)->where('type', '=', 'episodio')->where('num', '=', $episode->num)->groupBy([ 'host_id' ])->get() as $host)
-											<img src="{{ $host->host()->getResults()->icon ?? '/img/unknown_circle.png' }}" class="download-link-icon">
+										@foreach($episode->downloads()->orderBy('host_id', 'ASC')->get() as $download)
+											<a href="{{ $download->link }}" title="{{ $download->host->name ?? '' }}">
+												<img src="{{ $download->host->icon ?? '/img/unknown_circle.png' }}" class="download-link-icon">
+											</a>
 										@endforeach
 									</td>
 									<td>

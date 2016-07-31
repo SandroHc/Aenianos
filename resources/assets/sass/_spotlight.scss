@@ -94,7 +94,7 @@
 
 		&:hover {
 			.spotlight__cell__description {
-				background-color: $theme;
+				background-color: $main;
 			}
 
 			.spotlight__cell__img {
@@ -108,7 +108,7 @@
 		bottom: 0;
 		right: 0;
 		left: 0;
-		background-color: $theme-90;
+		background-color: $main-90;
 		padding: 10px;
 		font-weight: bold;
 		overflow: hidden;
@@ -156,59 +156,6 @@
 
 	span {
 		color: darkgray;
-	}
-}
-
-/** Anime **/
-.anime-link {
-	background-color: #2196f3;
-	color: #FFF;
-	display: inline-block;
-	text-decoration: none;
-	padding: 10px;
-	@include transition(all 200ms ease-in);
-
-	&:hover {
-		background-color: #1976d2;
-	}
-}
-
-.anime-tile__synopsis {
-	max-height: 60px;
-	overflow: hidden;
-}
-
-.anime-header {
-	width: 100%;
-	background-color: rgb(66, 66, 66);
-	@extend .clearfix;
-}
-
-.anime-header__sub {
-	margin: 0 auto;
-	@extend .mdl-grid--wide;
-
-	.mdl-button {
-		margin-right: 12px;
-	}
-
-	h1 {
-		color: #FFF;
-		text-transform: uppercase;
-	}
-
-	&__content {
-		background-color: rgba(150, 150, 150, 0.5);
-		display: flex;
-
-		&__synopsis {
-			padding: 25px;
-			color: white;
-		}
-	}
-
-	img {
-		width: 200px;
 	}
 }
 

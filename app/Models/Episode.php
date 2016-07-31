@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Model;
 class Episode extends Model {
     protected $table = 'episodes';
 
-    protected $fillable = ['anime', 'type', 'num', 'link', 'host_id', 'quality', 'size', 'notes'];
+    protected $fillable = ['anime', 'type', 'num', 'title' ];
 
 	/**
 	 * Get the anime associated with the download.
@@ -27,24 +27,10 @@ class Episode extends Model {
 	}
 
 	/**
-	 * Get the host associated with the download.
+	 * Get all the downloads for this episode.
 	 */
-	public function host() {
-		return $this->hasOne('\App\Models\Host', 'id', 'host_id');
-	}
-
-	/**
-	 * Set the link attribute.
-	 * If no host_id was set, try to find one through regex.
-	 *
-	 * @param	mixed	$value
-	 * @return	void
-	 */
-	public function setLinkAttribute($value) {
-		$this->attributes['link'] = $value;
-
-		if(!$this->host_id)
-			$this->attributes['host_id'] = Host::getHostByRegex($value)->id ?? NULL;
+	public function downloads() {
+		return $this->hasMany('\App\Models\Download', 'episode_id', 'id');
 	}
 
 	public static function get($anime_slug, $episode_type, $episode_number) {
@@ -53,14 +39,5 @@ class Episode extends Model {
 
 	public static function getLatest($limit = 11) {
 		return Episode::groupBy([ 'type', 'num' ])->orderBy('created_at', 'DESC')->limit($limit)->get([ 'anime', 'type', 'num' ]);
-	}
-
-	public function getType() {
-		switch($this['type']) {
-			case 'episodio':	return 'Episódio';
-			case 'filme':		return 'Filme';
-			case 'especial':	return 'Especial';
-			default:			return '?';
-		}
 	}
 }

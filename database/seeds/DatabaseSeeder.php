@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder {
 
 		$this->call(AnimeTableSeeder::class);
 		$this->call(EpisodeTableSeeder::class);
+		$this->call(DownloadTableSeeder::class);
 		$this->call(HostTableSeeder::class);
 		$this->call(NewsTableSeeder::class);
 

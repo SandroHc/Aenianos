@@ -12,7 +12,7 @@
 					{{ $anime->title }}<br>
 
 					<div class="spotlight__cell__episode">
-						{{ $data->getType() }} {{ $data->num }}
+						{{ $data->type }} {{ $data->num }}
 					</div>
 				</div>
 			</a>

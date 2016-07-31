@@ -1,0 +1,103 @@
+
+.anime-tile__synopsis {
+	max-height: 60px;
+	overflow: hidden;
+}
+
+.anime-header {
+	width: 100%;
+	background-color: rgb(66, 66, 66);
+	@extend .clearfix;
+}
+
+.anime-header__sub {
+	margin: 0 auto;
+	@extend .mdl-grid--wide;
+
+	.mdl-button {
+		margin-right: 12px;
+	}
+
+	h1 {
+		color: #FFF;
+		text-transform: uppercase;
+	}
+
+	&__content {
+		background-color: rgba(150, 150, 150, 0.5);
+		display: flex;
+
+		&__synopsis {
+			padding: 25px;
+			color: white;
+		}
+	}
+
+	img {
+		width: 200px;
+	}
+}
+
+.download-section {
+
+	&__table {
+		width: 100%;
+		border-collapse: collapse;
+
+		tr {
+			background-color: $accent;
+			font-size: 14px;
+			color: #FFF;
+			border-bottom: thin solid #FFF;
+
+			td {
+				padding: 8px 5px;
+
+				&:first-child {
+					background-color: hsla(0,-50%,0,.5);
+					width: 40px;
+					font-weight: 700;
+					text-align: center;
+				}
+			}
+
+			&.has-dl {
+				cursor: pointer;
+			}
+
+			&.hidden {
+				display: none;
+			}
+
+			&.disabled {
+				background-color: rgba(155, 0, 0, 0.76);
+				cursor: default;
+			}
+
+			&.download {
+				td {
+					background-color: white;
+					text-align: left;
+					padding: {
+						left: 0;
+						right: 0;
+					}
+				}
+			}
+		}
+	}
+}
+
+.button-link {
+	background-color: #2196f3;
+	color: white;
+	display: inline-block;
+	text-decoration: none;
+	padding: 10px;
+	@include transition(all 200ms ease-in);
+
+	&:hover {
+		background-color: #1976d2;
+	}
+}
+
