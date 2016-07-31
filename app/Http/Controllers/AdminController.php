@@ -209,8 +209,8 @@ class AdminController extends Controller {
 			$data->episodes = Input::get('episodes');
 			$data->genres = Input::get('genres');
 
-			$data->producer = Input::get('producer');
-			$data->director = Input::get('director');
+			$data->original = Input::get('original');
+			$data->studio = Input::get('studio');
 			$data->website = Input::get('website');
 
 			// Save the changes to the DB

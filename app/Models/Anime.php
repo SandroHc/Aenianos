@@ -32,9 +32,8 @@ class Anime extends Model {
 
 	protected $table = 'anime';
 
-	protected $fillable = [ 'title', 'slug', 'synopsis', 'cover', 'cover_offset', 'official_cover', 'status',
-		'airing_date', 'airing_week_day', 'episodes', 'genres', 'producer', 'director', 'website', 'codec_video',
-		'codec_audio', 'subtitles_type', 'coordinator' ];
+	protected $fillable = [ 'title', 'original', 'slug', 'synopsis', 'cover', 'cover_offset', 'official_cover', 'status',
+		'airing_date', 'airing_week_day', 'episodes', 'genres', 'studio', 'website' ];
 
 	protected $dates = [ 'deleted_at', 'airing_date' ];
 

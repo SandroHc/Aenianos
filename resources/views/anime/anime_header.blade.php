@@ -1,6 +1,6 @@
 <div class="anime-header">
 	<div class="anime-header__sub">
-		<h1>{{ $data->title }} <span style="font-size: 28px; color: #969696; ">/ {{ $data->status }}</span></h1>
+		<h1>{{ $data->title }} <span style="font-size: 0.5em; color: #969696; ">{{ $data->original != $data->title ? $data->original : '' }} / {{ $data->status }}</span></h1>
 
 		<div class="anime-header__sub__content">
 			@if(!empty($data->official_cover))
@@ -9,6 +9,8 @@
 				</div>
 			@endif
 			<div class="anime-header__sub__content__synopsis">
+				<span style="font-size: 1.4em; font-weight: bold; display: inline-block; margin-bottom: 20px">{{ $data->episodes != 0 ? $data->episodes : '?' }} EPISÓDIOS | {{ $data->airing_date ?? '?' }} | {{ !empty($data->genres) ? $data->genres : '?' }} | <a href="{!! $data->website ?? '#' !!}" target="_blank">{{ $data->studio ?? '?' }}</a></span>
+
 				{!! $data->synopsis !!}
 			</div>
 

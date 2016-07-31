@@ -74,15 +74,15 @@
 
 			<div class="mdl-grid">
 				<div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--4-col">
-					Produtor
-					<input class="mdl-textfield__input" type="text" id="producer" name="producer" value="{{ $data->producer ?? '' }}" />
-					<label class="mdl-textfield__label" for="producer"></label>
+					Nome original
+					<input class="mdl-textfield__input" type="text" id="original" name="original" value="{{ $data->original ?? '' }}" />
+					<label class="mdl-textfield__label" for="original"></label>
 				</div>
 
 				<div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--4-col">
-					Diretor
-					<input class="mdl-textfield__input" type="text" id="director" name="director" value="{{ $data->director ?? '' }}" />
-					<label class="mdl-textfield__label" for="director"></label>
+					Estúdio
+					<input class="mdl-textfield__input" type="text" id="studio" name="studio" value="{{ $data->studio ?? '' }}" />
+					<label class="mdl-textfield__label" for="studio"></label>
 				</div>
 
 				<div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--4-col">
