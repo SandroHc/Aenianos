@@ -8,24 +8,21 @@ use Illuminate\Support\Str;
 use Mmanos\Search\Facade as Search;
 
 /**
+ * @property int id
  * @property string title
+ * @property string japanese
  * @property string slug
  * @property string synopsis
  * @property string cover
  * @property int cover_offset
  * @property string official_cover
  * @property string status
- * @property string airing_date
+ * @property string premiered
  * @property string airing_week_day
  * @property int episodes
  * @property string genres
- * @property string producer
- * @property string director
+ * @property string studio
  * @property string website
- * @property string codec_video
- * @property string codec_audio
- * @property string subtitles_type
- * @property string coordinator
  */
 class Anime extends Model {
 	use SoftDeletes;

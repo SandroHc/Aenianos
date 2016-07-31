@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use Mmanos\Search\Facade as Search;
 
 /**
+ * @property  int id
  * @property  string title
  * @property  string slug
  * @property  string text

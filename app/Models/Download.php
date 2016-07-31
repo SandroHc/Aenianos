@@ -5,14 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @property string anime
- * @property string type
- * @property int num
+ * @property int id
+ * @property int episode_id
  * @property string link
  * @property int host_id
  * @property string quality
  * @property string size
- * @property string notes
  */
 class Download extends Model {
     protected $table = 'downloads';
