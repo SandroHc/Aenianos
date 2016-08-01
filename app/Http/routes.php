@@ -12,7 +12,7 @@
 */
 
 Route::pattern('id', '\d+');
-Route::pattern('type', '[a-z0-9-]+');
+//Route::pattern('type', '[A-Za-z0-9-]+');
 Route::pattern('slug', '[a-z0-9-]+');
 
 
@@ -55,13 +55,15 @@ Route::group([ 'middleware' => 'admin', 'prefix' => 'admin' ], function() {
 
 	/** Episodes **/
 	// Edit
-	Route::get('anime/{slug}/{type}/{num}',    'AdminController@showEpisodeEditor');
-	Route::post('anime/{slug}/{type}/{num}',   'AdminController@updateEpisode');
-	Route::put('anime/{slug}/{type}/{num}',    'EpisodeController@addLink');
-	Route::delete('anime/{id}', 'EpisodeController@deleteLink');
+	Route::put('anime/{slug}/{type}',			'EpisodeController@add');
+	Route::put('anime/{slug}/{type}/{num}',		'EpisodeController@update');
+	Route::get('anime/{slug}/{type}/{num}',		'EpisodeController@manageDownloads');
+	Route::put('anime/{slug}/{type}/{num}/link',	'EpisodeController@addLink');
+//	Route::delete('anime/{slug}/{type}/{num}/link',	'EpisodeController@deleteLink');
+	Route::delete('anime/link/{id}',				'EpisodeController@deleteLink');
 	// Delete
-	Route::get('anime/{slug}/{type}/{num}/eliminar',  'AdminController@deleteEpisodePrompt');
-	Route::post('anime/{slug}/{type}/{num}/eliminar', 'AdminController@deleteEpisode');
+	Route::get('anime/{slug}/{type}/{num}/eliminar',  'EpisodeController@deleteWarning');
+	Route::post('anime/{slug}/{type}/{num}/eliminar', 'EpisodeController@delete');
 
 	/** Episode downloads */
 	Route::get('anime/{slug}/raw',  'AdminController@showEpisodeRaw');

@@ -19,7 +19,7 @@ class Episode extends Model {
 	/**
 	 * Get the anime associated with the download.
 	 */
-	public function anime() {
+	public function _anime() {
 		return $this->belongsTo('\App\Models\Anime', 'anime', 'slug');
 	}
 

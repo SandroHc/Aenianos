@@ -2,52 +2,37 @@
 
 	<div class="mdl-card__supporting-text mdl-card--no-padding">
 		<?php
-		const AVAILABLE = 0;
-		const NAME = 1;
-		const TITLE = 2;
 
 		$sectionConfig = [
-				[
-						$data->hasSeries(),
-						'Episódio',
-						'Episódios',
-				],
-				[
-						$data->hasSpecials(),
-						'Especial',
-						'OVAs',
-				],
-				[
-						$data->hasMovies(),
-						'Filme',
-						'Filmes',
-				],
+				[ 'available' => $data->hasSeries(), 'name' => 'Episódio', 'title' => 'Episódios' ],
+				[ 'available' => $data->hasSpecials(), 'name' => 'Especial', 'title' => 'OVAs' ],
+				[ 'available' => $data->hasMovies(), 'name' => 'Filme', 'title' => 'Filmes' ],
 		];
 		?>
 
 		@foreach($sectionConfig as $section)
-			@if($section[AVAILABLE])
+			@if($section['available'])
 				<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
 					<div class="mdl-tabs__tab-bar">
-						<h4>{{ $section[TITLE] }}</h4>
-						<?php $quality_list = $data->qualityList($section[NAME]); ?>
+						<h4>{{ $section['title'] }}</h4>
+						<?php $quality_list = $data->qualityList($section['name']); ?>
 						<?php $is_first = true ?>
 						@foreach($quality_list as $quality)
-							<a href="#{{ $section[NAME] }}-{{ $quality->quality }}" class="mdl-tabs__tab {{ $is_first ? 'is-active' : '' }}">{{ $quality->quality }}</a>
+							<a href="#{{ $section['name'] }}-{{ $quality->quality }}" class="mdl-tabs__tab {{ $is_first ? 'is-active' : '' }}">{{ $quality->quality }}</a>
 							<?php $is_first = false ?>
 						@endforeach
 					</div>
 
-					<?php $episodes_available = $data->availableEpisodes($section[NAME]); ?>
+					<?php $episodes_available = $data->availableEpisodes($section['name']); ?>
 
 					<?php $is_first = true ?>
 					@forelse($quality_list as $quality)
-						<div class="mdl-tabs__panel {{ $is_first ? 'is-active' : '' }}" id="{{ $section[NAME] }}-{{ $quality->quality }}">
+						<div class="mdl-tabs__panel {{ $is_first ? 'is-active' : '' }}" id="{{ $section['name'] }}-{{ $quality->quality }}">
 							<?php $is_first = false ?>
 							<table class="download-section__table">
 								<tbody>
 								<?php
-									$episode_list = $data->episodeList($section[NAME], $quality->quality);
+									$episode_list = $data->episodeList($section['name'], $quality->quality);
 
 									$episode_list_keys = [];
 									foreach($episode_list as $episode)
@@ -61,7 +46,7 @@
 										if($has_episode)
 											$episode = $episode_list_keys[$episode_base->num];
 									?>
-									<tr id="{{ $section[NAME] }}-{{ $episode_base->num }}-{{ $quality->quality }}" class="has-dl {{ !$has_episode ? 'disabled' : '' }}">
+									<tr id="{{ $section['name'] }}-{{ $episode_base->num }}-{{ $quality->quality }}" class="has-dl {{ !$has_episode ? 'disabled' : '' }}">
 										<td>
 											@if($episode_base->num > 0)
 												{{ trailing_zeros($episode_base->num) }}
@@ -74,7 +59,7 @@
 										</td>
 									</tr>
 									@if($has_episode)
-										<tr id="{{ $section[NAME] }}-{{ $episode->num }}-{{ $quality->quality }}-dl" class="download hidden">
+										<tr id="{{ $section['name'] }}-{{ $episode->num }}-{{ $quality->quality }}-dl" class="download hidden">
 											<td colspan="2">
 											@foreach($episode->downloads()->orderBy('host_id', 'ASC')->get() as $download)
 												<a href="{{ $download->link }}" class="button-link">
@@ -90,11 +75,11 @@
 							</table>
 						</div>
 					@empty
-						<div class="mdl-tabs__panel is-active" id="{{ $section[NAME] }}">
+						<div class="mdl-tabs__panel is-active" id="{{ $section['name'] }}">
 							<table class="download-section__table">
 								<tbody>
 								@foreach($episodes_available as $episode_base)
-									<tr id="{{ $section[NAME] }}-{{ $episode_base->num }}" class="has-dl disabled">
+									<tr id="{{ $section['name'] }}-{{ $episode_base->num }}" class="has-dl disabled">
 										<td>
 											@if($episode_base->num > 0)
 												{{ trailing_zeros($episode_base->num) }}

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\News;
 use App\Models\Anime;
-use App\Models\Episode;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\App;
@@ -252,98 +251,5 @@ class AdminController extends Controller {
 		// This means that the anime will still be on the DB and thus the episodes should also stay.
 
 		return Redirect::action('AdminController@showAnimeList');
-	}
-
-	public function showEpisodeEditor($slug, $type, $num) {
-		$data = ['slug' => $slug, 'type' => $type, 'num' => $num, 'data' => NULL];
-
-		if($num !== 'novo') {
-			try {
-				$data['data'] = Episode::get($slug, $type, $num);
-			} catch(ModelNotFoundException $e) {
-				return App::abort(404);
-			}
-		}
-
-		return view('admin.episode.editor', $data);
-	}
-
-	public function updateEpisode($slug, $type, $num) {
-		// Check if the form was correctly filled
-		$rules = [
-			'num' => 'required|integer',
-			'type' => 'in:episodio,filme,especial',
-		];
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if(!$validator->fails()) {
-			// If the variable $id equals 'novo', create a new model
-			if($num === 'novo') {
-				$data = new Episode();
-			} else {
-				// Try to find the episode on the DB. If no episode is found, create one.
-				try {
-					$data = Episode::get($slug, $type, $num);
-				} catch(ModelNotFoundException $e) {
-					$data = new Episode();
-				}
-			}
-
-			$data->anime = $slug;
-			$data->type = Input::get('type');
-			$data->num = Input::get('num');
-
-			// Save the changes to the DB
-			$data->save();
-
-			return Redirect::action('AdminController@showEpisodeEditor', [ 'slug' => $slug, 'type' => $data->type, 'num' => $data->num ]);
-		} else {
-			// Go back to the form and highlight the errors
-			return Redirect::back()->withErrors($validator);
-		}
-	}
-
-	/**
-	 * Shows a view to confirm the deletion of the the episode of type %type and number $id (from anime with ID $id).
-	 * Only accessible to administrators.
-	 *
-	 * @param string $slug	Anime slug
-	 * @param string $type	Episode type
-	 * @param int $num		Episode number
-	 * @return View
-	 */
-	public function deleteEpisodePrompt($slug, $type, $num) {
-		try {
-			// Collect all the needed information about the news article
-			$data = Episode::get($slug, $type, $num)->first();
-
-			return view('admin.episode.delete', [ 'data' => $data ]);
-		} catch(ModelNotFoundException $e) {
-			return App::abort(404);
-		}
-	}
-
-	/**
-	 * Delete the episode of type %type and number $id (from anime with slug $slug) from the DB.
-	 *
-	 * @param string $slug	Anime slug
-	 * @param string $type	Episode type
-	 * @param int $num		Episode number
-	 * @return View
-	 */
-	public function deleteEpisode($slug, $type, $num) {
-		$episode = Episode::get($slug, $type, $num)->first();
-		$episode->delete();
-
-		return Redirect::action('AdminController@showAnimeList');
-	}
-
-	public function showEpisodeRaw($id) {
-		try {
-			return view('admin.episode.raw', ['id' => $id]);
-		} catch(ModelNotFoundException $e) {
-			return App::abort(404);
-		}
 	}
 }
