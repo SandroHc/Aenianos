@@ -19,6 +19,7 @@
 	</title>
 
 	<link rel="icon" type="image/png" href="{{ asset('favicon.png') }}" />
+	<link rel="manifest" href="manifest.json">
 
 	{{-- Material Design Lite - http://getmdl.io --}}
 	<link rel="stylesheet" href="{{ $debug ? asset('dev-env/material.blue-indigo.min.css') : 'https://storage.googleapis.com/code.getmdl.io/1.1.3/material.blue-indigo.min.css' }}">
@@ -108,6 +109,22 @@
 	</script>
 @endif
 <script src="{{ asset('js/analytics.js') }}" async defer></script>
+
+<script>
+	if ('serviceWorker' in navigator) {
+		console.log('Service Worker is supported');
+		navigator.serviceWorker.register('js/sw.js').then(function(reg) {
+			console.log(':^)', reg);
+			reg.pushManager.subscribe({
+				userVisibleOnly: true
+			}).then(function(sub) {
+				console.log('endpoint:', sub.endpoint);
+			});
+		}).catch(function(err) {
+			console.log(':^(', err);
+		});
+	}
+</script>
 
 @yield('scripts')
 

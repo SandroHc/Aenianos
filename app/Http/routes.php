@@ -70,6 +70,9 @@ Route::group([ 'middleware' => 'admin', 'prefix' => 'admin' ], function() {
 	/** Users **/
 	Route::get('utilizadores', 'UsersController@showUsersList');
 
+	/** Notifications **/
+	Route::any('notificações', 'NotificationController@index');
+
 	/** Misc **/
 	Route::post('upload', 'GeneralController@upload');
 });
