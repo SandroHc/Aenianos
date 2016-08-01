@@ -72,6 +72,7 @@ Route::group([ 'middleware' => 'admin', 'prefix' => 'admin' ], function() {
 
 	/** Notifications **/
 	Route::any('notificações', 'NotificationController@index');
+	Route::any('notificações/send', 'NotificationController@send');
 
 	/** Misc **/
 	Route::post('upload', 'GeneralController@upload');
@@ -125,12 +126,3 @@ Route::post('editor/upload', function() {
 	}
 	return false;
 });
-
-
-// Filters
-/*
-Route::filter('auth', function() {
-	if (Auth::guest())
-		return Redirect::guest('login');
-});
-*/
