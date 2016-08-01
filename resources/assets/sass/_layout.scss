@@ -45,6 +45,20 @@
 	}
 }
 
+.mdl-tabs__tab {
+
+	&.is-active {
+		background-color: #2196F3;
+		color: white !important;
+	}
+
+	&-bar {
+		h4 {
+			margin: 0;
+			line-height: 49px;
+		}
+	}
+}
 
 .mdl-layout__header-row {
 	padding-right: 0 !important;

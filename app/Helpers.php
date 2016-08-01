@@ -42,9 +42,11 @@ function store_upload(Symfony\Component\HttpFoundation\File\UploadedFile $file =
 		$filename = $file->getClientOriginalName();
 
 		// Save the uploaded file in the server
+		if(!file_exists(UPLOAD_PATH)) mkdir(UPLOAD_PATH, 0775, true); // Make sure all directories exist
 		$file->move(UPLOAD_PATH, $filename);
 
 		// Generate a optimized version (graciously fails if not a image)
+		if(!file_exists(UPLOAD_PATH)) mkdir(OPTIMIZED_PATH, 0775, true); // Make sure all directories exist
 		optimize_image(UPLOAD_PATH, $filename);
 
 		return UPLOAD_PATH . $filename;
@@ -65,17 +67,11 @@ function optimize_image($path, $filename = '', $height = OPTIMIZED_MAX_HEIGHT, $
 
 	$info = getimagesize($srcFile);
 	switch($info[2]) { // Check for file type
-	case IMAGETYPE_PNG:
-		$image = imagecreatefrompng($srcFile);
-		break;
-	case IMAGETYPE_GIF:
-		$image = imagecreatefromgif($srcFile); 
-		break;
-	case IMAGETYPE_JPEG:
-		$image = imagecreatefromjpeg($srcFile); 
-		break;
-	default:
-		return false;
+		case IMAGETYPE_PNG:		$image = imagecreatefrompng($srcFile); break;
+		case IMAGETYPE_GIF:		$image = imagecreatefromgif($srcFile); break;
+		case IMAGETYPE_JPEG:	$image = imagecreatefromjpeg($srcFile); break;
+		default:
+			return false;
 	}
 
 	// Only resize the image if bigger than the target height
@@ -85,7 +81,7 @@ function optimize_image($path, $filename = '', $height = OPTIMIZED_MAX_HEIGHT, $
 	}
 
 	// Save the optimized image
-	$outputPath = OPTIMIZED_PATH . basename($srcFile);
+	$outputPath = get_optimized_path($srcFile);
 	imagejpeg($image, $outputPath, $quality);
 	imagedestroy($image);
 

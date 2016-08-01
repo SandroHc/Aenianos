@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Models\Anime;
+use App\Models\Episode;
 
 class AnimeTableSeeder extends Seeder {
 
@@ -45,6 +46,27 @@ especialista em esgrima, Asuna, ele se juntou a ela.
 trouxe uma oportunidade para chamar pelo destinado Kirito.
 </p>',
 			'status' => 'Concluído',
+		]);
+
+		$ep = 1;
+		$ep_titles = [
+			'Monotone/Colorful', 'Friend A', 'Inside Spring', 'The Journey', 'Gray Skies', 'On the Way Home', 'The Shadows Whisper', 'Let It Ring', 'Resonance', 'The Scenery I Shared with You', 'Light of Life', 'Twinkle Little Star', 'Love\'s Sorrow', 'Footprints', 'Liar', 'Two of a Kind', 'Twilight', 'Hearts Come Together', 'Goodbye, Hero', 'Hand in Hand', 'Snow', 'Spring Wind',
+		];
+
+		foreach($ep_titles as $title) {
+			Episode::create([
+				'anime' => 'shigatsu-wa-kimi-no-uso',
+				'type' => 'Episódio',
+				'num' => $ep++,
+				'title' => $title
+			]);
+		}
+
+		Episode::create([
+			'anime' => 'shigatsu-wa-kimi-no-uso',
+			'type' => 'Especial',
+			'num' => 1,
+			'title' => 'Moments'
 		]);
 
 		//factory(Anime::class, 10)->create();

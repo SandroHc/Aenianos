@@ -14,9 +14,15 @@
 	@if($paginator != NULL)
 		@forelse($paginator as $cur)
 			@if($cur['type'] == 'anime')
-				@include('anime.tile', [ 'data' => \App\Models\Anime::find($cur['db_id']) ])
+				<?php $data = \App\Models\Anime::find($cur['db_id']) ?>
+				@if($data != NULL)
+					@include('anime.tile', [ 'data' => $data ])
+				@endif
 			@elseif($cur['type'] == 'news')
-				@include('news.tile', [ 'data' => \App\Models\News::find($cur['db_id']) ])
+				<?php $data = \App\Models\News::find($cur['db_id']) ?>
+				@if($data != NULL)
+					@include('news.tile', [ 'data' => $data ])
+				@endif
 			@endif
 		@empty
 			<p>Nenhum resultado foi encontrado.</p>

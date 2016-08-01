@@ -11,7 +11,7 @@
 		</h2>
 
 		@if(Auth::check() && Auth::user()->admin)
-			<button id="anime-{{ $data->id }}" class="mdl-button mdl-js-button mdl-button--icon" style="{{ empty($data->cover) ? 'margin-right: 126px' : '' }}">
+			<button id="anime-{{ $data->id }}" class="mdl-button mdl-js-button mdl-button--icon">
 				<i class="material-icons">more_vert</i>
 			</button>
 
@@ -19,12 +19,6 @@
 				<a href="{!! URL::action('AdminController@showAnimeEditor', [ 'slug' => $data->slug ]) !!}" target="_self" style="text-decoration: none"><li class="mdl-menu__item">Editar</li></a>
 				<a href="{!! URL::action('AdminController@deleteAnimePrompt', [ 'slug' => $data->slug ]) !!}" target="_self" style="text-decoration: none"><li class="mdl-menu__item">Remover</li></a>
 			</ul>
-
-			<div style="position:absolute; right:16px; top:24px">
-				<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" onclick="window.location='{!! URL::action('AdminController@showEpisodeEditor', [ 'id' => $data->id, 'type' => 'episodio', 'num' => 'novo' ]) !!}'">
-					<i class="material-icons">add</i>
-				</button>
-			</div>
 		@endif
 	</div>
 

@@ -63,7 +63,7 @@ class AdminController extends Controller {
 	public function updateNews($slug) {
 		// Check if the form was correctly filled
 		$rules = [
-			'title' => 'required|min:5',
+			'title' => 'required',
 			'text' => 'required',
 			'category' => 'required|integer',
 		];
@@ -214,7 +214,7 @@ class AdminController extends Controller {
 			// Save the changes to the DB
 			$data->save();
 
-			return Redirect::action('AdminController@showAnimeEditor', [ 'slug' => $data->slug ]);
+			return Redirect::action('AnimeController@showAnimePage', [ 'slug' => $data->slug ]);
 		} else {
 			// Go back to the form and highlight the errors
 			return Redirect::back()->withErrors($validator);

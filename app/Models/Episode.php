@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
 class Episode extends Model {
     protected $table = 'episodes';
 
-    protected $fillable = ['anime', 'type', 'num', 'title' ];
+    protected $fillable = [ 'anime', 'type', 'num', 'title' ];
 
 	/**
 	 * Get the anime associated with the download.
