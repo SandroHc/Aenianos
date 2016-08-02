@@ -14,7 +14,7 @@ use Illuminate\View\View;
 
 class UsersController extends Controller {
 
-	public function showUser($username) {
+	public function page($username) {
 		try {
 			// Collect all the needed information about the news article
 			$data = User::where('username', '=', $username)->firstOrFail();
@@ -29,7 +29,7 @@ class UsersController extends Controller {
 	 * Shows a view with all the active and inactive users.
 	 * @return View
 	 */
-	public function showUsersList() {
+	public function list() {
 		return view('users.list', [ 'data' => User::withTrashed()->paginate(10) ]);
 	}
 
@@ -45,7 +45,7 @@ class UsersController extends Controller {
 	 * Shows the preferences form.
 	 * @return View
 	 */
-	public function showPreferences() {
+	public function preferences() {
 		return view('users.preferences', [ 'user' => Auth::user() ]);
 	}
 

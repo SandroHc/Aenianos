@@ -6,7 +6,7 @@
 	<div class="mdl-card mdl-card--no-margin mdl-shadow--2dp mdl-cell mdl-cell--8-col">
 		<div class="mdl-card__supporting-text mdl-card--no-padding">
 
-			{!! Form::open([ 'url' => URL::action('EpisodeController@delete', [ 'slug' => $data->anime, 'type' => $data->type, 'num' => $data->num ]), 'style' => 'width:100%' ]) !!}
+			{!! Form::open([ 'url' => URL::action('EpisodeController@delete', [ 'slug' => $data->anime, 'type' => $data->type, 'num' => $data->num ]), 'method' => 'delete', 'style' => 'width:100%' ]) !!}
 			<h3>Notícias</h3>
 
 			<p>Pretende mesmo eliminar o episódio #{{ $data->num }} do anime <b>{{ \App\Models\Anime::get($data->anime)->title }}</b>?</p>

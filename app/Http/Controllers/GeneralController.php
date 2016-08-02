@@ -5,6 +5,7 @@ use App\Models\Anime;
 use App\Models\News;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Response;
 use Mail;
 use Search;
 
@@ -64,7 +65,7 @@ class GeneralController extends Controller {
 		// Check if the form was correctly filled
 		$rules = [
 			'email' => 'required|email',
-			'message' => 'required|min:1',
+			'message' => 'required',
 		];
 
 		$validator = Validator::make(Input::all(), $rules);

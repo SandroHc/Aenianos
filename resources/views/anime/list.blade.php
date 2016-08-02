@@ -5,7 +5,7 @@
 @section('content')
 	@if(Auth::check() && Auth::user()->admin)
 		<div style="position: absolute; right:16px; top: 24px">
-			<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" onclick="window.location='{{ URL::action('AdminController@showAnimeEditor', [ 'id' => 'novo' ]) }}'">
+			<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" onclick="window.location='{{ URL::action('AnimeController@add') }}'">
 				<i class="material-icons">add</i>
 			</button>
 		</div>

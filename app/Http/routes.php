@@ -21,13 +21,13 @@ Route::any('home', function() {
 	return Redirect::guest('/');
 });
 
-// Anime-realted routes
-Route::any('anime', 'AnimeController@showList');
-Route::any('anime/{slug}', 'AnimeController@showAnimePage');
+// Anime-related routes
+Route::any('anime', 'AnimeController@list');
+Route::any('anime/{slug}', 'AnimeController@page');
 
 // News-related routes
-Route::any('noticias', 'NewsController@showList');
-Route::any('noticias/{slug}', 'NewsController@showNewsPage');
+Route::any('noticias', 'NewsController@list');
+Route::any('noticias/{slug}', 'NewsController@page');
 Route::any('noticias/categoria/{slug}', 'NewsController@showNewsByCategory');
 
 // Administration routes
@@ -36,41 +36,41 @@ Route::group([ 'middleware' => 'admin', 'prefix' => 'admin' ], function() {
 	Route::any('rebuild_search', 'GeneralController@rebuildSearch');
 
 	/** News **/
-	Route::get('noticias', 'AdminController@showNewsList');
+//	Route::get('noticias', 'AdminController@showNewsList');
 	// Edit
-	Route::get('noticias/{slug}',  'AdminController@showNewsEditor');
-	Route::post('noticias/{slug}', 'AdminController@updateNews');
+	Route::get('noticias/new',		'NewsController@add');
+	Route::get('noticias/{slug}',	'NewsController@manage');
+	Route::post('noticias/{slug}',	'NewsController@update');
 	// Delete
-	Route::get('noticias/{slug}/eliminar',	'AdminController@deleteNewsPrompt');
-	Route::post('noticias/{slug}/eliminar',	'AdminController@deleteNews');
+	Route::get('noticias/{slug}/eliminar',	'NewsController@deleteWarning');
+	Route::delete('noticias/{slug}',		'NewsController@delete');
 
 	/** Anime **/
-	Route::get('anime', 'AdminController@showAnimeList'); // FIXME: Use "anime.list" instead.
 	// Edit
-	Route::get('anime/{slug}',	'AdminController@showAnimeEditor');
-	Route::post('anime/{slug}',	'AdminController@updateAnime');
+	Route::get('anime/new',		'AnimeController@add');
+	Route::get('anime/{slug}',	'AnimeController@manage');
+	Route::post('anime/{slug}',	'AnimeController@update');
 	// Delete
-	Route::get('anime/{slug}/eliminar',	 'AdminController@deleteAnimePrompt');
-	Route::post('anime/{slug}/eliminar', 'AdminController@deleteAnime');
+	Route::get('anime/{slug}/eliminar',	'AnimeController@deleteWarning');
+	Route::delete('anime/{slug}', 		'AnimeController@delete');
 
 	/** Episodes **/
 	// Edit
 	Route::put('anime/{slug}/{type}',			'EpisodeController@add');
+	Route::get('anime/{slug}/{type}/{num}',		'EpisodeController@manage');
 	Route::put('anime/{slug}/{type}/{num}',		'EpisodeController@update');
-	Route::get('anime/{slug}/{type}/{num}',		'EpisodeController@manageDownloads');
-	Route::put('anime/{slug}/{type}/{num}/link',	'EpisodeController@addLink');
-//	Route::delete('anime/{slug}/{type}/{num}/link',	'EpisodeController@deleteLink');
-	Route::delete('anime/link/{id}',				'EpisodeController@deleteLink');
+	Route::put('anime/{slug}/{type}/{num}/link','EpisodeController@addLink');
+	Route::delete('anime/link/{id}',			'EpisodeController@deleteLink');
 	// Delete
 	Route::get('anime/{slug}/{type}/{num}/eliminar',  'EpisodeController@deleteWarning');
-	Route::post('anime/{slug}/{type}/{num}/eliminar', 'EpisodeController@delete');
+	Route::delete('anime/{slug}/{type}/{num}', 'EpisodeController@delete');
 
 	/** Episode downloads */
 	Route::get('anime/{slug}/raw',  'AdminController@showEpisodeRaw');
 	Route::post('anime/{slug}/raw', 'EpisodeController@parseRawEpisodeDownloads');
 
 	/** Users **/
-	Route::get('utilizadores', 'UsersController@showUsersList');
+	Route::get('utilizadores', 'UsersController@list');
 
 	/** Notifications **/
 	Route::any('notificações', 'NotificationController@index');
@@ -88,12 +88,13 @@ Route::get('logout', 'Auth\AuthController@getLogout');
 Route::get('registar',  'Auth\AuthController@getRegister');
 Route::post('registar', 'Auth\AuthController@postRegister');
 
-Route::get('perfil', 'UsersController@showPreferences');
+Route::get('perfil', 'UsersController@preferences');
 Route::post('perfil/geral', 'UsersController@savePreferencesGeneral');
 Route::post('perfil/password', 'UsersController@savePreferencesPassword');
 Route::post('perfil/email', 'UsersController@savePreferencesEmail');
 
-Route::post('utilizador/{id}/desativar', 'UsersController@disableUser');
+Route::post('utilizador/{name}', 'UsersController@page');
+Route::post('utilizador/{name}/desativar', 'UsersController@disableUser');
 
 // Password reset link request routes...
 Route::get('login/resetar',  'Auth\PasswordController@getEmail');
@@ -115,16 +116,5 @@ Route::any('faq', 'GeneralController@faq');
 Route::any('doacoes', 'GeneralController@donations');
 
 
-Route::post('editor/upload', function() {
-	$validator = Validator::make(Input::all(), [ 'file' => 'image|max:10000' ]);
-	if(!$validator->fails()) {
-		$file = Input::file('file');
-
-		if($file->isValid()) {
-			$file->move('img/upload', $file->getClientOriginalName()); // uploading file to given path
-
-			return Response::json([ 'filelink' => '/img/upload/'. $file->getClientOriginalName() ]);
-		}
-	}
-	return false;
-});
+// Used by the editor to avoid CSRF token validation
+Route::post('editor/upload', 'GeneralController@upload');

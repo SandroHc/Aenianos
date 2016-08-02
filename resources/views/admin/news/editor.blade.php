@@ -11,7 +11,7 @@
 
 		<div class="mdl-card__supporting-text mdl-card--no-padding">
 
-			{!! Form::open([ 'url' => 'admin/noticias/'. ($data->slug ?? 'novo'), 'files' => true, 'style' => 'width:100%' ]) !!}
+			{!! Form::open([ 'url' => URL::action('NewsController@update', [ 'slug' => ($data->slug ?? 'new') ]), 'files' => true, 'style' => 'width:100%' ]) !!}
 			<h3>Notícias</h3>
 
 			@if(!$errors->isEmpty())
@@ -46,7 +46,7 @@
 				{{ isset($data) ? 'Atualizar' : 'Inserir' }}
 			</button>
 
-			<input type="button" class="mdl-button mdl-js-button" onclick="window.location='{{ URL::action('AdminController@showNewsList') }}'" value="Cancelar">
+			<input type="button" class="mdl-button mdl-js-button" onclick="window.location='{{ URL::action('NewsController@list') }}'" value="Cancelar">
 
 			{!! Form::close() !!}
 

@@ -26,6 +26,7 @@
 	&__content {
 		background-color: rgba(150, 150, 150, 0.5);
 		display: flex;
+		position: relative;
 
 		&__synopsis {
 			padding: 25px;

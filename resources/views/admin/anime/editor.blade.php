@@ -11,8 +11,8 @@
 
 		<div class="mdl-card__supporting-text mdl-card--no-padding">
 
-			{!! Form::open([ 'url' => URL::action('AdminController@updateAnime', [ 'slug' => $data->slug ?? 'novo' ]), 'files' => true, 'style' => 'width:100%' ]) !!}
-			<h3><span class="navigation-parent"><a class="navigation-parent-link" href="{!! action('AdminController@showAnimeList') !!}" target="_self">Projetos</a> ></span> {{ isset($data) ? $data->title : 'Novo' }}</h3>
+			{!! Form::open([ 'url' => URL::action('AnimeController@update', [ 'slug' => $data->slug ?? 'new' ]), 'files' => true, 'style' => 'width:100%' ]) !!}
+			<h3><span class="navigation-parent"><a class="navigation-parent-link" href="{!! URL::action('AnimeController@list') !!}" target="_self">Projetos</a> ></span> {{ isset($data) ? $data->title : 'Novo' }}</h3>
 
 			@if(!$errors->isEmpty())
 				@foreach($errors->all() as $error)
@@ -123,7 +123,7 @@
 				{{ isset($data) ? 'Atualizar' : 'Inserir' }}
 			</button>
 
-			<input type="button" class="mdl-button mdl-js-button" onclick="window.location='{{ URL::action('AnimeController@showAnimePage', [ 'slug' => $data->slug ]) }}'" value="Cancelar">
+			<input type="button" class="mdl-button mdl-js-button" onclick="window.location='{{ isset($data) ? URL::action('AnimeController@page', [ 'slug' => $data->slug ]) : URL::action('AnimeController@list') }}'" value="Cancelar">
 
 			{!! Form::close() !!}
 
@@ -189,7 +189,7 @@
 											@endforeach
 										</td>
 										<td>
-											<a href="{{ URL::action('EpisodeController@manageDownloads', [ 'slug' => $data->slug, 'type' => $type['name'], 'num' => $episode->num ]) }}" style="color:black">
+											<a href="{{ URL::action('EpisodeController@manage', [ 'slug' => $data->slug, 'type' => $type['name'], 'num' => $episode->num ]) }}" style="color:black">
 												<button class="mdl-button mdl-js-button mdl-button--icon">
 													<i class="material-icons">edit</i>
 												</button>

@@ -193,7 +193,7 @@ class EpisodeController extends Controller {
 		}
 	}
 
-	public function manageDownloads($slug, $type, $num) {
+	public function manage($slug, $type, $num) {
 		try {
 			$data = ['data' => Episode::get($slug, $type, $num)];
 		} catch(ModelNotFoundException $e) {
@@ -215,7 +215,7 @@ class EpisodeController extends Controller {
 	public function deleteWarning($slug, $type, $num) {
 		try {
 			// Collect all the needed information about the news article
-			$data = Episode::get($slug, $type, $num)->first();
+			$data = Episode::get($slug, $type, $num)->firstOrFail();
 
 			return view('admin.episode.delete', [ 'data' => $data ]);
 		} catch(ModelNotFoundException $e) {
@@ -232,10 +232,17 @@ class EpisodeController extends Controller {
 	 * @return View
 	 */
 	public function delete($slug, $type, $num) {
-		$episode = Episode::get($slug, $type, $num)->first();
-		$episode->delete();
+		try {
+			$episode = Episode::get($slug, $type, $num)->firstOrFail();
+			$episode->delete();
 
-		return Redirect::action('AdminController@showAnimeList');
+			// Delete all downloads related to the episode
+			Download::where('episode_id', '=', $episode->id)->delete();
+
+			return Redirect::action('AdminController@showAnimeEditor', ['slug' => $slug]);
+		} catch(ModelNotFoundException $e) {
+			return App::abort(404);
+		}
 	}
 
 	public function showEpisodeRaw($id) {
