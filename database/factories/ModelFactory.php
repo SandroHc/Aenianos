@@ -73,6 +73,5 @@ $factory->define(App\Models\Host::class, function($faker) {
 	return [
 		'name' => $faker->company,
 		'icon' => $faker->imageUrl(250, 250),
-		'regex' => NULL,
 	];
 });

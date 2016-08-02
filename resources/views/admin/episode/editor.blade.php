@@ -67,27 +67,17 @@
 
 				<tr>
 					<td class="mdl-data-table__cell--non-numeric" colspan="2"><i>Automático</i></td>
-					<td class="mdl-data-table__cell--non-numeric">
-						<div class="mdl-textfield mdl-js-textfield" style="margin-top:-20px; padding-bottom:0">
-							<input class="mdl-textfield__input" type="text" name="link" value="{{ old('link') }}" />
-							<label class="mdl-textfield__label" for="link">Link...</label>
+					<td class="mdl-data-table__cell--non-numeric" style="padding:0">
+						<div class="mdl-textfield mdl-js-textfield" style="padding:0">
+							<input class="mdl-textfield__input" type="text" name="link" placeholder="Link..." value="{{ old('link') }}" />
+							{{--<label class="mdl-textfield__label" for="link">Link...</label>--}}
 						</div>
 					</td>
-					<td class="mdl-data-table__cell--non-numeric">
+					<td class="mdl-data-table__cell--non-numeric" colspan="2">
 						<select name="quality">
 							<option value="BD" selected>BD</option>
 							<option value="HD">HD</option>
 							<option value="SD">SD</option>
-						</select>
-					</td>
-					<td class="mdl-data-table__cell--non-numeric">
-						<div class="mdl-textfield mdl-js-textfield" style="margin-top:-20px; padding-bottom:0; width:70px">
-							<input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="size" value="{{ old('size') }}" />
-							<label class="mdl-textfield__label" for="tamanho">#</label>
-						</div>
-						<select name="size-suffix">
-							<option value="MB" selected>MB</option>
-							<option value="GB">GB</option>
 						</select>
 					</td>
 					<td>

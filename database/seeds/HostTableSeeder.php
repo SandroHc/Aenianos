@@ -10,14 +10,16 @@ class HostTableSeeder extends Seeder {
 			'name' => 'MEGA',
 			'icon' => '/img/hosts/mega.png',
 			'regex' => '(mega.(nz|co.nz))',
-			'regex_offline' => NULL,
+			'regex_size' => 'download info-txt small-txt">(.+)<\/div>',
+			'regex_link_down' => NULL,
 		]);
 
 		Host::create([
 			'name' => 'Google Drive',
 			'icon' => '/img/hosts/google-drive.png',
 			'regex' => '((drive|docs).google.com)',
-			'regex_offline' => NULL,
+			'regex_size' => NULL,
+			'regex_link_down' => NULL,
 		]);
 	}
 }

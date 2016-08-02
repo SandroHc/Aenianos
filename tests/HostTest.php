@@ -34,10 +34,19 @@ class HostTest extends TestCase {
 			'http://docs.google.com/uc?id=0B8O5z12KKllkMkV4d1ZPS2IzOEk&export=download',
 		];
 		foreach($links as $link)
-			$this->assertEquals('Google Drive', $this->regexHelper($link));
+			$this->assertEquals('Google Drive', $this->getHostByRegex($link)->name);
 	}
 
-	private function regexHelper($url) {
-		return \App\Models\Host::getHostByRegex($url)->name ?? NULL;
+	public static function getHostByRegex($url) {
+		foreach(Host::all() as $host) {
+			if(!empty($host->regex)) {
+				if(preg_match($host->regex, $url) === 1) {
+					return $host;
+				}
+			}
+		}
+
+		// No host was found using the regex technique.
+		return NULL;
 	}
 }

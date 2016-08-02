@@ -15,7 +15,8 @@ class CreateHostTable extends Migration {
 			$table->string('name');
 			$table->string('icon')->nullable();
 			$table->string('regex')->nullable();
-			$table->string('regex_offline')->nullable();
+			$table->string('regex_size')->nullable();
+			$table->string('regex_link_down')->nullable();
 			$table->timestamps();
 		});
 	}
