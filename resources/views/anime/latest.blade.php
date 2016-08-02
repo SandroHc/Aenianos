@@ -2,7 +2,7 @@
 	<p class="spotlight__cell__title">LANÇAMENTOS RECENTES</p>
 
 	@foreach(\App\Models\Episode::getLatest() as $data)
-		<?php $anime = $data->anime()->first() ?>
+		<?php $anime = $data->_anime()->first() ?>
 		<div class="spotlight__cell__content">
 			<a class="spotlight__cell__link" href="{!! URL::action('AnimeController@showAnimePage', [ 'slug' => $anime->slug ]) !!}" target="_self">
 				<?php $cover = !empty($anime->official_cover) ? $anime->official_cover : $anime->cover ?>
