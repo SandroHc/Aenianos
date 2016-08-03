@@ -130,86 +130,90 @@
 			<hr>
 			<h3>Downloads</h3>
 
-			<p>
-				@if(isset($data))
-					<?php
-						$types = [
-							[ 'name' => 'Episódio', 'title' => 'Episódios' ],
-							[ 'name' => 'Especial', 'title' => 'OVAs' ],
-							[ 'name' => 'Filme', 'title' => 'Filmes' ],
-						];
-					?>
+			@if(isset($data))
+				<?php
+					$types = [
+						[ 'name' => 'Episódio', 'title' => 'Episódios' ],
+						[ 'name' => 'Especial', 'title' => 'OVAs' ],
+						[ 'name' => 'Filme', 'title' => 'Filmes' ],
+					];
+				?>
+
+				<div class="mdl-grid">
 
 					@foreach($types as $type)
-						<h4>{{ $type['title'] }}</h4>
-						<table class="mdl-data-table mdl-shadow--2dp">
-							<thead>
-							<tr>
-								<td>#</td>
-								<td class="mdl-data-table__cell--non-numeric">Título</td>
-								<td class="mdl-data-table__cell--non-numeric">Links</td>
-								<td class="mdl-data-table__cell--non-numeric"></td>
-							</tr>
-							</thead>
-							<tbody>
+						<div class="mdl-cell mdl-cell--6-col">
+							<h4>{{ $type['title'] }}</h4>
+							<table class="mdl-data-table mdl-shadow--2dp" style="width: 100%">
+								<thead>
 								<tr>
-								{!! Form::open([ 'url' => URL::action('EpisodeController@add', [ 'slug' => $data->slug, 'type' => $type['name'] ]), 'method' => 'put' ]) !!}
-									<td style="padding: 0">
-										<div class="mdl-textfield mdl-js-textfield" style="width: 2em; padding: 0">
-											<input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="num" placeholder="#" value="{{ ($ep = \App\Models\Episode::where([ ['anime', '=', $data->slug], ['type', '=', $type['name']] ])->orderBy('num', 'DESC')->first()) !== NULL ? $ep->num + 1 : 1 }}" />
-											{{--<label class="mdl-textfield__label" for="num"></label>--}}
-											<span class="mdl-textfield__error">Insira um número válido!</span>
-										</div>
-									</td>
-									<td class="mdl-data-table__cell--non-numeric" colspan="2">
-										<div class="mdl-textfield mdl-js-textfield" style="width: 100%; padding: 0">
-											<input class="mdl-textfield__input" type="text" name="title" placeholder="Título (opcional)"/>
-											{{--<label class="mdl-textfield__label" for="title"></label>--}}
-										</div>
-									</td>
-									<td>
-										<button type="submit" class="mdl-button mdl-js-button mdl-button--icon" style="color:black">
-											<i class="material-icons">save</i>
-										</button>
-									</td>
-
-									<input type="hidden" name="type" value="{{ $type['name'] }}" />
-								{!! Form::close() !!}
+									<td>#</td>
+									<td class="mdl-data-table__cell--non-numeric">Título</td>
+									<td class="mdl-data-table__cell--non-numeric">Links</td>
+									<td class="mdl-data-table__cell--non-numeric"></td>
 								</tr>
-
-								@foreach($data->episodes()->where('type', '=', $type['name'])->groupBy([ 'num' ])->get() as $episode)
+								</thead>
+								<tbody>
 									<tr>
-										<td>{{ $episode->num }}</td>
-										<td class="mdl-data-table__cell--non-numeric">{{ $episode->title }}</td>
-										<td class="mdl-data-table__cell--non-numeric">
-											@foreach($episode->downloads()->orderBy('host_id', 'ASC')->get() as $download)
-												<a href="{{ $download->link }}" title="{{ $download->host->name ?? '' }}">
-													<img src="{{ $download->host->icon ?? '/img/unknown_circle.png' }}" class="download-link-icon">
-												</a>
-											@endforeach
+									{!! Form::open([ 'url' => URL::action('EpisodeController@add', [ 'slug' => $data->slug, 'type' => $type['name'] ]), 'method' => 'put' ]) !!}
+										<td style="padding: 0">
+											<div class="mdl-textfield mdl-js-textfield" style="width: 2em; padding: 0">
+												<input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="num" placeholder="#" value="{{ ($ep = \App\Models\Episode::where([ ['anime', '=', $data->slug], ['type', '=', $type['name']] ])->orderBy('num', 'DESC')->first()) !== NULL ? $ep->num + 1 : 1 }}" />
+												{{--<label class="mdl-textfield__label" for="num"></label>--}}
+												<span class="mdl-textfield__error">Insira um número válido!</span>
+											</div>
+										</td>
+										<td class="mdl-data-table__cell--non-numeric" colspan="2">
+											<div class="mdl-textfield mdl-js-textfield" style="width: 100%; padding: 0">
+												<input class="mdl-textfield__input" type="text" name="title" placeholder="Título (opcional)"/>
+												{{--<label class="mdl-textfield__label" for="title"></label>--}}
+											</div>
 										</td>
 										<td>
-											<a href="{{ URL::action('EpisodeController@manage', [ 'slug' => $data->slug, 'type' => $type['name'], 'num' => $episode->num ]) }}" style="color:black">
-												<button class="mdl-button mdl-js-button mdl-button--icon">
-													<i class="material-icons">edit</i>
-												</button>
-											</a>
-
-											<a href="{{ URL::action('EpisodeController@deleteWarning', [ 'slug' => $data->slug, 'type' => $type['name'], 'num' => $episode->num ]) }}" style="color:darkred">
-												<button class="mdl-button mdl-js-button mdl-button--icon">
-													<i class="material-icons">delete</i>
-												</button>
-											</a>
+											<button type="submit" class="mdl-button mdl-js-button mdl-button--icon" style="color:black">
+												<i class="material-icons">save</i>
+											</button>
 										</td>
+
+										<input type="hidden" name="type" value="{{ $type['name'] }}" />
+									{!! Form::close() !!}
 									</tr>
-								@endforeach
-							</tbody>
-						</table>
+
+									@foreach($data->episodes()->where('type', '=', $type['name'])->groupBy([ 'num' ])->get() as $episode)
+										<tr>
+											<td>{{ $episode->num }}</td>
+											<td class="mdl-data-table__cell--non-numeric">{{ $episode->title }}</td>
+											<td class="mdl-data-table__cell--non-numeric">
+												@foreach($episode->downloads()->orderBy('host_id', 'ASC')->get() as $download)
+													<a href="{{ $download->link }}" title="{{ $download->host->name ?? '' }}">
+														<img src="{{ $download->host->icon ?? '/img/unknown_circle.png' }}" class="download-link-icon">
+													</a>
+												@endforeach
+											</td>
+											<td>
+												<a href="{{ URL::action('EpisodeController@manage', [ 'slug' => $data->slug, 'type' => $type['name'], 'num' => $episode->num ]) }}" style="color:black">
+													<button class="mdl-button mdl-js-button mdl-button--icon">
+														<i class="material-icons">edit</i>
+													</button>
+												</a>
+
+												<a href="{{ URL::action('EpisodeController@deleteWarning', [ 'slug' => $data->slug, 'type' => $type['name'], 'num' => $episode->num ]) }}" style="color:darkred">
+													<button class="mdl-button mdl-js-button mdl-button--icon">
+														<i class="material-icons">delete</i>
+													</button>
+												</a>
+											</td>
+										</tr>
+									@endforeach
+								</tbody>
+							</table>
+						</div>
 					@endforeach
-				@else
-					<p>Guarde o anime antes de adicionar episódios.</p>
-				@endif
-			</p>
+
+				</div>
+			@else
+				<p>Guarde o anime antes de adicionar episódios.</p>
+			@endif
 
 		</div>
 	</div>

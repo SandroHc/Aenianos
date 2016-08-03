@@ -95,6 +95,7 @@
 	display: inline-block;
 	text-decoration: none;
 	padding: 10px;
+	margin: 2px 0;
 	@include transition(all 200ms ease-in);
 
 	&:hover {

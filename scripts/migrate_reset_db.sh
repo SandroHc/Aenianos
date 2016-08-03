@@ -1,0 +1,1 @@
+php artisan migrate:reset --seed
