@@ -20,7 +20,7 @@ class AnimeTableSeeder extends Seeder {
 
 		$faker = Faker\Factory::create();
 		$uploads_dir = "/img/upload/";
-		$uploads = NULL;
+		$uploads = [ ];
 		if(file_exists('public' . $uploads_dir)) // Check if the upload folder exists
 			$uploads = scandir('public' . $uploads_dir);
 

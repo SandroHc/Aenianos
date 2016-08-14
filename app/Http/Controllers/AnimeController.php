@@ -112,16 +112,12 @@ class AnimeController extends Controller {
 			$data->cover_offset = Input::get('cover_offset', 0);
 
 			$data->status = Input::get('status');
-			$data->premiered = Input::get('premiered');
-
-			$temp = Input::get('airing_week_day');
-			$data->airing_week_day = empty($temp) ? NULL : $temp;
-
-			$data->genres = Input::get('genres');
-
-			$data->japanese = Input::get('japanese');
-			$data->studio = Input::get('studio');
-			$data->website = Input::get('website');
+			$data->japanese = empty($temp = Input::get('japanese')) ? NULL : $temp;
+			$data->premiered = empty($temp = Input::get('premiered')) ? NULL : $temp;
+			$data->airing_week_day = empty($temp = Input::get('airing_week_day')) ? NULL : $temp;
+			$data->genres = empty($temp = Input::get('genres')) ? NULL : $temp;
+			$data->studio = empty($temp = Input::get('studio')) ? NULL : $temp;
+			$data->website = empty($temp = Input::get('website')) ? NULL : $temp;
 
 			// Save the changes to the DB
 			$data->save();
