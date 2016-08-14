@@ -4,6 +4,7 @@
 
 @section('head')
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/redactor.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ asset('css/getmdl-select.min.css') }}">
 @endsection
 
 @section('content')
@@ -22,7 +23,7 @@
 
 			<div class="mdl-textfield mdl-js-textfield">
 				Título
-				<input class="mdl-textfield__input" type="text" name="title" value="{{ old('title', isset($data) ? $data->title : '')  }}" required="" />
+				<input class="mdl-textfield__input" type="text" name="title" value="{{ old('title', isset($data) ? $data->title : '')  }}" required="" id="input" />
 				<label class="mdl-textfield__label" for="title"></label>
 			</div>
 
@@ -33,40 +34,60 @@
 			<br>
 
 			<h4>Outras informações</h4>
-			<h5>Estado</h5>
-
-			<?php $values = [ 'Em lançamento', 'Em tradução', 'Concluído' ]; ?>
-			@foreach($values as $cur)
-				<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="status-{{ $cur }}">
-					<input type="radio" id="status-{{ $cur }}" class="mdl-radio__button" name="status" value="{{ $cur }}" {{ (!isset($data) && $values[0] === $cur) || (isset($data) && $data->status === $cur) ? 'checked' : '' }} />
-					<span class="mdl-radio__label">{{ $cur }}</span>
-				</label>
-				<br>
-			@endforeach
 
 			<div class="mdl-grid">
-				<div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--4-col">
+
+				<div class="mdl-cell mdl-cell--2-col">
+					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
+						<input class="mdl-textfield__input" type="text" name="status" id="status" value="{{ $data->status ?? 'Em lançamento' }}" readonly tabIndex="-1">
+						<label for="status">
+							<i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
+						</label>
+						<label for="status" class="mdl-textfield__label">Estado</label>
+						<ul for="status" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+							<li class="mdl-menu__item">Em lançamento</li>
+							<li class="mdl-menu__item">Em tradução</li>
+							<li class="mdl-menu__item">Concluído</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--2-col">
 					Episódios
-					<input class="mdl-textfield__input" type="text" id="episodes" name="episodes" value="{{ $data->episodes ?? '' }}" />
 					<label class="mdl-textfield__label" for="episodes"></label>
+					<input class="mdl-textfield__input" type="text" id="episodes" name="episodes" value="{{ $data->episodes ?? '' }}" />
 				</div>
 
-				<div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--4-col">
-					Lançamentos semanais
-					<input class="mdl-textfield__input" type="text" id="airing_week_day" name="airing_week_day" value="{{ $data->airing_week_day ?? '' }}" />
-					<label class="mdl-textfield__label" for="airing_week_day"></label>
+				<div class="mdl-cell mdl-cell--2-col">
+					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
+						<input class="mdl-textfield__input" type="text" name="airing_week_day" id="airing_week_day" value="{{ $data->airing_week_day ?? 'N/A' }}" readonly tabIndex="-1">
+						<label for="airing_week_day">
+							<i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
+						</label>
+						<label for="status" class="mdl-textfield__label">Lançamentos semanais</label>
+						<ul for="airing_week_day" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+							<li class="mdl-menu__item" data-val="?">N/A</li>
+							<li class="mdl-menu__item">segunda</li>
+							<li class="mdl-menu__item">terça</li>
+							<li class="mdl-menu__item">quarta</li>
+							<li class="mdl-menu__item">quinta</li>
+							<li class="mdl-menu__item">sexta</li>
+							<li class="mdl-menu__item">sábado</li>
+							<li class="mdl-menu__item">domingo</li>
+						</ul>
+					</div>
 				</div>
 
-				<div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--4-col">
+				<div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--2-col">
 					Época de lançamento
 					<input class="mdl-textfield__input" type="text" id="premiered" name="premiered" value="{{ isset($data->premiered) ? $data->premiered : '' }}" />
 					<label class="mdl-textfield__label" for="premiered"></label>
 				</div>
 
-				<div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--4-col">
+				<div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--2-col">
 					Géneros
-					<input class="mdl-textfield__input" type="text" id="genres" name="genres" value="{{ $data->genres ?? '' }}" />
 					<label class="mdl-textfield__label" for="genres"></label>
+					<input class="mdl-textfield__input" type="text" id="genres" name="genres" value="{{ $data->genres ?? '' }}" />
 				</div>
 			</div>
 
@@ -114,7 +135,7 @@
 			</p>
 
 			@if(isset($data) && !empty($data->official_cover))
-				<img class="editor-capa" src="/{{ $data->official_cover }}">
+				<img class="editor-capa" src="{{ $data->official_cover }}">
 			@endif
 
 			<br><br>
@@ -139,78 +160,75 @@
 					];
 				?>
 
-				<div class="mdl-grid">
-
-					@foreach($types as $type)
-						<div class="mdl-cell mdl-cell--6-col">
-							<h4>{{ $type['title'] }}</h4>
-							<table class="mdl-data-table mdl-shadow--2dp" style="width: 100%">
-								<thead>
+				@foreach($types as $type)
+					<div class="mdl-cell mdl-cell--6-col">
+						<h4>{{ $type['title'] }}</h4>
+						<table class="mdl-data-table mdl-shadow--2dp" style="width: 100%">
+							<thead>
+							<tr>
+								<td>#</td>
+								<td class="mdl-data-table__cell--non-numeric">Título</td>
+								<td class="mdl-data-table__cell--non-numeric">Links</td>
+								<td class="mdl-data-table__cell--non-numeric"></td>
+							</tr>
+							</thead>
+							<tbody>
 								<tr>
-									<td>#</td>
-									<td class="mdl-data-table__cell--non-numeric">Título</td>
-									<td class="mdl-data-table__cell--non-numeric">Links</td>
-									<td class="mdl-data-table__cell--non-numeric"></td>
+								{!! Form::open([ 'url' => URL::action('EpisodeController@add', [ 'slug' => $data->slug, 'type' => $type['name'] ]), 'method' => 'put' ]) !!}
+									<td style="padding: 0">
+										<div class="mdl-textfield mdl-js-textfield" style="width: 2em; padding: 0">
+											<input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="num" placeholder="#" value="{{ ($ep = \App\Models\Episode::where([ ['anime', '=', $data->slug], ['type', '=', $type['name']] ])->orderBy('num', 'DESC')->first()) !== NULL ? $ep->num + 1 : 1 }}" />
+											{{--<label class="mdl-textfield__label" for="num"></label>--}}
+											<span class="mdl-textfield__error">Insira um número válido!</span>
+										</div>
+									</td>
+									<td class="mdl-data-table__cell--non-numeric" colspan="2">
+										<div class="mdl-textfield mdl-js-textfield" style="width: 100%; padding: 0">
+											<input class="mdl-textfield__input" type="text" name="title" placeholder="Título (opcional)"/>
+											{{--<label class="mdl-textfield__label" for="title"></label>--}}
+										</div>
+									</td>
+									<td>
+										<button type="submit" class="mdl-button mdl-js-button mdl-button--icon" style="color:black">
+											<i class="material-icons">save</i>
+										</button>
+									</td>
+
+									<input type="hidden" name="type" value="{{ $type['name'] }}" />
+								{!! Form::close() !!}
 								</tr>
-								</thead>
-								<tbody>
+
+								@foreach($data->episodes()->where('type', '=', $type['name'])->groupBy([ 'num' ])->get() as $episode)
 									<tr>
-									{!! Form::open([ 'url' => URL::action('EpisodeController@add', [ 'slug' => $data->slug, 'type' => $type['name'] ]), 'method' => 'put' ]) !!}
-										<td style="padding: 0">
-											<div class="mdl-textfield mdl-js-textfield" style="width: 2em; padding: 0">
-												<input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="num" placeholder="#" value="{{ ($ep = \App\Models\Episode::where([ ['anime', '=', $data->slug], ['type', '=', $type['name']] ])->orderBy('num', 'DESC')->first()) !== NULL ? $ep->num + 1 : 1 }}" />
-												{{--<label class="mdl-textfield__label" for="num"></label>--}}
-												<span class="mdl-textfield__error">Insira um número válido!</span>
-											</div>
-										</td>
-										<td class="mdl-data-table__cell--non-numeric" colspan="2">
-											<div class="mdl-textfield mdl-js-textfield" style="width: 100%; padding: 0">
-												<input class="mdl-textfield__input" type="text" name="title" placeholder="Título (opcional)"/>
-												{{--<label class="mdl-textfield__label" for="title"></label>--}}
-											</div>
+										<td>{{ $episode->num }}</td>
+										<td class="mdl-data-table__cell--non-numeric">{{ $episode->title }}</td>
+										<td class="mdl-data-table__cell--non-numeric">
+											@foreach($episode->downloads()->orderBy('host_id', 'ASC')->get() as $download)
+												<a href="{{ $download->link }}" title="{{ $download->host->name ?? '' }}">
+													<img src="{{ $download->host->icon ?? '/img/unknown_circle.png' }}" class="download-link-icon">
+												</a>
+											@endforeach
 										</td>
 										<td>
-											<button type="submit" class="mdl-button mdl-js-button mdl-button--icon" style="color:black">
-												<i class="material-icons">save</i>
-											</button>
+											<a href="{{ URL::action('EpisodeController@manage', [ 'slug' => $data->slug, 'type' => $type['name'], 'num' => $episode->num ]) }}" style="color:black">
+												<button class="mdl-button mdl-js-button mdl-button--icon">
+													<i class="material-icons">edit</i>
+												</button>
+											</a>
+
+											<a href="{{ URL::action('EpisodeController@deleteWarning', [ 'slug' => $data->slug, 'type' => $type['name'], 'num' => $episode->num ]) }}" style="color:darkred">
+												<button class="mdl-button mdl-js-button mdl-button--icon">
+													<i class="material-icons">delete</i>
+												</button>
+											</a>
 										</td>
-
-										<input type="hidden" name="type" value="{{ $type['name'] }}" />
-									{!! Form::close() !!}
 									</tr>
+								@endforeach
+							</tbody>
+						</table>
+					</div>
+				@endforeach
 
-									@foreach($data->episodes()->where('type', '=', $type['name'])->groupBy([ 'num' ])->get() as $episode)
-										<tr>
-											<td>{{ $episode->num }}</td>
-											<td class="mdl-data-table__cell--non-numeric">{{ $episode->title }}</td>
-											<td class="mdl-data-table__cell--non-numeric">
-												@foreach($episode->downloads()->orderBy('host_id', 'ASC')->get() as $download)
-													<a href="{{ $download->link }}" title="{{ $download->host->name ?? '' }}">
-														<img src="{{ $download->host->icon ?? '/img/unknown_circle.png' }}" class="download-link-icon">
-													</a>
-												@endforeach
-											</td>
-											<td>
-												<a href="{{ URL::action('EpisodeController@manage', [ 'slug' => $data->slug, 'type' => $type['name'], 'num' => $episode->num ]) }}" style="color:black">
-													<button class="mdl-button mdl-js-button mdl-button--icon">
-														<i class="material-icons">edit</i>
-													</button>
-												</a>
-
-												<a href="{{ URL::action('EpisodeController@deleteWarning', [ 'slug' => $data->slug, 'type' => $type['name'], 'num' => $episode->num ]) }}" style="color:darkred">
-													<button class="mdl-button mdl-js-button mdl-button--icon">
-														<i class="material-icons">delete</i>
-													</button>
-												</a>
-											</td>
-										</tr>
-									@endforeach
-								</tbody>
-							</table>
-						</div>
-					@endforeach
-
-				</div>
 			@else
 				<p>Guarde o anime antes de adicionar episódios.</p>
 			@endif
@@ -222,8 +240,11 @@
 @section('scripts')
 	<script type="text/javascript" src="{{ asset('js/redactor.min.js') }}" defer></script>
 	<script type="text/javascript" src="{{ asset('js/redactor.fontcolor.js') }}" defer></script>
-
 	<script type="text/javascript" src="{{ asset('js/jquery.cropit.js') }}" defer></script>
+
+	<script type="text/javascript" src="{{ asset('js/build/anime-editor.js') }}" defer></script>
+
+	<script type="text/javascript" src="{{ asset('js/getmdl-select.min.js') }}" defer async></script>
 
 	<script defer>
 		$(window).load(function() {
@@ -235,8 +256,8 @@
 			var $imageCropper = $('#image-cropper');
 			$imageCropper.cropit({
 				@if(isset($data) && !empty($data->cover))
-				imageState: { src: '/{{ $data->cover }}' },
-				onImageLoaded: function() { $imageCropper.cropit('offset', { x: 0, y: {{ $data->cover_offset or 0 }} / 100 * $imageCropper.cropit('imageSize').height }) },
+				imageState: { src: '{{ $data->cover }}' },
+				onImageLoaded: function() { $imageCropper.cropit('offset', { x: 0, y: {{ $data->cover_offset / 100 }} * $imageCropper.cropit('imageSize').height })	},
 				@endif
 				width: 784,
 				height: 200,

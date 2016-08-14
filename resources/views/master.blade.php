@@ -103,6 +103,8 @@
 <script src="{{ $debug ? asset('dev-env/jquery.min.js') : 'https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js' }}"></script>
 <script src="{{ $debug ? asset('dev-env/material.min.js') : 'https://storage.googleapis.com/code.getmdl.io/1.1.3/material.min.js' }}" async></script>
 
+<script src="{{ asset('js/build/app-main.js') }}" defer></script>
+
 @if(Auth::check())
 	<script>
 		var uid = '{{ Auth::id() }}';

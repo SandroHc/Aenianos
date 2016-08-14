@@ -35,18 +35,25 @@ function trailing_zeros($num, $digits = 2) {
 	return $num;
 }
 
-const UPLOAD_PATH = 'img/upload/';
+const UPLOAD_PATH = '/img/upload/';
 
-function store_upload(Symfony\Component\HttpFoundation\File\UploadedFile $file = null) {
+function save_upload(Symfony\Component\HttpFoundation\File\UploadedFile $file = null, $filename = NULL) {
 	if($file !== NULL && $file->isValid()) {
-		$filename = $file->getClientOriginalName();
+		// If the filename is provided, append the extension of the original file to it. Else, use the original filename
+		if($filename) {
+			$ext = $file->getClientOriginalExtension();
+			if($ext)
+				$filename .= '.' . $ext;
+		} else {
+			$filename = $file->getClientOriginalName();
+		}
 
 		// Save the uploaded file in the server
 		if(!file_exists(UPLOAD_PATH)) mkdir(UPLOAD_PATH, 0775, true); // Make sure all directories exist
 		$file->move(UPLOAD_PATH, $filename);
 
 		// Generate a optimized version (graciously fails if not a image)
-		if(!file_exists(UPLOAD_PATH)) mkdir(OPTIMIZED_PATH, 0775, true); // Make sure all directories exist
+		if(!file_exists(OPTIMIZED_PATH)) mkdir(OPTIMIZED_PATH, 0775, true); // Make sure all directories exist
 		optimize_image(UPLOAD_PATH, $filename);
 
 		return UPLOAD_PATH . $filename;
@@ -59,14 +66,18 @@ const OPTIMIZED_PATH = UPLOAD_PATH . 'opt/';
 const OPTIMIZED_QUALITY = 90;
 const OPTIMIZED_MAX_HEIGHT = 250;
 
+const IMG_INFO_WIDTH = 0;
+const IMG_INFO_HEIGHT = 1;
+const IMG_INFO_TYPE = 2;
+const IMG_INFO_SIZE = 3;
+
 function optimize_image($path, $filename = '', $height = OPTIMIZED_MAX_HEIGHT, $quality = OPTIMIZED_QUALITY) {
 	$srcFile = $path . $filename;
-
 	if(empty($srcFile))
 		return false;
 
 	$info = getimagesize($srcFile);
-	switch($info[2]) { // Check for file type
+	switch($info[IMG_INFO_TYPE]) { // Check for file type
 		case IMAGETYPE_PNG:		$image = imagecreatefrompng($srcFile); break;
 		case IMAGETYPE_GIF:		$image = imagecreatefromgif($srcFile); break;
 		case IMAGETYPE_JPEG:	$image = imagecreatefromjpeg($srcFile); break;
@@ -75,9 +86,13 @@ function optimize_image($path, $filename = '', $height = OPTIMIZED_MAX_HEIGHT, $
 	}
 
 	// Only resize the image if bigger than the target height
-	if($info[1] > $height) {
-		$width = $height / $info[1] * $info[0]; // max_height / image_height * image_width
-		$image = imagescale($image, $width, $height, IMG_BICUBIC);
+	if($info[IMG_INFO_HEIGHT] > $height) {
+		$width = floor($height / $info[IMG_INFO_HEIGHT] * $info[IMG_INFO_WIDTH]); // max_height / image_height * image_width
+//		$image = imagescale($image, $width, $height, IMG_BICUBIC);
+		$image_p = imagecreatetruecolor($width, $height);
+		imagecopyresampled($image_p, $image, 0, 0, 0, 0, $width, $height, $info[IMG_INFO_WIDTH], $info[IMG_INFO_HEIGHT]);
+		imagedestroy($image); // Free up the resources of the original image
+		$image = $image_p; // Swap the original with the resized one
 	}
 
 	// Save the optimized image

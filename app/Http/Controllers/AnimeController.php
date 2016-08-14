@@ -5,6 +5,7 @@ use App\Models\Anime;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
@@ -36,7 +37,7 @@ class AnimeController extends Controller {
 	 * ADMIN AREA
 	 */
 	public function add() {
-		return $this->manage('novo');
+		return $this->manage('new');
 	}
 
 	/**
@@ -47,7 +48,7 @@ class AnimeController extends Controller {
 	 * @return View
 	 */
 	public function manage($slug) {
-		if($slug !== 'novo') {
+		if($slug !== 'new') {
 			try {
 				$data = Anime::get($slug);
 			} catch(ModelNotFoundException $e) {
@@ -73,7 +74,7 @@ class AnimeController extends Controller {
 			'status' => 'required',
 			'cover' => 'max:10000',
 			'official_cover' => 'max:5000',
-			'airing_week_day' => 'in:segunda,terça,quarta,quinta,sexta,sábado,domingo',
+			'airing_week_day' => 'in:N/A,segunda,terça,quarta,quinta,sexta,sábado,domingo',
 			'episodes' => 'integer',
 		];
 
@@ -81,7 +82,7 @@ class AnimeController extends Controller {
 
 		if(!$validator->fails()) {
 			// If adding a new anime, create the Model.
-			if($slug === 'novo') {
+			if($slug === 'new') {
 				$data = new Anime();
 			} else {
 				$data = Anime::get($slug);
@@ -91,15 +92,20 @@ class AnimeController extends Controller {
 			$data->synopsis = Input::get('synopsis');
 			$data->episodes = Input::get('episodes');
 
-			$temp = store_upload(Input::file('official_cover'));
-			if($temp !== NULL)
-				$data->official_cover = $temp;
-
-			$temp = store_upload(Input::file('cover'));
+			$temp = save_upload(Input::file('cover'), $data->title . '-cover');
 			if($temp !== NULL)
 				$data->cover = $temp;
 
-			$data->cover_offset = Input::get('cover_offset');
+			$temp = save_upload(Input::file('official_cover'), $data->title . '-cover-official');
+			if($temp !== NULL) {
+				$data->official_cover = $temp;
+
+				// Apply the official cover if no custom one was provided
+				if($data->cover == NULL)
+					$data->cover = $data->official_cover;
+			}
+
+			$data->cover_offset = Input::get('cover_offset', 0);
 
 			$data->status = Input::get('status');
 			$data->premiered = Input::get('premiered');

@@ -12,5 +12,12 @@ var elixir = require('laravel-elixir');
  */
 
 elixir(function(mix) {
-    mix.sass('app.scss');
+    mix
+		.sass('app.scss')
+		.coffee([
+			'main.coffee'
+		], 'public/js/build/app-main.js')
+		.coffee([
+			'anime-editor.coffee'
+		], 'public/js/build/anime-editor.js');
 });

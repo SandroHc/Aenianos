@@ -3,6 +3,7 @@
 Thumbs.db
 
 storage/search/
+public/js/build/
 public/img/upload/
 public/css/app.css*
 _ide_helper.php

@@ -63,7 +63,7 @@ class UsersController extends Controller {
 
 			$data->name = Input::get('name');
 
-			$temp = store_upload(Input::file('avatar'));
+			$temp = save_upload(Input::file('avatar'));
 			if($temp !== NULL)
 				$data->avatar = $temp;
 

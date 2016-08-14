@@ -16,7 +16,7 @@
 		<div class="anime-header__sub__content">
 			@if(!empty($data->official_cover))
 				<div>
-					<img src="/{{ $data->official_cover }}">
+					<img src="{{ $data->official_cover }}">
 				</div>
 			@endif
 			<div class="anime-header__sub__content__synopsis">
