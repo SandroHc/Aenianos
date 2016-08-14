@@ -50,11 +50,10 @@ function save_upload(Symfony\Component\HttpFoundation\File\UploadedFile $file = 
 
 		// Save the uploaded file in the server
 		if(!file_exists(UPLOAD_PATH)) mkdir(UPLOAD_PATH, 0775, true); // Make sure all directories exist
-		$file->move(UPLOAD_PATH, $filename);
+		$file->move(UPLOAD_PATH . $filename);
 
 		// Generate a optimized version (graciously fails if not a image)
-		if(!file_exists(OPTIMIZED_PATH)) mkdir(OPTIMIZED_PATH, 0775, true); // Make sure all directories exist
-		optimize_image(UPLOAD_PATH, $filename);
+		optimize_image(UPLOAD_PATH . $filename);
 
 		return '/' . UPLOAD_PATH . $filename;
 	} else {
@@ -71,16 +70,18 @@ const IMG_INFO_HEIGHT = 1;
 const IMG_INFO_TYPE = 2;
 const IMG_INFO_SIZE = 3;
 
-function optimize_image($path, $filename = '', $height = OPTIMIZED_MAX_HEIGHT, $quality = OPTIMIZED_QUALITY) {
-	$srcFile = $path . $filename;
-	if(empty($srcFile))
+function optimize_image($filename, $output = '', $height = OPTIMIZED_MAX_HEIGHT, $quality = OPTIMIZED_QUALITY) {
+	if(empty($filename) || file_exists($filename))
 		return false;
 
-	$info = getimagesize($srcFile);
+	if(!file_exists(OPTIMIZED_PATH))
+		mkdir(OPTIMIZED_PATH, 0775, true);
+
+	$info = getimagesize($filename);
 	switch($info[IMG_INFO_TYPE]) { // Check for file type
-		case IMAGETYPE_PNG:		$image = imagecreatefrompng($srcFile); break;
-		case IMAGETYPE_GIF:		$image = imagecreatefromgif($srcFile); break;
-		case IMAGETYPE_JPEG:	$image = imagecreatefromjpeg($srcFile); break;
+		case IMAGETYPE_PNG:		$image = imagecreatefrompng($filename); break;
+		case IMAGETYPE_GIF:		$image = imagecreatefromgif($filename); break;
+		case IMAGETYPE_JPEG:	$image = imagecreatefromjpeg($filename); break;
 		default:
 			return false;
 	}
@@ -88,23 +89,23 @@ function optimize_image($path, $filename = '', $height = OPTIMIZED_MAX_HEIGHT, $
 	// Only resize the image if bigger than the target height
 	if($info[IMG_INFO_HEIGHT] > $height) {
 		$width = floor($height / $info[IMG_INFO_HEIGHT] * $info[IMG_INFO_WIDTH]); // max_height / image_height * image_width
-//		$image = imagescale($image, $width, $height, IMG_BICUBIC);
 		$image_p = imagecreatetruecolor($width, $height);
 		imagecopyresampled($image_p, $image, 0, 0, 0, 0, $width, $height, $info[IMG_INFO_WIDTH], $info[IMG_INFO_HEIGHT]);
 		imagedestroy($image); // Free up the resources of the original image
 		$image = $image_p; // Swap the original with the resized one
 	}
 
-	// Save the optimized image
-	$outputPath = get_optimized_path($srcFile);
-	imagejpeg($image, $outputPath, $quality);
+	if(empty($output))
+		$output = get_optimized_path($filename);
+
+	imagejpeg($image, $output, $quality);
 	imagedestroy($image);
 
-	return $outputPath;
+	return $output;
 }
 
-function get_optimized_path($originalPath) {
-	return OPTIMIZED_PATH . basename($originalPath);
+function get_optimized_path($path) {
+	return OPTIMIZED_PATH . basename($path);
 }
 
 /**

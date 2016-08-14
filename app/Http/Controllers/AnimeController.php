@@ -96,11 +96,11 @@ class AnimeController extends Controller {
 			$data->synopsis = Input::get('synopsis');
 			$data->episodes = Input::get('episodes');
 
-			$temp = save_upload(Input::file('cover'), $data->title . '-cover');
+			$temp = save_upload(Input::file('cover'), $data->slug . '-cover');
 			if($temp !== NULL)
 				$data->cover = $temp;
 
-			$temp = save_upload(Input::file('official_cover'), $data->title . '-cover-official');
+			$temp = save_upload(Input::file('official_cover'), $data->slug . '-cover-official');
 			if($temp !== NULL) {
 				$data->official_cover = $temp;
 
@@ -117,7 +117,6 @@ class AnimeController extends Controller {
 			$temp = Input::get('airing_week_day');
 			$data->airing_week_day = empty($temp) ? NULL : $temp;
 
-			$data->episodes = Input::get('episodes');
 			$data->genres = Input::get('genres');
 
 			$data->japanese = Input::get('japanese');

@@ -55,7 +55,7 @@ $factory->define(App\Models\Episode::class, function($faker) {
 });
 
 $factory->define(App\Models\Download::class, function($faker) {
-	static $hosts = [ 'http://mega.nz/', 'https://drive.google.com/file/d/0B8KL1BNoXI0jblotVS1YQkE3TEE/view?usp=sharing', 'http://example.com' ];
+	static $hosts = [ 'http://mega.nz/', 'https://drive.google.com/file/d/0B8KL1BNoXI0jblotVS1YQkE3TEE/view?usp=sharing', 'http://example.com/' ];
 
 	$host = $faker->numberBetween(1,3);
 	$quality = $faker->randomElement([ 'BD', 'HD', 'SD' ]);
