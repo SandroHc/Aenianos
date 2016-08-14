@@ -33,6 +33,10 @@ class AnimeController extends Controller {
 		return view('anime.list');
 	}
 
+	public function admin() {
+		return view('admin.anime.admin');
+	}
+
 	/*
 	 * ADMIN AREA
 	 */

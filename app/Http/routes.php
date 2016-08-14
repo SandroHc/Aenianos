@@ -46,6 +46,7 @@ Route::group([ 'middleware' => 'admin', 'prefix' => 'admin' ], function() {
 	Route::delete('noticias/{slug}',		'NewsController@delete');
 
 	/** Anime **/
+	Route::get('anime',			'AnimeController@admin');
 	// Edit
 	Route::get('anime/new',		'AnimeController@add');
 	Route::get('anime/{slug}',	'AnimeController@manage');

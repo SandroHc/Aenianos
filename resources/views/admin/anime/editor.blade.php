@@ -1,6 +1,6 @@
 @extends('master')
 
-<?php $current_section = "Editar ". ($data->title ?? 'novo projeto') ?>
+<?php $current_section = 'Editar '. ($data->title ?? 'novo projeto') ?>
 
 @section('head')
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/redactor.css') }}">
@@ -60,7 +60,7 @@
 
 				<div class="mdl-cell mdl-cell--2-col">
 					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
-						<input class="mdl-textfield__input" type="text" name="airing_week_day" id="airing_week_day" value="{{ $data->airing_week_day ?? 'N/A' }}" readonly tabIndex="-1">
+						<input class="mdl-textfield__input" type="text" name="airing_week_day" id="airing_week_day" value="{{ $data->airing_week_day ?? 'N/A' }}" readonly tabIndex="-1" {{ $data != NULL && $data->status !== 'Em lançamento' ? 'disabled' : '' }}>
 						<label for="airing_week_day">
 							<i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
 						</label>

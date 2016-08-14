@@ -1,6 +1,6 @@
 @extends('master')
 
-@section('title', 'Administração - Aenianos Fansub')
+<?php $current_section = 'Administração' ?>
 
 @section('content')
 	<div class="mdl-card mdl-grid mdl-shadow--2dp">
@@ -10,12 +10,7 @@
 			{{ \App\Models\Episode::where('created_at', '>=', \Carbon\Carbon::now()->subMonth())->count() }} episódios lançados no último mês
 		</div>
 		<div class="mdl-cell mdl-cell--3-col">
-			<a href="/anime">Gerir Projetos</a>
-		</div>
-		<div class="mdl-cell mdl-cell--1-col">
-			<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" onclick="window.location='{{ URL::action('AnimeController@add') }}'">
-				<i class="material-icons">add</i>
-			</button>
+			<a href="{{ URL::action('AnimeController@admin') }}">Gerir Projetos</a>
 		</div>
 	</div>
 
