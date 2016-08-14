@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Host;
+
 class HostTest extends TestCase {
 
 	public function testRegex() {
@@ -27,7 +29,7 @@ class HostTest extends TestCase {
 			'http://www.mega.nz/#!4px0UKzK!vt8yksoENVLLWqVfCMkMB8Ejpzlru4eNqXSGB8UvOe4',
 		];
 		foreach($links as $link)
-			$this->assertEquals('MEGA', $this->regexHelper($link));
+			$this->assertEquals('MEGA', $this->getHostByRegex($link)->name);
 
 		// Check against Google Drive
 		$links = [
