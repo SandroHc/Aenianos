@@ -35,7 +35,7 @@ function trailing_zeros($num, $digits = 2) {
 	return $num;
 }
 
-const UPLOAD_PATH = '/img/upload/';
+const UPLOAD_PATH = 'img/upload/';
 
 function save_upload(Symfony\Component\HttpFoundation\File\UploadedFile $file = null, $filename = NULL) {
 	if($file !== NULL && $file->isValid()) {
@@ -56,7 +56,7 @@ function save_upload(Symfony\Component\HttpFoundation\File\UploadedFile $file = 
 		if(!file_exists(OPTIMIZED_PATH)) mkdir(OPTIMIZED_PATH, 0775, true); // Make sure all directories exist
 		optimize_image(UPLOAD_PATH, $filename);
 
-		return UPLOAD_PATH . $filename;
+		return '/' . UPLOAD_PATH . $filename;
 	} else {
 		return NULL;
 	}
