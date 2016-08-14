@@ -21,12 +21,9 @@ class GeneralController extends Controller {
 		$searchTerm = trim(Input::get('search'));
 
 		// Check if the term is not empty.
-		if($searchTerm !== '') {
+		$search = NULL;
+		if(!empty($searchTerm))
 			$search = Search::search(NULL, $searchTerm, [ 'fuzzy' => 0 ])->paginate(10);
-		} else {
-			// If it's really just an empty string, initialize the variable with NULL
-			$search = NULL;
-		}
 
 		return view('search', [ 'search' => $searchTerm, 'paginator' => $search ]);
 	}

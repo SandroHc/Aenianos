@@ -26,6 +26,19 @@ class AuthController extends Controller {
 	protected $loginPath = '/login';
 
 	/**
+	 * @param $request
+	 * @param $user		User
+	 * @return \Illuminate\Http\RedirectResponse
+	 */
+	protected function authenticated($request, $user) {
+		if($user->isAdmin()) {
+			return redirect()->intended('/admin');
+		}
+
+		return redirect()->intended($this->redirectPath);
+	}
+
+	/**
 	 * Create a new authentication controller instance.
 	 */
 	public function __construct() {
