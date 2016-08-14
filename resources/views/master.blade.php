@@ -22,7 +22,7 @@
 	<link rel="manifest" href="{{ asset('manifest.json') }}">
 
 	{{-- Material Design Lite - http://getmdl.io --}}
-	<link rel="stylesheet" href="{{ $debug ? asset('dev-env/material.blue-indigo.min.css') : 'https://storage.googleapis.com/code.getmdl.io/1.1.3/material.blue-indigo.min.css' }}">
+	<link rel="stylesheet" href="{{ $debug ? asset('dev-env/material.blue-indigo.min.css') : 'https://storage.googleapis.com/code.getmdl.io/1.2.0/material.blue-indigo.min.css' }}">
 
 	{{-- Minified CSS for the whole app --}}
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
@@ -101,7 +101,7 @@
 
 {{-- Import some external libraries. --}}
 <script src="{{ $debug ? asset('dev-env/jquery.min.js') : 'https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js' }}"></script>
-<script src="{{ $debug ? asset('dev-env/material.min.js') : 'https://storage.googleapis.com/code.getmdl.io/1.1.3/material.min.js' }}" async></script>
+<script src="{{ $debug ? asset('dev-env/material.min.js') : 'https://storage.googleapis.com/code.getmdl.io/1.2.0/material.min.js' }}" async></script>
 
 <script src="{{ asset('js/build/app-main.js') }}" defer></script>
 
