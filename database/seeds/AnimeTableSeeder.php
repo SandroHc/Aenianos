@@ -34,6 +34,7 @@ class AnimeTableSeeder extends Seeder {
 			if(isset($node['episodes_total'])) $anime->episodes = $node['episodes_total'];
 			if(isset($node['premiered'])) $anime->premiered = $node['premiered'];
 			if(isset($node['status'])) $anime->status = $node['status'];
+			if(isset($node['genres'])) $anime->genres = $node['genres'];
 			if(isset($node['studio'])) $anime->studio = $node['studio'];
 			if(isset($node['director'])) $anime->director = $node['director'];
 			if(isset($node['website'])) $anime->website = $node['website'];
@@ -66,7 +67,7 @@ class AnimeTableSeeder extends Seeder {
 						$ep->anime = $anime->slug;
 						$ep->type = $type;
 						$ep->num = isset($ep_node['num']) ? $ep_node['num'] : ++$num;
-						if(isset($ep_node['title'])) $ep->title = $ep_node['title'];
+						if(!empty($ep_node['title'])) $ep->title = $ep_node['title'];
 						$ep->save();
 
 						if(isset($ep_node['dl'])) {

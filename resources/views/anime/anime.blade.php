@@ -55,7 +55,7 @@
 											@endif
 										</td>
 										<td>
-											{{ $episode_base->title }}
+											{!! empty($episode_base->title) ? '<em>' . $section['name'] . ' ' . trailing_zeros($episode_base->num) . '</em>' : $episode_base->title !!}
 										</td>
 									</tr>
 									@if($has_episode)
