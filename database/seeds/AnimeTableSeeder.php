@@ -34,6 +34,9 @@ class AnimeTableSeeder extends Seeder {
 			//if(isset($node['episodes_total'])) $anime->episodes = $node['episodes_total'];
 			if(isset($node['premiered'])) $anime->premiered = $node['premiered'];
 			if(isset($node['status'])) $anime->status = $node['status'];
+			if(isset($node['studio'])) $anime->studio = $node['studio'];
+			if(isset($node['director'])) $anime->director = $node['director'];
+			if(isset($node['website'])) $anime->website = $node['website'];
 
 			foreach($uploads as $file) {
 				$filename = pathinfo($file)['filename'];
@@ -52,8 +55,6 @@ class AnimeTableSeeder extends Seeder {
 
 			$anime->save();
 
-//			echo "ANIME:", $anime->title, '<br>';
-
 			if(isset($node['episodes'])) {
 				static $ep_types = [ 'Episódio', 'Especial', 'Filme' ];
 				foreach($ep_types as $type) {
@@ -65,15 +66,23 @@ class AnimeTableSeeder extends Seeder {
 						$ep->anime = $anime->slug;
 						$ep->type = $type;
 						$ep->num = isset($ep_node['num']) ? $ep_node['num'] : ++$num;
-
-						if(isset($ep_node['title']))
-							$ep->title = $ep_node['title'];
-
+						if(isset($ep_node['title'])) $ep->title = $ep_node['title'];
 						$ep->save();
 
-//						echo "EP:", $ep->type, ':', $ep->num, ':', $ep->title, '<br>';
+						if(isset($ep_node['dl'])) {
+							foreach($ep_node['dl'] as $dl_node) {
+								if(!isset($dl_node['quality']) || !isset($dl_node['link']))
+									continue;
 
-						$this->createDownloads($faker, $ep->id);
+								$dl = new \App\Models\Download();
+								$dl->episode_id = $ep->id;
+								$dl->quality = $dl_node['quality'];
+								$dl->link = $dl_node['link'];
+								$dl->save();
+							}
+						} else {
+							$this->createDownloads($faker, $ep->id);
+						}
 					}
 				}
 			}

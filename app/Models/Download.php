@@ -46,7 +46,7 @@ class Download extends Model {
 
 	private function fillData() {
 		$this->findHost();
-		$this->findSize();
+//		$this->findSize();
 //		$this->isDown();
 	}
 

@@ -28,6 +28,7 @@ class CreateAnimeTable extends Migration {
 			$table->string('genres', 255)->nullable();
 
 			$table->string('studio', 100)->nullable();
+			$table->string('director', 100)->nullable();
 			$table->string('website', 255)->nullable();
 
 			$table->timestamps();

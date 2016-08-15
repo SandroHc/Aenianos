@@ -22,6 +22,7 @@ use Mmanos\Search\Facade as Search;
  * @property int episodes
  * @property string genres
  * @property string studio
+ * @property string director
  * @property string website
  */
 class Anime extends Model {
@@ -30,7 +31,7 @@ class Anime extends Model {
 	protected $table = 'anime';
 
 	protected $fillable = [ 'title', 'japanese', 'slug', 'synopsis', 'cover', 'cover_offset', 'official_cover', 'status',
-		'premiered', 'airing_week_day', 'episodes', 'genres', 'studio', 'website' ];
+		'premiered', 'airing_week_day', 'episodes', 'genres', 'studio', 'director', 'website' ];
 
 	protected $dates = [ 'deleted_at', 'airing_date' ];
 
