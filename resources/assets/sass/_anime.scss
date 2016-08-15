@@ -42,6 +42,33 @@
 	}
 }
 
+.mdl-chip .material-icons {
+	line-height: 32px;
+	margin-left: -1px;
+}
+
+#modal-official-cover {
+	padding: 0;
+	border: none;
+	background-color: transparent;
+	box-shadow: 0 9px 46px 8px rgba(0,0,0,.14),0 11px 15px -7px rgba(0,0,0,.12),0 24px 38px 3px rgba(0,0,0,.2);
+	position: fixed;
+	top: 50%;
+	transform: translate(0, -50%);
+
+	img {
+		height: 80%;
+	}
+
+	button {
+		background-color: #c51313;
+		color: white;
+		position: absolute;
+		top: -10px;
+		right: -10px;
+	}
+}
+
 .download-section {
 
 	&__table {
@@ -53,6 +80,9 @@
 			font-size: 14px;
 			color: #FFF;
 			border-bottom: thin solid #FFF;
+			cursor: pointer;
+			height: auto;
+			@include transition(all 200ms ease-in);
 
 			td {
 				padding: 8px 5px;
@@ -65,12 +95,8 @@
 				}
 			}
 
-			&.has-dl {
-				cursor: pointer;
-			}
-
 			&.hidden {
-				display: none;
+				height: 0;
 			}
 
 			&.disabled {

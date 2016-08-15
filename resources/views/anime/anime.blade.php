@@ -46,7 +46,7 @@
 										if($has_episode)
 											$episode = $episode_list_keys[$episode_base->num];
 									?>
-									<tr id="{{ $section['name'] }}-{{ $episode_base->num }}-{{ $quality->quality }}" class="has-dl {{ !$has_episode ? 'disabled' : '' }}">
+									<tr id="{{ $section['name'] }}-{{ $episode_base->num }}-{{ $quality->quality }}" class="{{ $has_episode ? 'has-dl' : 'disabled' }}">
 										<td>
 											@if($episode_base->num > 0)
 												{{ trailing_zeros($episode_base->num) }}
