@@ -61,7 +61,7 @@
 									@if($has_episode)
 										<tr id="{{ $section['name'] }}-{{ $episode->num }}-{{ $quality->quality }}-dl" class="download hidden">
 											<td colspan="2">
-											@foreach($episode->downloads()->orderBy('host_id', 'ASC')->get() as $download)
+											@foreach($episode->downloads()->where('quality', '=', $quality->quality)->orderBy('host_id', 'ASC')->get() as $download)
 												<a href="{{ $download->link }}" class="button-link">
 													<img src="{{ $download->host->icon ?? '/img/unknown_circle.png' }}">
 													{{ $download->host->name ?? '' }}

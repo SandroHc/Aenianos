@@ -31,7 +31,7 @@ class AnimeTableSeeder extends Seeder {
 			$anime->title = $node['title'];
 			if(isset($node['japanese'])) $anime->japanese = $node['japanese'];
 			if(isset($node['synopsis'])) $anime->synopsis = $node['synopsis'];
-			//if(isset($node['episodes_total'])) $anime->episodes = $node['episodes_total'];
+			if(isset($node['episodes_total'])) $anime->episodes = $node['episodes_total'];
 			if(isset($node['premiered'])) $anime->premiered = $node['premiered'];
 			if(isset($node['status'])) $anime->status = $node['status'];
 			if(isset($node['studio'])) $anime->studio = $node['studio'];
@@ -103,8 +103,6 @@ class AnimeTableSeeder extends Seeder {
 			$dl->quality = $quality;
 			$dl->size = $faker->biasedNumberBetween(50, 500);
 			$dl->save();
-
-//				echo "DL!<br>";
 		}
 	}
 }
