@@ -21,5 +21,21 @@ class HostTableSeeder extends Seeder {
 			'regex_size' => NULL,
 			'regex_link_down' => NULL,
 		]);
+
+		Host::create([
+			'name' => 'Fansubber',
+			'icon' => '/img/hosts/fansubber.png',
+			'regex' => '(fansubber.com.br)',
+			'regex_size' => NULL,
+			'regex_link_down' => NULL,
+		]);
+
+		Host::create([
+			'name' => 'OMDA',
+			'icon' => '/img/hosts/omda.png',
+			'regex' => '(omda-fansubs.com)',
+			'regex_size' => NULL,
+			'regex_link_down' => NULL,
+		]);
 	}
 }
