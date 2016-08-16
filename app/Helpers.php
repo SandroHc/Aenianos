@@ -71,7 +71,10 @@ const IMG_INFO_TYPE = 2;
 const IMG_INFO_SIZE = 3;
 
 function optimize_image($filename, $output = '', $height = OPTIMIZED_MAX_HEIGHT, $quality = OPTIMIZED_QUALITY) {
-	if(empty($filename) || file_exists($filename))
+	if(empty($output))
+		$output = get_optimized_path($filename);
+
+	if(empty($filename) || file_exists($output))
 		return false;
 
 	if(!file_exists(OPTIMIZED_PATH))
@@ -94,9 +97,6 @@ function optimize_image($filename, $output = '', $height = OPTIMIZED_MAX_HEIGHT,
 		imagedestroy($image); // Free up the resources of the original image
 		$image = $image_p; // Swap the original with the resized one
 	}
-
-	if(empty($output))
-		$output = get_optimized_path($filename);
 
 	imagejpeg($image, $output, $quality);
 	imagedestroy($image);
