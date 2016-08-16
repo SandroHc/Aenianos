@@ -57,12 +57,9 @@ class AnimeTableSeeder extends Seeder {
 			$anime->save();
 
 			if(isset($node['episodes'])) {
-				static $ep_types = [ 'Episódio', 'Especial', 'Filme' ];
-				foreach($ep_types as $type) {
-					if(!isset($node['episodes'][$type])) continue;
-
-					$num = 0;
-					foreach($node['episodes'][$type] as $ep_node) {
+				$num = 0;
+				foreach($node['episodes'] as $type => $episodes_node) {
+					foreach($episodes_node as $ep_node) {
 						$ep = new \App\Models\Episode();
 						$ep->anime = $anime->slug;
 						$ep->type = $type;

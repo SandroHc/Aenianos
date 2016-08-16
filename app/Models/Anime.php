@@ -113,19 +113,7 @@ class Anime extends Model {
 		return $this->hasMany('App\Models\Episode', 'anime', 'slug');
 	}
 
-	public function hasMovies() {
-		return $this->hasEpisodesFrom('Filme');
-	}
-
-	public function hasSeries() {
-		return $this->hasEpisodesFrom('Episódio');
-	}
-
-	public function hasSpecials() {
-		return $this->hasEpisodesFrom('Especial');
-	}
-
-	private function hasEpisodesFrom($type) {
+	public function hasEpisodesFrom($type) {
 		return Episode::where('anime', '=', $this['slug'])->where('type', '=', $type)->exists();
 	}
 

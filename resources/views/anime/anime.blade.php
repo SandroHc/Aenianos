@@ -4,14 +4,15 @@
 		<?php
 
 		$sectionConfig = [
-				[ 'available' => $data->hasSeries(), 'name' => 'Episódio', 'title' => 'Episódios' ],
-				[ 'available' => $data->hasSpecials(), 'name' => 'Especial', 'title' => 'OVAs' ],
-				[ 'available' => $data->hasMovies(), 'name' => 'Filme', 'title' => 'Filmes' ],
+				[ 'name' => 'Episódio', 'title' => 'Episódios' ],
+				[ 'name' => 'Especial', 'title' => 'Especiais' ],
+				[ 'name' => 'OVA', 'title' => 'OVAs' ],
+				[ 'name' => 'Filme', 'title' => 'Filmes' ],
 		];
 		?>
 
 		@foreach($sectionConfig as $section)
-			@if($section['available'])
+			@if($data->hasEpisodesFrom($section['name']))
 				<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
 					<div class="mdl-tabs__tab-bar">
 						<h4>{{ $section['title'] }}</h4>
