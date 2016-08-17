@@ -11,10 +11,11 @@ class AnimeTableSeeder extends Seeder {
 		//factory(Anime::class, 10)->create();
 	}
 
-	public function seedFromFile($filename = 'database/seeds/anime_dump.json') {
-//		\Illuminate\Support\Facades\Log::debug('cwd: ' . getcwd());
-		$text = file_get_contents($filename);
-		$json = json_decode($text, true);
+	public function seedFromFile($directory = 'database/seeds/anime/') {
+		if(file_exists($directory))
+			$dir = scandir($directory);
+		else
+			return;
 
 		//var_dump($json);
 
@@ -24,65 +25,75 @@ class AnimeTableSeeder extends Seeder {
 		if(file_exists('public' . $uploads_dir)) // Check if the upload folder exists
 			$uploads = scandir('public' . $uploads_dir);
 
-		foreach($json['anime'] as $node) {
-			if(!isset($node['title'])) continue;
+		foreach($dir as $filename) {
+			if($filename == '.' || $filename == '..')
+				continue;
 
-			$anime = new \App\Models\Anime();
-			$anime->title = $node['title'];
-			if(isset($node['japanese'])) $anime->japanese = $node['japanese'];
-			if(isset($node['synopsis'])) $anime->synopsis = $node['synopsis'];
-			if(isset($node['episodes_total'])) $anime->episodes = $node['episodes_total'];
-			if(isset($node['premiered'])) $anime->premiered = $node['premiered'];
-			if(isset($node['status'])) $anime->status = $node['status'];
-			if(isset($node['genres'])) $anime->genres = $node['genres'];
-			if(isset($node['studio'])) $anime->studio = $node['studio'];
-			if(isset($node['director'])) $anime->director = $node['director'];
-			if(isset($node['website'])) $anime->website = $node['website'];
+			try {
+				$text = file_get_contents($directory . $filename);
+				$node = json_decode($text, true);
 
-			foreach($uploads as $file) {
-				$filename = pathinfo($file)['filename'];
+				if(!isset($node['title'])) continue;
 
-				if(empty($anime->cover) && $filename === $anime->slug . '-cover') {
-					$anime->cover = $uploads_dir . $file;
-					$anime->cover_offset = 0;
-					optimize_image('public' . $anime->cover, 'public/' . get_optimized_path($anime->cover));
+				$anime = new \App\Models\Anime();
+				$anime->title = $node['title'];
+				if(isset($node['japanese'])) $anime->japanese = $node['japanese'];
+				if(isset($node['synopsis'])) $anime->synopsis = $node['synopsis'];
+				if(isset($node['episodes_total'])) $anime->episodes = $node['episodes_total'];
+				if(isset($node['premiered'])) $anime->premiered = $node['premiered'];
+				if(isset($node['status'])) $anime->status = $node['status'];
+				if(isset($node['genres'])) $anime->genres = $node['genres'];
+				if(isset($node['studio'])) $anime->studio = $node['studio'];
+				if(isset($node['director'])) $anime->director = $node['director'];
+				if(isset($node['website'])) $anime->website = $node['website'];
+
+				foreach($uploads as $file) {
+					$filename = pathinfo($file)['filename'];
+
+					if(empty($anime->cover) && $filename === $anime->slug . '-cover') {
+						$anime->cover = $uploads_dir . $file;
+						$anime->cover_offset = 0;
+						optimize_image('public' . $anime->cover, 'public/' . get_optimized_path($anime->cover));
+					}
+
+					if(empty($anime->official_cover) && $filename === $anime->slug . '-cover-official') {
+						$anime->official_cover = $uploads_dir . $file;
+						optimize_image('public' . $anime->official_cover, 'public/' . get_optimized_path($anime->official_cover));
+					}
 				}
 
-				if(empty($anime->official_cover) && $filename === $anime->slug . '-cover-official') {
-					$anime->official_cover = $uploads_dir . $file;
-					optimize_image('public' . $anime->official_cover, 'public/' . get_optimized_path($anime->official_cover));
-				}
-			}
+				$anime->save();
 
-			$anime->save();
+				if(isset($node['episodes'])) {
+					$num = 0;
+					foreach($node['episodes'] as $type => $episodes_node) {
+						foreach($episodes_node as $ep_node) {
+							$ep = new \App\Models\Episode();
+							$ep->anime = $anime->slug;
+							$ep->type = $type;
+							$ep->num = isset($ep_node['num']) ? $ep_node['num'] : ++$num;
+							if(!empty($ep_node['title'])) $ep->title = $ep_node['title'];
+							$ep->save();
 
-			if(isset($node['episodes'])) {
-				$num = 0;
-				foreach($node['episodes'] as $type => $episodes_node) {
-					foreach($episodes_node as $ep_node) {
-						$ep = new \App\Models\Episode();
-						$ep->anime = $anime->slug;
-						$ep->type = $type;
-						$ep->num = isset($ep_node['num']) ? $ep_node['num'] : ++$num;
-						if(!empty($ep_node['title'])) $ep->title = $ep_node['title'];
-						$ep->save();
+							if(isset($ep_node['dl'])) {
+								foreach($ep_node['dl'] as $dl_node) {
+									if(!isset($dl_node['quality']) || !isset($dl_node['link']))
+										continue;
 
-						if(isset($ep_node['dl'])) {
-							foreach($ep_node['dl'] as $dl_node) {
-								if(!isset($dl_node['quality']) || !isset($dl_node['link']))
-									continue;
-
-								$dl = new \App\Models\Download();
-								$dl->episode_id = $ep->id;
-								$dl->quality = $dl_node['quality'];
-								$dl->link = $dl_node['link'];
-								$dl->save();
+									$dl = new \App\Models\Download();
+									$dl->episode_id = $ep->id;
+									$dl->quality = $dl_node['quality'];
+									$dl->link = $dl_node['link'];
+									$dl->save();
+								}
+							} else {
+								$this->createDownloads($faker, $ep->id);
 							}
-						} else {
-							$this->createDownloads($faker, $ep->id);
 						}
 					}
 				}
+			} catch (Exception $e) {
+				\Illuminate\Support\Facades\Log::error("Error parsing '$filename': " . $e->getMessage());
 			}
 		}
 	}

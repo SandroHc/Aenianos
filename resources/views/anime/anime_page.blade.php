@@ -24,7 +24,7 @@
 			});
 
 			var dialog = document.querySelector('#modal-official-cover');
-			var closeButton = dialog.querySelector('button');
+			var closeButton = dialog;
 			var showButton = document.querySelector('#show-modal-cover');
 			if(!dialog.showModal)
 				dialogPolyfill.registerDialog(dialog);

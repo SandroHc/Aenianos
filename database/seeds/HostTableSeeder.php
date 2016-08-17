@@ -23,6 +23,22 @@ class HostTableSeeder extends Seeder {
 		]);
 
 		Host::create([
+			'name' => 'Dropbox',
+			'icon' => '/img/hosts/dropbox.png',
+			'regex' => '(dropbox.com)',
+			'regex_size' => NULL,
+			'regex_link_down' => NULL,
+		]);
+
+		Host::create([
+			'name' => 'MediaFire',
+			'icon' => '/img/hosts/mediafire.png',
+			'regex' => '(mediafire.com)',
+			'regex_size' => NULL,
+			'regex_link_down' => NULL,
+		]);
+
+		Host::create([
 			'name' => 'Fansubber',
 			'icon' => '/img/hosts/fansubber.png',
 			'regex' => '(fansubber.com.br)',

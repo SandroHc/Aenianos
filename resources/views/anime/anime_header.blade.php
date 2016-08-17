@@ -79,8 +79,5 @@
 @if(!empty($data->official_cover))
 	<dialog id="modal-official-cover">
 		<img src="{{ $data->official_cover }}">
-		<button id="close-modal-cover" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
-			<i class="material-icons">clear</i>
-		</button>
 	</dialog>
 @endif

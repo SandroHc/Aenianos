@@ -1,7 +1,32 @@
 
-.anime-tile__synopsis {
-	max-height: 60px;
-	overflow: hidden;
+.anime-tile {
+	&__cover {
+		margin: 0 0 0 -8px;
+		width: auto;
+
+		img {
+			width: 150px;
+		}
+	}
+
+	.mdl-card__title-text {
+		a {
+			text-decoration: none;
+		}
+
+		span {
+			color: #555555;
+			font-weight: 100;
+			font-size: medium;
+			line-height: 29px;
+		}
+	}
+
+	&__synopsis {
+		max-height: calc(100% - 112px);
+		padding-bottom: 0;
+		overflow: hidden;
+	}
 }
 
 .anime-header {
@@ -52,20 +77,13 @@
 	border: none;
 	background-color: transparent;
 	box-shadow: 0 9px 46px 8px rgba(0,0,0,.14),0 11px 15px -7px rgba(0,0,0,.12),0 24px 38px 3px rgba(0,0,0,.2);
+	cursor: pointer;
 	position: fixed;
 	top: 50%;
 	transform: translate(0, -50%);
 
 	img {
 		height: 80%;
-	}
-
-	button {
-		background-color: #c51313;
-		color: white;
-		position: absolute;
-		top: -10px;
-		right: -10px;
 	}
 }
 
