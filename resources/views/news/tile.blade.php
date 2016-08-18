@@ -1,4 +1,4 @@
-<div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--8-col">
+<div class="mdl-card mdl-shadow--2dp">
 	<div class="mdl-card__title" style="padding-bottom:7px">
 		<h2 class="mdl-card__title-text">
 			@if(isset($show_comments))
@@ -33,8 +33,7 @@
 			<div class="mdl-tooltip" for="date-created-{{ $data->id }}">
 				editado
 				@if($data->updated_by > 0)
-					<?php $user = \App\User::find($data->updated_by); ?>
-					@if($user)
+					@if($user = \App\User::find($data->updated_by))
 						por {{ $user->name }}
 					@endif
 				@endif
@@ -42,8 +41,7 @@
 			</div>
 		@endif
 		@if($data->created_by > 0)
-			<?php $user = \App\User::find($data->created_by); ?>
-			@if($user)
+			@if($user = \App\User::find($data->created_by))
 				por {{ $user->name }}
 			@endif
 		@endif

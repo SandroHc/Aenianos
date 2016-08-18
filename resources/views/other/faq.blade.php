@@ -1,10 +1,10 @@
-@extends('master')
+@extends('card')
 
 <?php $current_section = "FAQ" ?>
 
-@section('content')
-	<h3>Perguntas frequentes</h3>
+@section('title', 'Perguntas frequentes')
 
+@section('text')
 	<section>
 		<h4>Dúvidas gerais</h4>
 		<nav>
@@ -61,7 +61,6 @@
 
 		<h5><a name="tecnicas_2">Uso o KMPLayer mas as legendas não aparecem direito</a></h5>
 		<p>KMPLayer é um player problemático nesse sentido, já que reproduz as legendas softsub de uma forma própria, e não como os fansubs as estilizam.</p>
-		<p><b><a href="http://www.anbient.net/faq/como-exibir-legendas-estilizadasass-no-kmplayer" target="_blank">AQUI</a></b> tem um tutorial que mostra como resolver esse problema.</p>
+		<p><b><a href="http://www.anbient.net/faq/como-exibir-legendas-estilizadasass-no-kmplayer" target="_blank">Aqui</a></b> tem um tutorial que mostra como resolver esse problema.</p>
 	</section>
-
 @endsection

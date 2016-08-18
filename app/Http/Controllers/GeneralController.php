@@ -107,18 +107,18 @@ class GeneralController extends Controller {
 	 * Basic views
 	 */
 	public function contact() {
-		return view('contact');
+		return view('other.contact');
 	}
 
 	public function about() {
-		return view('about');
+		return view('other.about');
 	}
 
 	public function faq() {
-		return view('faq');
+		return view('other.faq');
 	}
 
 	public function donations() {
-		return view('donations');
+		return view('other.donations');
 	}
 }

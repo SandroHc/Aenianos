@@ -3,7 +3,7 @@
 <?php $current_section = $search ?>
 
 @section('content')
-	<div class="mdl-card mdl-card--no-margin mdl-shadow--2dp mdl-cell mdl-cell--8-col">
+	<div class="mdl-card mdl-card--no-margin mdl-shadow--2dp">
 		<div class="mdl-card__supporting-text mdl-card--no-padding">
 			<h3>Pesquisa</h3>
 
@@ -14,13 +14,11 @@
 	@if($paginator != NULL)
 		@forelse($paginator as $cur)
 			@if($cur['type'] == 'anime')
-				<?php $data = \App\Models\Anime::find($cur['db_id']) ?>
-				@if($data != NULL)
+				@if(($data = \App\Models\Anime::find($cur['db_id'])) != NULL)
 					@include('anime.tile', [ 'data' => $data ])
 				@endif
 			@elseif($cur['type'] == 'news')
-				<?php $data = \App\Models\News::find($cur['db_id']) ?>
-				@if($data != NULL)
+				@if(($data = \App\Models\News::find($cur['db_id'])) != NULL)
 					@include('news.tile', [ 'data' => $data ])
 				@endif
 			@endif
