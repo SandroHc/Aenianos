@@ -4,7 +4,7 @@
 			@if(isset($show_comments))
 				{{ $data->title }}
 			@else
-				<a href="{!! action('NewsController@page', [ 'slug' => $data->slug ]) !!}" target="_self" style="text-decoration: none">{{ $data->title }}</a>
+				<a class="text-decoration--none" href="{!! action('NewsController@page', [ 'slug' => $data->slug ]) !!}" target="_self">{{ $data->title }}</a>
 			@endif
 		</h2>
 
@@ -14,8 +14,8 @@
 			</button>
 
 			<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="news-{{ $data->id }}">
-				<a href="{!! action('NewsController@manage', [ 'slug' => $data->slug ]) !!}" target="_self" style="text-decoration: none"><li class="mdl-menu__item">Editar</li></a>
-				<a href="{!! action('NewsController@deleteWarning', [ 'slug' => $data->slug ]) !!}" target="_self" style="text-decoration: none"><li class="mdl-menu__item">Remover</li></a>
+				<a class="text-decoration--none" href="{!! action('NewsController@manage', [ 'slug' => $data->slug ]) !!}" target="_self"><li class="mdl-menu__item">Editar</li></a>
+				<a class="text-decoration--none" href="{!! action('NewsController@deleteWarning', [ 'slug' => $data->slug ]) !!}" target="_self"><li class="mdl-menu__item">Remover</li></a>
 			</ul>
 		@endif
 	</div>

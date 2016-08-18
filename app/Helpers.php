@@ -63,7 +63,7 @@ function save_upload(Symfony\Component\HttpFoundation\File\UploadedFile $file = 
 
 const OPTIMIZED_PATH = UPLOAD_PATH . 'opt/';
 const OPTIMIZED_QUALITY = 90;
-const OPTIMIZED_MAX_HEIGHT = 250;
+const OPTIMIZED_MAX_HEIGHT = 300;
 
 const IMG_INFO_WIDTH = 0;
 const IMG_INFO_HEIGHT = 1;
@@ -98,6 +98,7 @@ function optimize_image($filename, $output = '', $height = OPTIMIZED_MAX_HEIGHT,
 		$image = $image_p; // Swap the original with the resized one
 	}
 
+	imageinterlace($image, true); // Enable interlacing
 	imagejpeg($image, $output, $quality);
 	imagedestroy($image);
 

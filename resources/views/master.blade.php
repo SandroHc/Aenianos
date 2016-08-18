@@ -21,11 +21,32 @@
 	<link rel="icon" type="image/png" href="{{ asset('favicon.png') }}" />
 	<link rel="manifest" href="{{ asset('manifest.json') }}">
 
+	{{-------- CSS --------}}
+
 	{{-- Material Design Lite - http://getmdl.io --}}
 	<link rel="stylesheet" href="{{ $debug ? asset('dev-env/material.blue-indigo.min.css') : 'https://storage.googleapis.com/code.getmdl.io/1.2.0/material.blue-indigo.min.css' }}">
 
 	{{-- Minified CSS for the whole app --}}
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
+
+
+
+	{{------ SCRIPTS ------}}
+
+	{{-- Import some external libraries. --}}
+	<script src="{{ $debug ? asset('dev-env/jquery.min.js') : 'https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js' }}"></script>
+	<script src="{{ $debug ? asset('dev-env/material.min.js') : 'https://storage.googleapis.com/code.getmdl.io/1.2.0/material.min.js' }}" async></script>
+
+	<script src="{{ asset('js/build/app.js') }}"></script>
+
+	@yield('scripts')
+
+	@if(Auth::check())
+		<script defer>
+			var uid = '{{ Auth::id() }}';
+		</script>
+	@endif
+	<script src="{{ asset('js/analytics.js') }}" defer async></script>
 
 	@yield("head")
 </head>
@@ -35,17 +56,17 @@
 		{{-- Top row, always visible --}}
 		<div class="mdl-layout__header-row">
 			{{-- Title --}}
-			<span class="mdl-layout-title">{{ env('APP_NAME', 'Aenianos') }}</span>
+			<span class="mdl-layout-title"><a class="text-decoration--none" href="{{ URL::action('GeneralController@home') }}">{{ env('APP_NAME', 'Aenianos') }}</a></span>
 			<div class="mdl-layout-spacer"></div>
 
 			{{-- Navigation --}}
 			<div class="navigation__container">
-				<nav class="mdl-navigation navigation">
-					<a class="mdl-navigation__link mdl-typography--text-uppercase" href="/">Home</a>
-					<a class="mdl-navigation__link mdl-typography--text-uppercase" href="/anime">Projetos</a>
+				<nav class="mdl-navigation navigation mdl-cell--hide-phone mdl-cell--hide-tablet">
+					<a class="mdl-navigation__link mdl-typography--text-uppercase" href="{{ URL::action('GeneralController@home') }}">Home</a>
+					<a class="mdl-navigation__link mdl-typography--text-uppercase" href="{{ URL::action('AnimeController@list') }}">Projetos</a>
 
 					@if(is_admin())
-						<a class="mdl-navigation__link mdl-typography--text-uppercase" href="/admin">Administração</a>
+						<a class="mdl-navigation__link mdl-typography--text-uppercase" href="{{ URL::action('AdminController@index') }}">Administração</a>
 					@endif
 				</nav>
 			</div>
@@ -99,34 +120,19 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
-{{-- Import some external libraries. --}}
-<script src="{{ $debug ? asset('dev-env/jquery.min.js') : 'https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js' }}"></script>
-<script src="{{ $debug ? asset('dev-env/material.min.js') : 'https://storage.googleapis.com/code.getmdl.io/1.2.0/material.min.js' }}" async></script>
-
-<script src="{{ asset('js/build/app-main.js') }}" defer></script>
-
-@if(Auth::check())
-	<script>
-		var uid = '{{ Auth::id() }}';
-	</script>
-@endif
-<script src="{{ asset('js/analytics.js') }}" async defer></script>
-
-<script>
-	if('serviceWorker' in navigator) {
-		navigator.serviceWorker.register('{{ asset('push.js') }}').then(function(reg) {
-			reg.pushManager.subscribe({
-				userVisibleOnly: true
-			}).then(function(sub) {
-				console.log('endpoint:', JSON.stringify(sub));
-			});
-		}).catch(function(err) {
-			console.log(err);
-		});
-	}
-</script>
-
-@yield('scripts')
+{{--<script>--}}
+	{{--if('serviceWorker' in navigator) {--}}
+		{{--navigator.serviceWorker.register('{{ asset('push.js') }}').then(function(reg) {--}}
+			{{--reg.pushManager.subscribe({--}}
+				{{--userVisibleOnly: true--}}
+			{{--}).then(function(sub) {--}}
+				{{--console.log('endpoint:', JSON.stringify(sub));--}}
+			{{--});--}}
+		{{--}).catch(function(err) {--}}
+			{{--console.log(err);--}}
+		{{--});--}}
+	{{--}--}}
+{{--</script>--}}
 
 </body>
 </html>

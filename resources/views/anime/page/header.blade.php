@@ -16,7 +16,7 @@
 		<div class="anime-header__sub__content">
 			<div class="anime-header__sub__content__synopsis">
 				@if(!empty($data->official_cover))
-					<img src="{{ $data->official_cover }}" id="show-modal-cover">
+					<img src="/{{ get_optimized_path($data->official_cover) }}" id="show-modal-cover">
 				@endif
 
 				<span>
@@ -33,11 +33,11 @@
 					@endif
 
 					@if($data->genres)
-						@foreach(explode(',', $data->genres) as $genre)
-							<span class="mdl-chip">
-								<span class="mdl-chip__text">{{ $genre }}</span>
-							</span>
-						@endforeach
+						<span class="mdl-chip">
+							@foreach(explode(',', $data->genres) as $genre)
+								<span class="mdl-chip__text mdl-chip__text--separator">{{ mb_strtoupper($genre) }}</span>
+							@endforeach
+						</span>
 					@endif
 
 					@if($data->studio || $data->website)
@@ -78,6 +78,6 @@
 
 @if(!empty($data->official_cover))
 	<dialog id="modal-official-cover">
-		<img src="{{ $data->official_cover }}">
+		<img data-src="{{ $data->official_cover }}">
 	</dialog>
 @endif

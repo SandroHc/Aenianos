@@ -1,13 +1,11 @@
-<div class="anime-tile mdl-grid mdl-card mdl-shadow--2dp">
+<div class="anime-tile mdl-card mdl-shadow--2dp">
 	@if(empty($data->cover) && !empty($data->official_cover))
-		<div class="anime-tile__cover mdl-cell mdl-cell--2-col mdl-cell--hide-phone mdl-cell--hide-tablet">
-			<a href="{!! URL::action('AnimeController@page', [ 'slug' => $data->slug ]) !!}" target="_self">
-				<img src="{{ $data->official_cover }}">
-			</a>
-		</div>
+		<a href="{!! URL::action('AnimeController@page', [ 'slug' => $data->slug ]) !!}" target="_self" class="anime-tile__cover mdl-cell--hide-phone mdl-cell--hide-tablet">
+			<img src="{{ get_optimized_path($data->official_cover) }}" class="anime-tile__cover mdl-cell--hide-phone mdl-cell--hide-tablet">
+		</a>
 	@endif
 
-	<div class="mdl-cell mdl-cell--10-col">
+	<div class="anime-tile__synopsis">
 		@if(!empty($data->cover))
 			<a href="{!! URL::action('AnimeController@page', [ 'slug' => $data->slug ]) !!}" target="_self">
 				<div style="background: url('{{ $data->cover }}') 0 {{ $data->cover_offset }}% / cover; height: 200px"></div>
@@ -25,8 +23,8 @@
 				</button>
 
 				<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="anime-{{ $data->id }}">
-					<a href="{!! URL::action('AnimeController@manage', [ 'slug' => $data->slug ]) !!}" target="_self" style="text-decoration: none"><li class="mdl-menu__item">Editar</li></a>
-					<a href="{!! URL::action('AnimeController@deleteWarning', [ 'slug' => $data->slug ]) !!}" target="_self" style="text-decoration: none"><li class="mdl-menu__item">Remover</li></a>
+					<a class="text-decoration--none" href="{!! URL::action('AnimeController@manage', [ 'slug' => $data->slug ]) !!}" target="_self"><li class="mdl-menu__item">Editar</li></a>
+					<a class="text-decoration--none" href="{!! URL::action('AnimeController@deleteWarning', [ 'slug' => $data->slug ]) !!}" target="_self"><li class="mdl-menu__item">Remover</li></a>
 				</ul>
 			@endif
 		</div>

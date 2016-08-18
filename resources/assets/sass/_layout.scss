@@ -1,11 +1,9 @@
-.mdl-layout__header {
-	background: url('../img/bg.jpg') center / cover;
+.mdl-layout__header-row {
+	background: url('../img/bg.jpg') $main center / cover;
 }
 
 .mdl-layout__drawer-button {
-	@media screen and (max-width: 1024px) {
-		background-color: $main;
-	}
+	background-color: transparent !important;
 }
 
 .mdl-layout__content {
@@ -65,7 +63,11 @@
 }
 
 .navigation__container, .header__search {
-	background-color: $theme-60;
+	background-color: $theme-40;
+
+	@media (max-width:839px) {
+		background-color: transparent;
+	}
 }
 
 .navigation__container {
@@ -96,7 +98,7 @@
 	}
 
 	.mdl-navigation__link:hover {
-		border-bottom: 4px solid #8bc34a;
+		border-bottom: 4px solid $main;
 	}
 }
 
@@ -115,4 +117,10 @@
 .login__field {
 	width: 50%;
 	min-width: 400px;
+}
+
+.text-decoration--none {
+	text-decoration: inherit;
+	color: inherit;
+	font-weight: inherit;
 }

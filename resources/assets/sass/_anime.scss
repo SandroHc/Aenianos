@@ -1,12 +1,10 @@
 
 .anime-tile {
-	&__cover {
-		margin: 0 0 0 -8px;
-		width: auto;
+	display: inline-block;
 
-		img {
-			width: 150px;
-		}
+	&__cover {
+		float: left;
+		width: 150px;
 	}
 
 	.mdl-card__title-text {
@@ -25,7 +23,7 @@
 	&__synopsis {
 		max-height: calc(100% - 112px);
 		padding-bottom: 0;
-		overflow: hidden;
+		//overflow: hidden;
 	}
 }
 
@@ -65,11 +63,25 @@
 			}
 		}
 	}
+
+	.mdl-chip {
+		margin-right: 6px;
+	}
 }
 
 .mdl-chip .material-icons {
 	line-height: 32px;
 	margin-left: -1px;
+}
+
+.mdl-chip__text a {
+	color: inherit;
+}
+
+.mdl-chip__text--separator:not(:last-child) {
+	margin-right: 5px;
+	padding-right: 5px;
+	border-right: 1px solid rgb(150, 150, 150);
 }
 
 #modal-official-cover {

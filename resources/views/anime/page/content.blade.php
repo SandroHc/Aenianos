@@ -1,8 +1,7 @@
-<div class="mdl-card mdl-card--no-margin mdl-shadow--2dp mdl-cell mdl-cell--8-col">
+<div class="mdl-card mdl-card--no-margin mdl-shadow--2dp">
 
 	<div class="mdl-card__supporting-text mdl-card--no-padding">
 		<?php
-
 		$sectionConfig = [
 				[ 'name' => 'Episódio', 'title' => 'Episódios' ],
 				[ 'name' => 'Especial', 'title' => 'Especiais' ],

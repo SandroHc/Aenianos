@@ -16,8 +16,11 @@ elixir(function(mix) {
 		.sass('app.scss')
 		.coffee([
 			'main.coffee'
-		], 'public/js/build/app-main.js')
+		], 'public/js/build/')
 		.coffee([
-			'anime-editor.coffee'
-		], 'public/js/build/anime-editor.js');
+			'anime-page--modal.coffee'
+		], 'public/js/build/anime-page--modal.js')
+		.coffee([
+			'defer-images.coffee'
+		], 'public/js/build/defer-images.js');
 });

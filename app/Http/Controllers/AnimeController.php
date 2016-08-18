@@ -23,7 +23,7 @@ class AnimeController extends Controller {
 			// Collect all the needed information about the news article
 			$data = Anime::get($slug);
 
-			return view('anime.anime_page', ['data' => $data]);
+			return view('anime.page.page', ['data' => $data]);
 		} catch(ModelNotFoundException $e) {
 			return App::abort(404);
 		}
