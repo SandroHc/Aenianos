@@ -1,11 +1,48 @@
 @extends('master')
 
-<?php $current_section = 'Editar '. ($data->title ?? 'novo projeto') ?>
+@section('title')
+	Editar {{ $data->title ?? 'novo projeto' }}
+@endsection
 
 @section('head')
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/redactor.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/getmdl-select.min.css') }}">
 @endsection
+
+@push('scripts')
+	<script src="{{ asset('js/redactor.min.js') }}" defer></script>
+	<script src="{{ asset('js/redactor.fontcolor.js') }}" defer></script>
+	<script src="{{ asset('js/jquery.cropit.js') }}" defer></script>
+
+	<script src="{{ asset('js/build/anime-editor.js') }}" defer></script>
+
+	<script src="{{ asset('js/getmdl-select.min.js') }}" defer async></script>
+
+	<script defer>
+		$(window).load(function() {
+			$('#text').redactor({
+				imageUpload: '/editor/upload',
+				plugins: ['fontcolor']
+			});
+
+			var $imageCropper = $('#image-cropper');
+			$imageCropper.cropit({
+				@if(isset($data) && !empty($data->cover))
+				imageState: { src: '{{ $data->cover }}' },
+				onImageLoaded: function() { $imageCropper.cropit('offset', { x: 0, y: {{ $data->cover_offset / 100 }} * $imageCropper.cropit('imageSize').height })	},
+				@endif
+				width: 784,
+				height: 200,
+				$fileInput: $('#cover'),
+				smallImage: 'stretch'
+			});
+
+			$('form').submit(function() {
+				$('#cover_offset').val((-$imageCropper.cropit('offset').y / $imageCropper.cropit('imageSize').height) * 100);
+			});
+		});
+	</script>
+@endpush
 
 @section('content')
 	<div class="mdl-card mdl-card--no-margin mdl-shadow--2dp mdl-cell mdl-cell--8-col">
@@ -235,39 +272,4 @@
 
 		</div>
 	</div>
-@endsection
-
-@section('scripts')
-	<script type="text/javascript" src="{{ asset('js/redactor.min.js') }}" defer></script>
-	<script type="text/javascript" src="{{ asset('js/redactor.fontcolor.js') }}" defer></script>
-	<script type="text/javascript" src="{{ asset('js/jquery.cropit.js') }}" defer></script>
-
-	<script type="text/javascript" src="{{ asset('js/build/anime-editor.js') }}" defer></script>
-
-	<script type="text/javascript" src="{{ asset('js/getmdl-select.min.js') }}" defer async></script>
-
-	<script defer>
-		$(window).load(function() {
-			$('#text').redactor({
-				imageUpload: '/editor/upload',
-				plugins: ['fontcolor']
-			});
-
-			var $imageCropper = $('#image-cropper');
-			$imageCropper.cropit({
-				@if(isset($data) && !empty($data->cover))
-				imageState: { src: '{{ $data->cover }}' },
-				onImageLoaded: function() { $imageCropper.cropit('offset', { x: 0, y: {{ $data->cover_offset / 100 }} * $imageCropper.cropit('imageSize').height })	},
-				@endif
-				width: 784,
-				height: 200,
-				$fileInput: $('#cover'),
-				smallImage: 'stretch'
-			});
-
-			$('form').submit(function() {
-				$('#cover_offset').val((-$imageCropper.cropit('offset').y / $imageCropper.cropit('imageSize').height) * 100);
-			});
-		});
-	</script>
 @endsection

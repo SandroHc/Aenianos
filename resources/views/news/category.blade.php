@@ -1,6 +1,6 @@
 @extends('master')
 
-<?php $current_section = $data->name ?>
+@section('title', $data->name)
 
 @section('content')
 	<h4><span class="navigation-parent"><a href="{{ action('NewsController@list') }}" target="_self">Notícias</a> ></span> {{ $data->name }}</h4>

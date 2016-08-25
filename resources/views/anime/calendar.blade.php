@@ -12,7 +12,7 @@
 					<img class="spotlight__cell__img" src="{{ !empty($cover) ? get_optimized_path($cover) : '/img/unknown.png' }}">
 
 					<div class="spotlight__cell__description">
-						{{ cut_string($data->title, 20) }}
+						{{ $data->title }}
 					</div>
 				</a>
 			</div>

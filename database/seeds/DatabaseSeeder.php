@@ -10,6 +10,9 @@ class DatabaseSeeder extends Seeder {
 	 * @return void
 	 */
 	public function run() {
+		// Delete the current search index
+		Search::deleteIndex();
+
 		Model::unguard();
 
 		$this->call(UsersTableSeeder::class);

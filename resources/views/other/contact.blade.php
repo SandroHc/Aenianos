@@ -1,8 +1,8 @@
 @extends('card')
 
-<?php $current_section = "Contato" ?>
+@section('title', 'Contato')
 
-@section('text')
+@section('body')
 	{!! Form::open([ 'url' => URL::action('GeneralController@contactSend'), 'style' => 'margin:0 auto' ]) !!}
 		<div class="mdl-textfield mdl-js-textfield">
 			<input class="mdl-textfield__input" type="text" id="email" name="email" required="" />

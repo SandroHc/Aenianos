@@ -15,6 +15,7 @@ elixir(function(mix) {
     mix
 		.sass('app.scss')
 		.coffee([
+			'notifications.coffee',
 			'main.coffee'
 		], 'public/js/build/')
 		.coffee([

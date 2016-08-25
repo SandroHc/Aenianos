@@ -1,10 +1,26 @@
 @extends('master')
 
-<?php $current_section = "Editar ". ($data->title ?? 'nova notícia') ?>
+@section('title')
+	Editar {{ $data->title ?? 'nova notícia' }}
+@endsection
 
 @section('head')
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/redactor.css') }}">
 @endsection
+
+@push('scripts')
+	<script src="{{ asset('js/redactor.min.js') }}" defer></script>
+	<script src="{{ asset('js/redactor.fontcolor.js') }}" defer></script>
+
+	<script defer>
+		$(window).load(function() {
+			$('#text').redactor({
+				imageUpload: '/editor/upload',
+				plugins: ['fontcolor']
+			});
+		});
+	</script>
+@endpush
 
 @section('content')
 	<div class="mdl-card mdl-card--no-margin mdl-shadow--2dp mdl-cell mdl-cell--8-col">
@@ -52,18 +68,4 @@
 
 		</div>
 	</div>
-@endsection
-
-@section('scripts')
-	<script type="text/javascript" src="{{ asset('js/redactor.min.js') }}" defer></script>
-	<script type="text/javascript" src="{{ asset('js/redactor.fontcolor.js') }}" defer></script>
-
-	<script defer>
-		$(window).load(function() {
-			$('#text').redactor({
-				imageUpload: '/editor/upload',
-				plugins: ['fontcolor']
-			});
-		});
-	</script>
 @endsection

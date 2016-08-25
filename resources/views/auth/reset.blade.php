@@ -1,6 +1,6 @@
 @extends('master')
 
-<?php $current_section = "Resetar password" ?>
+@section('title', 'Resetar password')
 
 @section('content')
 	{!! Form::open([ 'url' => 'login/novapassword', 'style' => 'margin:0 auto' ]) !!}

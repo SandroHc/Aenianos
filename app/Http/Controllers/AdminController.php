@@ -22,4 +22,8 @@ class AdminController extends Controller {
 	public function index() {
 		return view('admin.admin');
 	}
+
+	public function config() {
+		return view('admin.config');
+	}
 }

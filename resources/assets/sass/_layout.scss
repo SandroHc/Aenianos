@@ -38,7 +38,7 @@
 		width: initial;
 	}
 
-	&__supporting-text a {
+	&__title-text a, &__supporting-text a {
 		text-decoration: none;
 	}
 }
@@ -111,6 +111,11 @@
 
 .drawer-navigation {
 	flex-grow: 1;
+}
+
+// Search
+.highlight {
+	background-color: #FFFF00;
 }
 
 // Login

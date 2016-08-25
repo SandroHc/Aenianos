@@ -1,6 +1,6 @@
 @extends('master')
 
-<?php $current_section = "Notícias" ?>
+@section('title', 'Notícias')
 
 @section('content')
 	<h4>Notícias</h4>

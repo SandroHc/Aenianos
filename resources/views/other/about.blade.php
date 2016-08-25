@@ -1,10 +1,9 @@
 @extends('card')
 
-<?php $current_section = "Sobre" ?>
+@section('title', 'Sobre')
+@section('description', 'Quem somos')
 
-@section('title', 'Quem somos')
-
-@section('text')
+@section('body')
 	<p>O Aenianos é um fansubber brasileiro criado em outubro de 2006, por Chrono e Choggo, que surgiu a partir do fórum AnimEmotionBH.</p>
 	<p>Com mais de oito anos de vida, nossa prioridade sempre foi e sempre será trazer animes de qualidade. Somos um fansubber tradicional, portanto nosso foco e proposta é priorizar a <b>qualidade</b> dos nossos lançamentos, e não a <b>velocidade</b> a que eles são feitos.</p>
 	<p>Estamos sempre de portas abertas para quem deseja fazer parte da equipe.</p>

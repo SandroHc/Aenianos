@@ -1,6 +1,6 @@
 @extends('master')
 
-<?php $current_section = "Preferências" ?>
+@section('title', 'Preferências')
 
 @section('content')
 	<div class="mdl-card mdl-card--no-margin mdl-shadow--2dp mdl-cell mdl-cell--8-col">

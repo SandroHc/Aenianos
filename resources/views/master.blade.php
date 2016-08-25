@@ -11,8 +11,8 @@
 		@if(isset($title))
 			{{ $title }}
 		@else
-			@if(isset($current_section))
-				{{ $current_section }} /
+			@hasSection('title')
+				@yield('title') /
 			@endif
 			{{ env('APP_NAME', 'Aenianos') }}
 		@endif
@@ -22,6 +22,8 @@
 	<link rel="manifest" href="{{ asset('manifest.json') }}">
 
 	{{-------- CSS --------}}
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
 	{{-- Material Design Lite - http://getmdl.io --}}
 	<link rel="stylesheet" href="{{ $debug ? asset('dev-env/material.blue-indigo.min.css') : 'https://storage.googleapis.com/code.getmdl.io/1.2.0/material.blue-indigo.min.css' }}">
@@ -29,17 +31,17 @@
 	{{-- Minified CSS for the whole app --}}
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
 
+	@yield("head")
 
 
 	{{------ SCRIPTS ------}}
 
 	{{-- Import some external libraries. --}}
 	<script src="{{ $debug ? asset('dev-env/jquery.min.js') : 'https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js' }}"></script>
+	{{--<script src="{{ $debug ? asset('dev-env/turbolinks.js') : 'https://cdnjs.cloudflare.com/ajax/libs/turbolinks/5.0.0/turbolinks.min.js' }}" async></script>--}}
 	<script src="{{ $debug ? asset('dev-env/material.min.js') : 'https://storage.googleapis.com/code.getmdl.io/1.2.0/material.min.js' }}" async></script>
 
 	<script src="{{ asset('js/build/app.js') }}"></script>
-
-	@yield('scripts')
 
 	@if(Auth::check())
 		<script defer>
@@ -48,7 +50,7 @@
 	@endif
 	<script src="{{ asset('js/analytics.js') }}" defer async></script>
 
-	@yield("head")
+	@stack('scripts')
 </head>
 <body>
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--overlay-drawer-button">
@@ -116,23 +118,6 @@
 		</div>
 	</main>
 </div>
-
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
-{{--<script>--}}
-	{{--if('serviceWorker' in navigator) {--}}
-		{{--navigator.serviceWorker.register('{{ asset('push.js') }}').then(function(reg) {--}}
-			{{--reg.pushManager.subscribe({--}}
-				{{--userVisibleOnly: true--}}
-			{{--}).then(function(sub) {--}}
-				{{--console.log('endpoint:', JSON.stringify(sub));--}}
-			{{--});--}}
-		{{--}).catch(function(err) {--}}
-			{{--console.log(err);--}}
-		{{--});--}}
-	{{--}--}}
-{{--</script>--}}
 
 </body>
 </html>

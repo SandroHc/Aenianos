@@ -18,7 +18,7 @@
 @endsection
 
 @section('content')
-	<div class="error">@yield('error')</div>
+	<div class="error">@yield('title')</div>
 
 	<a href="{{ URL::previous() }}" target="_self">Voltar</a>
 @endsection

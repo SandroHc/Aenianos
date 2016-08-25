@@ -1,6 +1,6 @@
 @extends('master')
 
-<?php $current_section = "Notícias" ?>
+@section('title', 'Notícias')
 
 @section('content')
 	<div style="position: absolute; right:16px; top: 24px">

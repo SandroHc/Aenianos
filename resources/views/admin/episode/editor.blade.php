@@ -1,7 +1,10 @@
 @extends('master')
 
 <?php $data = $data[0]; ?>
-<?php $current_section = 'Editar #' . $data->num ?>
+
+@section('title')
+	Editar #{{ $data->num }}
+@endsection
 
 @section('content')
 	<div class="mdl-card mdl-card--no-margin mdl-shadow--2dp mdl-cell mdl-cell--8-col">

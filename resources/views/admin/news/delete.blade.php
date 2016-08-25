@@ -1,6 +1,8 @@
 @extends('master')
 
-<?php $current_section = "Eliminar ". $data->title ?>
+@section('title')
+	Eliminar {{ $data->title }}
+@endsection
 
 @section('content')
 	<div class="mdl-card mdl-card--no-margin mdl-shadow--2dp mdl-cell mdl-cell--8-col">

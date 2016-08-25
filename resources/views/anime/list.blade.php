@@ -1,6 +1,6 @@
 @extends('master')
 
-<?php $current_section = "Projetos" ?>
+@section('title', 'Projetos')
 
 @section('content')
 	@if(Auth::check() && Auth::user()->admin)

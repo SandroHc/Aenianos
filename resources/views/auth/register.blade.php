@@ -1,6 +1,6 @@
 @extends('master')
 
-<?php $current_section = "Registar" ?>
+@section('title', 'Registar')
 
 @section('content')
 	{!! Form::open([ 'url' => URL::action('Auth\AuthController@postRegister'), 'style' => 'margin:0 auto' ]) !!}

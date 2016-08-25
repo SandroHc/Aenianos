@@ -1,10 +1,9 @@
 @extends('card')
 
-<?php $current_section = "FAQ" ?>
+@section('title', 'FAQ')
+@section('description', 'Perguntas frequentes')
 
-@section('title', 'Perguntas frequentes')
-
-@section('text')
+@section('body')
 	<section>
 		<h4>Dúvidas gerais</h4>
 		<nav>

@@ -4,7 +4,7 @@
 			@if(isset($show_comments))
 				{{ $data->title }}
 			@else
-				<a class="text-decoration--none" href="{!! action('NewsController@page', [ 'slug' => $data->slug ]) !!}" target="_self">{{ $data->title }}</a>
+				<a href="{!! action('NewsController@page', [ 'slug' => $data->slug ]) !!}" target="_self">{{ $data->title }}</a>
 			@endif
 		</h2>
 

@@ -1,3 +1,3 @@
 @extends('errors.template')
 
-@section('error', 'Erro 404')
+@section('title', 'Erro 404')

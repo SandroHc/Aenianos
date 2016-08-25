@@ -1,3 +1,3 @@
 @extends('errors.template')
 
-@section('error', 'Erro 503')
+@section('title', 'Erro 503')
