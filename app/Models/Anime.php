@@ -41,6 +41,12 @@ class Anime extends Model {
 		$this->index();
 	}
 
+	public function delete() {
+		parent::delete();
+
+		$this->deindex();
+	}
+
 	public static function get($slug) {
 		return Anime::where('slug', '=', $slug)->firstOrFail();
 	}
@@ -49,22 +55,22 @@ class Anime extends Model {
 	 * Index this file to the search dataset
 	 */
 	public function index() {
-		Search::insert(
-			'anime-' . $this['slug'],
+		Search::index($this->table)->insert(
+			$this['slug'],
 			[
-				'title' => $this['title'],
-				'synopsis' => $this['synopsis'],
-				'status' => $this['status'],
-				'genres' => $this['genres'],
+				'title'		=> $this['title'],
+				'synopsis'	=> $this['synopsis'],
+				'status'	=> $this['status'],
+				'genres'	=> $this['genres'],
 			],
 			[
-				'db_id' => $this['id'],
-				'title' => $this['title'],
-				'synopsis' => $this['synopsis'],
-				'status' => $this['status'],
-				'type' => 'anime',
+				'_type'		=> $this->table,
 			]
 		);
+	}
+
+	public function deindex() {
+		Search::index($this->table)->delete($this['slug']);
 	}
 
 	/**

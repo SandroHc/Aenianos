@@ -25,7 +25,7 @@ $factory->define(App\Models\News::class, function($faker) {
 	return [
 		'title' => $faker->sentence(),
 		'text' => $faker->realText(),
-		'id_category' => $faker->numberBetween(1, 2),
+		'category_id' => $faker->numberBetween(1, 2),
 		'created_by' => $faker->numberBetween(1, 1),
 		'updated_by' => $faker->numberBetween(1, 1),
 	];

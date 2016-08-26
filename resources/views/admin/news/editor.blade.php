@@ -50,7 +50,7 @@
 
 			@foreach(\App\Models\NewsCategory::all() as $category)
 				<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="category-{{ $category->id }}">
-					<input type="radio" id="category-{{ $category->id }}" class="mdl-radio__button" name="category" value="{{ $category->id }}" {{ (isset($data) ? $data->id_category : 1) == $category->id ? 'checked' : '' }} />
+					<input type="radio" id="category-{{ $category->id }}" class="mdl-radio__button" name="category" value="{{ $category->id }}" {{ (isset($data) ? $data->category_id : 1) == $category->id ? 'checked' : '' }} />
 					<span class="mdl-radio__label">{{ $category->name }}</span>
 				</label>
 				<br>

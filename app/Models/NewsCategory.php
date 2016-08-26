@@ -12,6 +12,10 @@ class NewsCategory extends Model {
 
     public $timestamps = false;
 
+	public function news() {
+		return $this->belongsTo('\App\Models\News', 'id', 'category_id');
+	}
+
 	public static function get($slug) {
 		return NewsCategory::where('slug', '=', $slug)->firstOrFail();
 	}

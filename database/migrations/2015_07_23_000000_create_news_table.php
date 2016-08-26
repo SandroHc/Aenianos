@@ -15,7 +15,7 @@ class CreateNewsTable extends Migration {
 			$table->string('title');
 			$table->string('slug');
 			$table->longText('text');
-			$table->unsignedInteger('id_category')->default(1); // Foreign key linking to "newsCategory" table
+			$table->unsignedInteger('category_id')->default(1); // Foreign key linking to "newsCategory" table
 			$table->unsignedInteger('created_by')->default(0); // Foreign key linking to "newsCategory" table
 			$table->unsignedInteger('updated_by')->default(0); // Foreign key linking to "newsCategory" table
 			$table->timestamps();

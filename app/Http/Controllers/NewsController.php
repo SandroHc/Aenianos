@@ -108,7 +108,7 @@ class NewsController extends Controller {
 
 			$data->title = Input::get('title');
 			$data->text = Input::get('text');
-			$data->id_category = Input::get('category');
+			$data->category_id = Input::get('category');
 
 			$data->updated_by = Auth::id();
 

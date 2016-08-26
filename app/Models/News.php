@@ -21,14 +21,24 @@ class News extends Model {
 
 	protected $table = 'news';
 
-	protected $fillable = [ 'title', 'slug', 'text', 'id_category', 'created_by', 'updated_by' ];
+	protected $fillable = [ 'title', 'slug', 'text', 'category_id', 'created_by', 'updated_by' ];
 
 	protected $dates = [ 'deleted_at' ];
+
+	public function category() {
+		return $this->hasOne('App\Models\NewsCategory', 'id', 'category_id');
+	}
 
 	public function save(array $options = []) {
 		parent::save($options);
 
 		$this->index();
+	}
+
+	public function delete() {
+		parent::delete();
+
+		$this->deindex();
 	}
 
 	public static function get($slug) {
@@ -39,21 +49,21 @@ class News extends Model {
 	 * Index this file to the search dataset
 	 */
 	public function index() {
-		Search::insert(
-			'news-'. $this['slug'],
+		Search::index($this->table)->insert(
+			$this['slug'],
 			[
 				'title'		=> $this['title'],
 				'text'		=> $this['text'],
-				'category'	=> $this['id_category'],
+				'category'	=> $this->category->name,
 			],
 			[
-				'db_id'		=> $this['id'],
-				'title'		=> $this['title'],
-				'text'		=> $this['text'],
-				'category'	=> $this['id_category'],
-				'type'		=> 'news',
+				'_type'		=> $this->table,
 			]
 		);
+	}
+
+	public function deindex() {
+		Search::index($this->table)->delete($this['slug']);
 	}
 
 	/**

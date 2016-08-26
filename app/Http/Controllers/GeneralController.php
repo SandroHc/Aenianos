@@ -16,16 +16,43 @@ class GeneralController extends Controller {
 	}
 
 	public function search() {
+		static $map = [
+			'Projetos' => 'anime',
+			'Notícias' => 'news'
+		];
+
 		// Trim the search term.
 		// If the Input is empty, the trim method returns a empty string.
 		$searchTerm = trim(Input::get('search'));
+		$searchType = Input::get('type');
+
+		$type = NULL;
+		if(array_key_exists($searchType, $map))
+			$type = $map[$searchType];
 
 		// Check if the term is not empty.
 		$search = NULL;
-		if(!empty($searchTerm))
-			$search = Search::search(NULL, $searchTerm, [ 'fuzzy' => 0 ])->paginate(10);
+		if(!empty($searchTerm)) {
+			$options = [ 'fuzzy' => 0.7 ];
 
-		return view('search', [ 'search' => $searchTerm, 'paginator' => $search ]);
+			$checkTitleOnly = strlen($searchTerm) < 7;
+			$fields = $checkTitleOnly ? 'title' : NULL;
+
+			switch($type) {
+				case 'anime':
+				case 'news':
+					$search = Search::index($type)->search($fields, $searchTerm, $options)->paginate(10);
+					break;
+				default:
+					$search = /*array_merge(
+						(array) */Search::index('anime')->search($fields, $searchTerm, $options)->paginate(10)/*,
+						(array) Search::index('news')->search(NULL, $searchTerm, $options)->paginate(10)
+					)*/;
+					break;
+			}
+		}
+
+		return view('search', [ 'search' => $searchTerm, 'type' => $searchType, 'paginator' => $search ]);
 	}
 
 	/**

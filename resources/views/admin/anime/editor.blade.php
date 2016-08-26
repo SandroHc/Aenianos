@@ -16,7 +16,7 @@
 
 	<script src="{{ asset('js/build/anime-editor.js') }}" defer></script>
 
-	<script src="{{ asset('js/getmdl-select.min.js') }}" defer async></script>
+	<script src="{{ asset('js/getmdl-select.min.js') }}" async></script>
 
 	<script defer>
 		$(window).load(function() {
