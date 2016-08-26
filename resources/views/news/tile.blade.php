@@ -21,12 +21,17 @@
 	</div>
 
 	<div class="mdl-card__supporting-text mdl-card--no-padding">
-		<?php $category = \App\Models\NewsCategory::find($data->id_category); ?>
+		<?php $category = $data->category ?>
+		<?php $now = \Carbon\Carbon::now() ?>
 		<span id="date-created-{{ $data->id }}">
-			@if($data->created_at->year < \Carbon\Carbon::now()->year) {{-- Show the year if not from the current one --}}
+			@if($data->created_at->year < $now->year) {{-- Show the year if not from the current one --}}
 				{{ utf8_encode($data->created_at->formatLocalized('%A, %d %B, %Y')) }}
 			@else
-				{{ utf8_encode($data->created_at->formatLocalized('%A, %d de %B')) }}
+				@if($data->created_at->diff($now)->days < 1)
+					<strong>{{ $data->updated_at->diffForHumans() }}</strong>
+				@else
+					{{ utf8_encode($data->created_at->formatLocalized('%A, %d de %B')) }}
+				@endif
 			@endif
 		</span>
 		@if($data->updated_at != $data->created_at)
