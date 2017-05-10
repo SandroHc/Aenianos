@@ -1,17 +1,17 @@
 @extends('master')
 
 @section('title')
-	Eliminar {{ $data->title }}
+	Eliminar {{ $anime->title }}
 @endsection
 
 @section('content')
 	<div class="mdl-card mdl-card--no-margin mdl-shadow--2dp mdl-cell mdl-cell--8-col">
 		<div class="mdl-card__supporting-text mdl-card--no-padding">
 
-			{!! Form::open([ 'url' => URL::action('AnimeController@delete', [ 'slug' => $data->slug ]), 'method' => 'delete', 'style' => 'width:100%' ]) !!}
+			{!! Form::open([ 'url' => URL::action('AnimeController@delete', [ $anime ]), 'method' => 'delete', 'style' => 'width:100%' ]) !!}
 			<h3>Projetos</h3>
 
-			<p>Pretende mesmo eliminar <b>{{ $data->title }}</b>?</p>
+			<p>Pretende mesmo eliminar <b>{{ $anime->title }}</b>?</p>
 
 			<br>
 
@@ -19,7 +19,7 @@
 				Sim
 			</button>
 
-			<input type="button" class="mdl-button mdl-js-button" onclick="window.location='{{ URL::action('show', [ 'slug' => $data->slug ]) }}'" value="Cancelar">
+			<input type="button" class="mdl-button mdl-js-button" onclick="window.location='{{ URL::action('AnimeController@show', [ $anime ]) }}'" value="Cancelar">
 
 			{!! Form::close() !!}
 

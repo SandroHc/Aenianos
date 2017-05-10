@@ -7,7 +7,7 @@
 
 		<div class="mdl-card__supporting-text mdl-card--no-padding">
 
-			{!! Form::open([ 'url' => URL::action('Auth\AuthController@postLogin'), 'style' => 'margin:0 auto' ]) !!}
+			{!! Form::open([ 'url' => route('login'), 'style' => 'margin:0 auto' ]) !!}
 
 			<h3>Login</h3>
 

@@ -11,11 +11,11 @@
 		?>
 
 		@foreach($sectionConfig as $section)
-			@if($data->hasEpisodesFrom($section['name']))
+			@if($anime->hasEpisodesFrom($section['name']))
 				<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
 					<div class="mdl-tabs__tab-bar">
 						<h4>{{ $section['title'] }}</h4>
-						<?php $quality_list = $data->qualityList($section['name']); ?>
+						<?php $quality_list = $anime->qualityList($section['name']); ?>
 						<?php $is_first = true ?>
 						@foreach($quality_list as $quality)
 							<a href="#{{ $section['name'] }}-{{ $quality->quality }}" class="mdl-tabs__tab {{ $is_first ? 'is-active' : '' }}">{{ $quality->quality }}</a>
@@ -23,7 +23,7 @@
 						@endforeach
 					</div>
 
-					<?php $episodes_available = $data->availableEpisodes($section['name']); ?>
+					<?php $episodes_available = $anime->availableEpisodes($section['name']); ?>
 
 					<?php $is_first = true ?>
 					@forelse($quality_list as $quality)
@@ -32,7 +32,7 @@
 							<table class="download-section__table">
 								<tbody>
 								<?php
-									$episode_list = $data->episodeList($section['name'], $quality->quality);
+									$episode_list = $anime->episodeList($section['name'], $quality->quality);
 
 									$episode_list_keys = [];
 									foreach($episode_list as $episode)

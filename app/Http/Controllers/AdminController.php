@@ -20,7 +20,7 @@ class AdminController extends Controller {
 	 * @return View
 	 */
 	public function index() {
-		return view('admin.admin');
+		return view('admin.index');
 	}
 
 	public function config() {

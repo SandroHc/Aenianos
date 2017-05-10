@@ -15,6 +15,14 @@ Route::pattern('id', '\d+');
 //Route::pattern('type', '[A-Za-z0-9-]+');
 Route::pattern('slug', '[a-z0-9-]+');
 
+Route::bind('anime', function ($value) {
+	return \App\Models\Anime::where('slug', '=', $value)->first();
+});
+
+Route::bind('news', function ($value) {
+	return \App\Models\News::where('slug', '=', $value)->first();
+});
+
 
 Route::any('/', 'GeneralController@home');
 
@@ -23,54 +31,57 @@ Auth::routes();
 
 
 // Anime-related routes
-Route::any('anime', 'AnimeController@index');
-Route::any('anime/{slug}', 'AnimeController@show');
+Route::any('projetos', 				'AnimeController@index');
+Route::any('anime', 				'AnimeController@index');
+
+Route::get('anime/create',			'AnimeController@create');
+Route::post('anime',				'AnimeController@store');
+Route::get('anime/{anime}', 		'AnimeController@show');
+Route::get('anime/{anime}/edit',	'AnimeController@edit');
+Route::put('anime/{anime}',			'AnimeController@update');
+Route::get('anime/{anime}/delete',	'AnimeController@destroyWarning');
+Route::delete('anime/{anime}', 		'AnimeController@destroy');
+
 
 // News-related routes
-Route::any('noticias', 'NewsController@index');
-Route::any('noticias/{slug}', 'NewsController@show');
-Route::any('noticias/categoria/{slug}', 'NewsController@showNewsByCategory');
+Route::any('noticias', 					'NewsController@index');
+
+Route::get('noticias/create',			'NewsController@create');
+Route::post('noticias',					'NewsController@store');
+Route::get('noticias/{news}', 			'NewsController@show');
+Route::get('noticias/{news}/edit',		'NewsController@edit');
+Route::put('noticias/{news}',			'NewsController@update');
+Route::get('noticias/{news}/delete',	'NewsController@destroyWarning');
+Route::delete('noticias/{anime}', 		'NewsController@destroy');
+
+Route::any('noticias/categoria/{slug}','NewsController@showNewsByCategory');
 
 // Administration routes
-Route::group([ 'middleware' => 'admin', 'prefix' => 'admin' ], function() {
-	Route::any('/', 'AdminController@index');
-	Route::any('/config', 'AdminController@config');
-	Route::any('rebuild_search', 'GeneralController@rebuildSearch');
+Route::group([ 'middleware' => 'auth', 'prefix' => 'admin' ], function() {
+	Route::get('/', 				'AdminController@index');
+	Route::get('config', 			'AdminController@config');
+	Route::get('rebuild_search',	'GeneralController@rebuildSearch');
 
 	/** News **/
-//	Route::get('noticias', 'AdminController@showNewsList');
-	// Edit
-	Route::get('noticias/new',		'NewsController@add');
-	Route::get('noticias/{slug}',	'NewsController@manage');
-	Route::post('noticias/{slug}',	'NewsController@update');
-	// Delete
-	Route::get('noticias/{slug}/eliminar',	'NewsController@deleteWarning');
-	Route::delete('noticias/{slug}',		'NewsController@delete');
+	Route::get('noticias', 'AdminController@showNewsList');
 
 	/** Anime **/
-	Route::get('anime',			'AnimeController@admin');
-	// Edit
-	Route::get('anime/new',		'AnimeController@add');
-	Route::get('anime/{slug}',	'AnimeController@manage');
-	Route::post('anime/{slug}',	'AnimeController@update');
-	// Delete
-	Route::get('anime/{slug}/eliminar',	'AnimeController@deleteWarning');
-	Route::delete('anime/{slug}', 		'AnimeController@delete');
+	Route::get('anime',				'AnimeController@admin');
 
 	/** Episodes **/
 	// Edit
-	Route::put('anime/{slug}/{type}',			'EpisodeController@add');
-	Route::get('anime/{slug}/{type}/{num}',		'EpisodeController@manage');
-	Route::put('anime/{slug}/{type}/{num}',		'EpisodeController@update');
-	Route::put('anime/{slug}/{type}/{num}/link','EpisodeController@addLink');
+	Route::put('anime/{anime}/{type}',			'EpisodeController@add');
+	Route::get('anime/{anime}/{type}/{num}',	'EpisodeController@manage');
+	Route::put('anime/{anime}/{type}/{num}',	'EpisodeController@update');
+	Route::put('anime/{anime}/{type}/{num}/link','EpisodeController@addLink');
 	Route::delete('anime/link/{id}',			'EpisodeController@deleteLink');
 	// Delete
-	Route::get('anime/{slug}/{type}/{num}/eliminar',  'EpisodeController@deleteWarning');
-	Route::delete('anime/{slug}/{type}/{num}', 'EpisodeController@delete');
+	Route::get('anime/{anime}/{type}/{num}/eliminar',  'EpisodeController@deleteWarning');
+	Route::delete('anime/{anime}/{type}/{num}', 'EpisodeController@delete');
 
 	/** Episode downloads */
-	Route::get('anime/{slug}/raw',  'AdminController@showEpisodeRaw');
-	Route::post('anime/{slug}/raw', 'EpisodeController@parseRawEpisodeDownloads');
+	Route::get('anime/{anime}/raw',  'AdminController@showEpisodeRaw');
+	Route::post('anime/{anime}/raw', 'EpisodeController@parseRawEpisodeDownloads');
 
 	/** Users **/
 	Route::get('utilizadores', 'UserController@index');
@@ -82,14 +93,6 @@ Route::group([ 'middleware' => 'admin', 'prefix' => 'admin' ], function() {
 	/** Misc **/
 	Route::post('upload', 'GeneralController@upload');
 });
-
-// Authentication routes...
-Route::get('login',  'Auth\AuthController@getLogin');
-Route::post('login', 'Auth\AuthController@postLogin');
-Route::get('logout', 'Auth\AuthController@getLogout');
-
-Route::get('registar',  'Auth\AuthController@getRegister');
-Route::post('registar', 'Auth\AuthController@postRegister');
 
 Route::get('perfil', 'UserController@preferences');
 Route::post('perfil/geral', 'UserController@savePreferencesGeneral');

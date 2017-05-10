@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
@@ -17,18 +18,11 @@ class NewsController extends Controller {
 	/**
 	 * Show the show for the news article.
 	 *
-	 * @param  string $slug
+	 * @param  News $news
 	 * @return View
 	 */
-	public function show($slug) {
-		try {
-			// Collect all the needed information about the news article
-			$data = News::get($slug);
-
-			return view('news.show.show', ['data' => $data ]);
-		} catch(ModelNotFoundException $e) {
-			return App::abort(404);
-		}
+	public function show(News $news) {
+		return view('news.show', [ 'news' => $news ]);
 	}
 
 	public function index() {
@@ -55,7 +49,7 @@ class NewsController extends Controller {
 	/*
 	 * ADMIN AREA
 	 */
-	public function add() {
+	public function create() {
 		return $this->manage('new');
 	}
 
@@ -63,10 +57,10 @@ class NewsController extends Controller {
 	 * Shows a editor for the news article with ID $id.
 	 * Only accessible to administrators.
 	 *
-	 * @param string $slug
+	 * @param News $news
 	 * @return View
 	 */
-	public function manage($slug) {
+	public function edit(News $news) {
 		if($slug !== 'new') {
 			try {
 				$data = News::get($slug);
@@ -83,10 +77,10 @@ class NewsController extends Controller {
 	/**
 	 * Update the information on the DB about the news article with ID $id.
 	 *
-	 * @param string $slug
+	 * @param News $news
 	 * @return View
 	 */
-	public function update($slug) {
+	public function update(News $news) {
 		// Check if the form was correctly filled
 		$rules = [
 			'title' => 'required',
@@ -126,29 +120,25 @@ class NewsController extends Controller {
 	 * Shows a view to confirm the deletion of the news article with ID $id.
 	 * Only accessible to administrators.
 	 *
-	 * @param string $slug
+	 * @param News $news
 	 * @return View
 	 */
-	public function deleteWarning($slug) {
-		try {
-			// Collect all the needed information about the news article
-			$data = News::get($slug);
-
-			return view('admin.news.delete', ['data' => $data ]);
-		} catch(ModelNotFoundException $e) {
-			return App::abort(404);
-		}
+	public function desotryWarning(News $news) {
+		return view('admin.news.delete', [ $news->slug ]);
 	}
 
 	/**
 	 * Delete the news article with ID $id from the DB.
 	 *
-	 * @param string $slug
+	 * @param News $news
 	 * @return View
 	 */
-	public function delete($slug) {
-		News::where('slug', '=', $slug)->delete();
+	public function destroy(News $news) {
+		$news->delete();
 
-		return Redirect::action('NewsController@index');
+		Session::flash('message', "News '" . $news->title . "' deleted");
+		Session::flash('alert-color', 'red');
+
+		return Redirect::back();
 	}
 }

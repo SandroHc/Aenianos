@@ -23,12 +23,12 @@
 			{{ \App\Models\News::where('created_at', '>=', \Carbon\Carbon::now()->subMonth())->count() }} no último mês
 		</div>
 		<div class="mdl-cell mdl-cell--3-col">
-			<a href="{{ URL::action('index') }}">Gerir Notícias</a>
+			<a href="{{ action('NewsController@index') }}">Gerir Notícias</a>
 			<br>
 			<a href="">Gerir Categorias</a>
 		</div>
 		<div class="mdl-cell mdl-cell--1-col">
-			<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" onclick="window.location='{{ URL::action('NewsController@add') }}'">
+			<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" onclick="window.location='{{ action('NewsController@create') }}'">
 				<i class="material-icons">add</i>
 			</button>
 		</div>
@@ -39,9 +39,9 @@
 			{{ \App\User::count() }} utilizadores ativos<br>
 		</div>
 		<div class="mdl-cell mdl-cell--4-col">
-			<a href="{{ URL::action('index') }}">Gerir Utilizadores</a>
+			<a href="{{ action('UserController@index') }}">Gerir Utilizadores</a>
 			<br>
-			<a href="{{ URL::action('UserController') }}">Editar Perfil</a>
+			<a href="{{ action('UserController@preferences') }}">Editar Perfil</a>
 		</div>
 	</div>
 @endsection

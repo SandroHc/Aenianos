@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Anime;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Input;
@@ -12,153 +13,124 @@ use Illuminate\View\View;
 
 class AnimeController extends Controller {
 
-	/**
-	 * Show the page of the specified anime.
-	 *
-	 * @param  string $slug
-	 * @return View
-	 */
-	public function show($slug) {
-		try {
-			// Collect all the needed information about the news article
-			$data = Anime::get($slug);
+	const RULES = [
+		'title' => 'required',
+		'status' => 'required',
+		'cover' => 'max:10000',
+		'official_cover' => 'max:5000',
+		'airing_week_day' => 'in:N/A,segunda,terça,quarta,quinta,sexta,sábado,domingo',
+		'episodes' => 'integer',
+	];
 
-			return view('anime.show', ['data' => $data]);
-		} catch(ModelNotFoundException $e) {
-			return App::abort(404);
-		}
-	}
 
 	public function index() {
 		return view('anime.index');
 	}
 
-	public function admin() {
-		return view('admin.anime.admin');
+	/**
+	 * Show the page of the specified anime.
+	 *
+	 * @param Anime $anime
+	 * @return View
+	 */
+	public function show(Anime $anime) {
+		return view('anime.show', compact('anime'));
 	}
 
-	/*
-	 * ADMIN AREA
-	 */
-	public function add() {
-		return $this->manage('new');
+	public function create()
+	{
+		$anime = new Anime();
+		return view('admin.anime.editor', compact('anime'));
+	}
+
+	public function store()
+	{
+		$validator = Validator::make(Input::all(), self::RULES);
+		if ($validator->fails()) {
+			// Go back to the form and highlight the errors
+			return Redirect::back()->withErrors($validator)->withInput();
+		}
+
+		// Create the model
+		$anime = Anime::create(Input::all());
+
+		return Redirect::action('AnimeController@show', [ $anime->slug ]);
 	}
 
 	/**
 	 * Shows a editor for the anime with ID $id.
 	 * Only accessible to administrators.
 	 *
-	 * @param string $slug
+	 * @param Anime $anime
 	 * @return View
 	 */
-	public function manage($slug) {
-		if($slug !== 'new') {
-			try {
-				$data = Anime::get($slug);
-			} catch(ModelNotFoundException $e) {
-				return App::abort(404);
-			}
-		} else {
-			$data = NULL;
-		}
-
-		return view('admin.anime.editor', ['data' => $data]);
+	public function edit(Anime $anime) {
+		return view('admin.anime.editor', compact('anime'));
 	}
 
 	/**
 	 * Update the information on the DB about the anime with ID $id.
 	 *
-	 * @param $slug
+	 * @param Anime $anime
 	 * @return View
 	 */
-	public function update($slug) {
-		// Check if the form was correctly filled
-		$rules = [
-			'title' => 'required',
-			'status' => 'required',
-			'cover' => 'max:10000',
-			'official_cover' => 'max:5000',
-			'airing_week_day' => 'in:N/A,segunda,terça,quarta,quinta,sexta,sábado,domingo',
-			'episodes' => 'integer',
-		];
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if(!$validator->fails()) {
-			// If adding a new anime, create the Model.
-			if($slug === 'new') {
-				$data = new Anime();
-			} else {
-				$data = Anime::get($slug);
-			}
-
-			$data->title = Input::get('title');
-			$data->synopsis = Input::get('synopsis');
-			$data->episodes = Input::get('episodes');
-
-			$temp = save_upload(Input::file('cover'), $data->slug . '-cover');
-			if($temp !== NULL)
-				$data->cover = $temp;
-
-			$temp = save_upload(Input::file('official_cover'), $data->slug . '-cover-official');
-			if($temp !== NULL) {
-				$data->official_cover = $temp;
-
-				// Apply the official cover if no custom one was provided
-				if($data->cover == NULL)
-					$data->cover = $data->official_cover;
-			}
-
-			$data->cover_offset = Input::get('cover_offset', 0);
-
-			$data->status = Input::get('status');
-			$data->japanese = empty($temp = Input::get('japanese')) ? NULL : $temp;
-			$data->premiered = empty($temp = Input::get('premiered')) ? NULL : $temp;
-			$data->airing_week_day = empty($temp = Input::get('airing_week_day')) ? NULL : $temp;
-			$data->genres = empty($temp = Input::get('genres')) ? NULL : $temp;
-			$data->studio = empty($temp = Input::get('studio')) ? NULL : $temp;
-			$data->website = empty($temp = Input::get('website')) ? NULL : $temp;
-
-			// Save the changes to the DB
-			$data->save();
-
-			return Redirect::action('AnimeController@show', [ 'slug' => $data->slug ]);
-		} else {
+	public function update(Anime $anime) {
+		$validator = Validator::make(Input::all(), self::RULES);
+		if ($validator->fails()) {
 			// Go back to the form and highlight the errors
-			return Redirect::back()->withErrors($validator);
+			return Redirect::back()->withErrors($validator)->withInput();
 		}
+
+		$anime->update(Input::all());
+
+		// TODO upload files
+//		$temp = save_upload(Input::file('cover'), $anime->slug . '-cover');
+//		if($temp !== NULL)
+//			$anime->cover = $temp;
+//
+//		$temp = save_upload(Input::file('official_cover'), $data->slug . '-cover-official');
+//		if($temp !== NULL) {
+//			$data->official_cover = $temp;
+//
+//			// Apply the official cover if no custom one was provided
+//			if($data->cover == NULL)
+//				$data->cover = $data->official_cover;
+//		}
+
+		// Save the changes to the DB
+		$anime->save();
+
+		return Redirect::action('AnimeController@show', [ $anime->slug ]);
+	}
+
+
+	public function admin() {
+		return view('admin.anime.admin');
 	}
 
 	/**
 	 * Shows a view to confirm the deletion of the anime with ID $id.
 	 * Only accessible to administrators.
 	 *
-	 * @param string $slug
+	 * @param Anime $anime
 	 * @return View
 	 */
-	public function deleteWarning($slug) {
-		try {
-			// Collect all the needed information about the news article
-			$data = Anime::get($slug);
-
-			return view('admin.anime.delete', ['data' => $data ]);
-		} catch(ModelNotFoundException $e) {
-			return App::abort(404);
-		}
+	public function destroyWarning(Anime $anime) {
+		return view('admin.anime.delete', [ $anime->slug ]);
 	}
 
 	/**
 	 * Delete the anime with ID $id from the DB.
 	 *
-	 * @param string $slug
+	 * @param Anime $anime
 	 * @return View
 	 */
-	public function delete($slug) {
-		Anime::where('slug', '=', $slug)->delete();
+	public function destroy(Anime $anime) {
+		$anime->delete();
 
-		// Don't delete any episode/links as the anime will only be 'soft-deleted'.
-		// This means that the anime will still be on the DB and thus the episodes should also stay.
+		Session::flash('message', "Anime '" . $anime->title . "' deleted");
+		Session::flash('alert-color', 'red');
 
-		return Redirect::action('AnimeController@list');
+		return Redirect::back();
 	}
 }

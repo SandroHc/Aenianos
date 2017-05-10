@@ -7,5 +7,3 @@
 
 	@include('news.list_lite')
 @endsection
-
-

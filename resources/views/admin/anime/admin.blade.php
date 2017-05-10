@@ -10,7 +10,7 @@
 		<div class="mdl-card__supporting-text mdl-card--no-padding">
 
 			<div style="position: absolute; right:16px; top: 24px">
-				<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" onclick="window.location='{{ URL::action('AnimeController@add') }}'">
+				<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" onclick="window.location='{{ URL::action('AnimeController@create') }}'">
 					<i class="material-icons">add</i>
 				</button>
 			</div>
@@ -29,17 +29,17 @@
 						</tr>
 						</thead>
 						<tbody>
-							@foreach($paginator = \App\Models\Anime::orderBy('created_at', 'DESC')->paginate(10) as $data)
+							@foreach($paginator = \App\Models\Anime::orderBy('created_at', 'DESC')->paginate(10) as $anime)
 								<tr>
-									<td class="mdl-data-table__cell--non-numeric"><a href="{{ URL::action('show', ['slug' => $data->slug]) }}">{{ $data->title }}</a></td>
-									<td class="mdl-data-table__cell--non-numeric">{{ $data->status }}</td>
-									<td class="mdl-data-table__cell--non-numeric">{{ $data->episodes }}</td>
+									<td class="mdl-data-table__cell--non-numeric"><a href="{{ URL::action('AnimeController@show', [ $anime->slug ]) }}">{{ $anime->title }}</a></td>
+									<td class="mdl-data-table__cell--non-numeric">{{ $anime->status }}</td>
+									<td class="mdl-data-table__cell--non-numeric">{{ $anime->episodes }}</td>
 									<td>
-										<a href="{{ URL::action('AnimeController@manage', [ 'slug' => $data->slug ]) }}" style="color:black">
+										<a href="{{ URL::action('AnimeController@edit', [ $anime->slug ]) }}" style="color:black">
 											<button class="mdl-button mdl-js-button mdl-button--icon"><i class="material-icons">edit</i></button>
 										</a>
 
-										<a href="{{ URL::action('AnimeController@deleteWarning', [ 'slug' => $data->slug ]) }}" style="color:darkred">
+										<a href="{{ URL::action('AnimeController@destroyWarning', [ $anime->slug ]) }}" style="color:darkred">
 											<button class="mdl-button mdl-js-button mdl-button--icon"><i class="material-icons">delete</i></button>
 										</a>
 									</td>
