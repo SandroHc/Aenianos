@@ -62,7 +62,7 @@
 				{{ isset($data) ? 'Atualizar' : 'Inserir' }}
 			</button>
 
-			<input type="button" class="mdl-button mdl-js-button" onclick="window.location='{{ URL::action('NewsController@list') }}'" value="Cancelar">
+			<input type="button" class="mdl-button mdl-js-button" onclick="window.location='{{ URL::action('index') }}'" value="Cancelar">
 
 			{!! Form::close() !!}
 

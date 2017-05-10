@@ -15,28 +15,28 @@ use Illuminate\View\View;
 class NewsController extends Controller {
 
 	/**
-	 * Show the page for the news article.
+	 * Show the show for the news article.
 	 *
 	 * @param  string $slug
 	 * @return View
 	 */
-	public function page($slug) {
+	public function show($slug) {
 		try {
 			// Collect all the needed information about the news article
 			$data = News::get($slug);
 
-			return view('news.page.page', ['data' => $data ]);
+			return view('news.show.show', ['data' => $data ]);
 		} catch(ModelNotFoundException $e) {
 			return App::abort(404);
 		}
 	}
 
-	public function list() {
-		return view('news.list');
+	public function index() {
+		return view('news.index');
 	}
 
 	/**
-	 * Show a list of news grouped by category.
+	 * Show a index of news grouped by category.
 	 *
 	 * @param  string $slug
 	 * @return View
@@ -115,10 +115,10 @@ class NewsController extends Controller {
 			// Save the changes to the DB
 			$data->save();
 
-			return Redirect::action('NewsController@page', [ 'slug' => $data->slug ]);
+			return Redirect::action('NewsController@show', [ 'slug' => $data->slug ]);
 		} else {
 			// Go back to the form and highlight the errors
-			return Redirect::back()->withErrors($validator);
+			return Redirect::back()->withErrors($validator)->withInput();
 		}
 	}
 
@@ -149,6 +149,6 @@ class NewsController extends Controller {
 	public function delete($slug) {
 		News::where('slug', '=', $slug)->delete();
 
-		return Redirect::action('NewsController@list');
+		return Redirect::action('NewsController@index');
 	}
 }

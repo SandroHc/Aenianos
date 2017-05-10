@@ -12,14 +12,14 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 
-class UsersController extends Controller {
+class UserController extends Controller {
 
-	public function page($username) {
+	public function show($username) {
 		try {
 			// Collect all the needed information about the news article
 			$data = User::where('username', '=', $username)->firstOrFail();
 
-			return view('user.page', [ 'data' => $data ]);
+			return view('user.show', [ 'data' => $data ]);
 		} catch(ModelNotFoundException $e) {
 			return App::abort(404);
 		}
@@ -29,8 +29,8 @@ class UsersController extends Controller {
 	 * Shows a view with all the active and inactive users.
 	 * @return View
 	 */
-	public function list() {
-		return view('users.list', [ 'data' => User::withTrashed()->paginate(10) ]);
+	public function index() {
+		return view('users.index', [ 'data' => User::withTrashed()->paginate(10) ]);
 	}
 
 	/**
@@ -70,9 +70,9 @@ class UsersController extends Controller {
 			// Save the changes to the DB
 			$data->save();
 
-			return Redirect::action('UsersController@showPreferences');
+			return Redirect::action('UserController@showPreferences');
 		} else {
-			// Show the validation error page the the validator failed
+			// Show the validation error show the the validator failed
 			return view('errors.validator', [ 'validation' => $validator->messages() ]);
 		}
 	}
@@ -96,9 +96,9 @@ class UsersController extends Controller {
 				$data->save();
 			}
 
-			return Redirect::action('UsersController@showPreferences');
+			return Redirect::action('UserController@showPreferences');
 		} else {
-			// Show the validation error page the the validator failed
+			// Show the validation error show the the validator failed
 			return view('errors.validator', [ 'validation' => $validator->messages() ]);
 		}
 	}
@@ -122,9 +122,9 @@ class UsersController extends Controller {
 				$data->save();
 			}
 
-			return Redirect::action('UsersController@showPreferences');
+			return Redirect::action('UserController@showPreferences');
 		} else {
-			// Show the validation error page the the validator failed
+			// Show the validation error show the the validator failed
 			return view('errors.validator', [ 'validation' => $validator->messages() ]);
 		}
 	}
@@ -139,7 +139,7 @@ class UsersController extends Controller {
 			else
 				$data->delete();
 
-			return Redirect::action('UsersController@showUsersList');
+			return Redirect::action('UserController@showUsersList');
 		} catch(ModelNotFoundException $e) {
 			return App::abort(404);
 		}

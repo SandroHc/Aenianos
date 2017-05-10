@@ -2,4 +2,4 @@
 	@include('news.tile')
 @endforeach
 
-@include('pagination')
+{{ $paginator->links('pagination') }}

@@ -9,12 +9,12 @@ use Illuminate\View\View;
 class NotificationController extends Controller {
 
 	/**
-	 * Show the notifications administration page.
+	 * Show the notifications administration show.
 	 *
 	 * @return View
 	 */
 	public function index() {
-		return view('admin.notification.list');
+		return view('admin.notification.index');
 	}
 
 	public function send() {

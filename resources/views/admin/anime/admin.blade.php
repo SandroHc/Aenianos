@@ -31,7 +31,7 @@
 						<tbody>
 							@foreach($paginator = \App\Models\Anime::orderBy('created_at', 'DESC')->paginate(10) as $data)
 								<tr>
-									<td class="mdl-data-table__cell--non-numeric"><a href="{{ URL::action('AnimeController@page', ['slug' => $data->slug]) }}">{{ $data->title }}</a></td>
+									<td class="mdl-data-table__cell--non-numeric"><a href="{{ URL::action('show', ['slug' => $data->slug]) }}">{{ $data->title }}</a></td>
 									<td class="mdl-data-table__cell--non-numeric">{{ $data->status }}</td>
 									<td class="mdl-data-table__cell--non-numeric">{{ $data->episodes }}</td>
 									<td>

@@ -104,7 +104,7 @@ class GeneralController extends Controller {
 
 			return 'A sua mensagem foi enviada com sucesso!';
 		} else {
-			// Show the validation error page the the validator failed
+			// Show the validation error show the the validator failed
 			return view('errors.validator', [ 'validation' => $validator->messages() ]);
 		}
 	}

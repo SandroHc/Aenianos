@@ -4,7 +4,7 @@
 	@foreach(\App\Models\Episode::getLatest() as $data)
 		<?php $anime = $data->_anime()->first() ?>
 		<div class="spotlight__cell__content">
-			<a class="spotlight__cell__link" href="{!! URL::action('AnimeController@page', [ 'slug' => $anime->slug ]) !!}" target="_self">
+			<a class="spotlight__cell__link" href="{{ action('AnimeController@show', [ 'slug' => $anime->slug ]) }}" target="_self">
 				<?php $cover = !empty($anime->official_cover) ? $anime->official_cover : $anime->cover ?>
 				<img class="spotlight__cell__img" src="{{ !empty($cover) ? get_optimized_path($cover) : '/img/unknown.png' }}">
 

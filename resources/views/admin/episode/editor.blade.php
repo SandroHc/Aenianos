@@ -12,7 +12,7 @@
 		<div class="mdl-card__supporting-text mdl-card--no-padding">
 
 			{!! Form::open([ 'url' => URL::action('EpisodeController@update', [ 'slug' => $data->anime, 'type' => $data->type, 'num' => $data->num ]), 'style' => 'width:100%' ]) !!}
-			<h3><span class="navigation-parent"><a class="navigation-parent-link" href="{!! URL::action('AnimeController@page', [ 'slug' => $data->anime ]) !!}" target="_self">{{ $data->_anime->title }}</a> > </span> #{{ $data->num }}</h3>
+			<h3><span class="navigation-parent"><a class="navigation-parent-link" href="{!! URL::action('show', [ 'slug' => $data->anime ]) !!}" target="_self">{{ $data->_anime->title }}</a> > </span> #{{ $data->num }}</h3>
 
 			@if(!$errors->isEmpty())
 				@foreach($errors->all() as $error)

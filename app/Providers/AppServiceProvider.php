@@ -2,29 +2,32 @@
 
 namespace App\Providers;
 
-use Carbon\Carbon;
+use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
-class AppServiceProvider extends ServiceProvider {
-	/**
-	 * Bootstrap any application services.
-	 *
-	 * @return void
-	 */
-	public function boot() {
-		// Used to allow date's localized formatting
-		date_default_timezone_set('America/Sao_Paulo');
+class AppServiceProvider extends ServiceProvider
+{
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        // Fix for MySQL <5.7.7 and MariaDB <10.2.2 because of long index names
+        Schema::defaultStringLength(191);
+    }
 
-		setlocale(LC_TIME, 'pt');
-		Carbon::setLocale('pt_BR');
-	}
-
-	/**
-	 * Register any application services.
-	 *
-	 * @return void
-	 */
-	public function register() {
-		//
-	}
+    /**
+     * Register any application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        if ($this->app->environment() !== 'production') {
+            $this->app->register(IdeHelperServiceProvider::class);
+        }
+    }
 }

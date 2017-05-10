@@ -1,4 +1,4 @@
-<?php $debug = Config::get('app.production') == false ?>
+@php($debug = Config::get('app.production') == false)
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,17 +58,17 @@
 		{{-- Top row, always visible --}}
 		<div class="mdl-layout__header-row">
 			{{-- Title --}}
-			<span class="mdl-layout-title"><a class="text-decoration--none" href="{!! URL::action('GeneralController@home') !!}">{{ env('APP_NAME', 'Aenianos') }}</a></span>
+			<span class="mdl-layout-title"><a class="text-decoration--none" href="{{ action('GeneralController@home') }}">{{ env('APP_NAME', 'Aenianos') }}</a></span>
 			<div class="mdl-layout-spacer"></div>
 
 			{{-- Navigation --}}
 			<div class="navigation__container">
 				<nav class="mdl-navigation navigation mdl-cell--hide-phone mdl-cell--hide-tablet">
-					<a class="mdl-navigation__link mdl-typography--text-uppercase" href="{!! URL::action('GeneralController@home') !!}">Home</a>
-					<a class="mdl-navigation__link mdl-typography--text-uppercase" href="{!! URL::action('AnimeController@list') !!}">Projetos</a>
+					<a class="mdl-navigation__link mdl-typography--text-uppercase" href="{{ action('GeneralController@home') }}">Home</a>
+					<a class="mdl-navigation__link mdl-typography--text-uppercase" href="{{ action('AnimeController@index') }}">Projetos</a>
 
 					@if(is_admin())
-						<a class="mdl-navigation__link mdl-typography--text-uppercase" href="{!! URL::action('AdminController@index') !!}">Administração</a>
+						<a class="mdl-navigation__link mdl-typography--text-uppercase" href="{{ action('AdminController@index') }}">Administração</a>
 					@endif
 				</nav>
 			</div>
@@ -91,17 +91,17 @@
 	<div class="mdl-layout__drawer">
 		<span class="mdl-layout-title">Aenianos</span>
 		<nav class="mdl-navigation drawer-navigation">
-			<a class="mdl-navigation__link" href="{!! URL::action('GeneralController@home') !!}">Home</a>
-			<a class="mdl-navigation__link" href="{!! URL::action('AnimeController@list') !!}">Projetos</a>
-			<a class="mdl-navigation__link" href="{!! URL::action('GeneralController@about') !!}">Sobre</a>
-			<a class="mdl-navigation__link" href="{!! URL::action('GeneralController@faq') !!}">FAQ</a>
-			<a class="mdl-navigation__link" href="{!! URL::action('GeneralController@donations') !!}">Doações</a>
-			<a class="mdl-navigation__link" href="{!! URL::action('GeneralController@contact') !!}">Contato</a>
+			<a class="mdl-navigation__link" href="{{ action('GeneralController@home') }}">Home</a>
+			<a class="mdl-navigation__link" href="{{ action('AnimeController@index') }}">Projetos</a>
+			<a class="mdl-navigation__link" href="{{ action('GeneralController@about') }}">Sobre</a>
+			<a class="mdl-navigation__link" href="{{ action('GeneralController@faq') }}">FAQ</a>
+			<a class="mdl-navigation__link" href="{{ action('GeneralController@donations') }}">Doações</a>
+			<a class="mdl-navigation__link" href="{{ action('GeneralController@contact') }}">Contato</a>
 			<div class="mdl-layout-spacer"></div>
 			<?php $user = Auth::user() ?>
 			@if($user !== NULL)
 				@if($user->admin)
-					<a class="mdl-navigation__link" href="{!! URL::action('AdminController@index') !!}">Administração</a>
+					<a class="mdl-navigation__link" href="{{ action('AdminController@index') }}">Administração</a>
 				@endif
 				<a class="mdl-navigation__link" href="/logout">Sair</a>
 			@else

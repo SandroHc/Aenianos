@@ -1,20 +1,20 @@
 <div class="anime-tile mdl-card mdl-shadow--2dp">
 	@if(empty($data->cover) && !empty($data->official_cover))
-		<a href="{!! URL::action('AnimeController@page', [ 'slug' => $data->slug ]) !!}" target="_self" class="anime-tile__cover mdl-cell--hide-phone mdl-cell--hide-tablet">
+		<a href="{!! URL::action('show', [ 'slug' => $data->slug ]) !!}" target="_self" class="anime-tile__cover mdl-cell--hide-phone mdl-cell--hide-tablet">
 			<img src="{{ get_optimized_path($data->official_cover) }}" class="anime-tile__cover mdl-cell--hide-phone mdl-cell--hide-tablet">
 		</a>
 	@endif
 
 	<div class="anime-tile__synopsis">
 		@if(!empty($data->cover))
-			<a href="{!! URL::action('AnimeController@page', [ 'slug' => $data->slug ]) !!}" target="_self">
+			<a href="{!! URL::action('show', [ 'slug' => $data->slug ]) !!}" target="_self">
 				<div style="background: url('{{ $data->cover }}') 0 {{ $data->cover_offset }}% / cover; height: 200px"></div>
 			</a>
 		@endif
 
 		<div class="mdl-card__title">
 			<h2 class="mdl-card__title-text">
-				<a href="{!! URL::action('AnimeController@page', [ 'slug' => $data->slug ]) !!}" target="_self">{{ $data->title }}</a><span>&nbsp; / {{ $data->status }}</span>
+				<a href="{!! URL::action('show', [ 'slug' => $data->slug ]) !!}" target="_self">{{ $data->title }}</a><span>&nbsp; / {{ $data->status }}</span>
 			</h2>
 
 			@if(Auth::check() && Auth::user()->admin)

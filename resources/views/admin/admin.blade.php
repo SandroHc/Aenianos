@@ -23,7 +23,7 @@
 			{{ \App\Models\News::where('created_at', '>=', \Carbon\Carbon::now()->subMonth())->count() }} no último mês
 		</div>
 		<div class="mdl-cell mdl-cell--3-col">
-			<a href="{{ URL::action('NewsController@list') }}">Gerir Notícias</a>
+			<a href="{{ URL::action('index') }}">Gerir Notícias</a>
 			<br>
 			<a href="">Gerir Categorias</a>
 		</div>
@@ -39,9 +39,9 @@
 			{{ \App\User::count() }} utilizadores ativos<br>
 		</div>
 		<div class="mdl-cell mdl-cell--4-col">
-			<a href="{{ URL::action('UsersController@list') }}">Gerir Utilizadores</a>
+			<a href="{{ URL::action('index') }}">Gerir Utilizadores</a>
 			<br>
-			<a href="{{ URL::action('UsersController@preferences') }}">Editar Perfil</a>
+			<a href="{{ URL::action('UserController') }}">Editar Perfil</a>
 		</div>
 	</div>
 @endsection

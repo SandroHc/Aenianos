@@ -19,7 +19,7 @@
 				Sim
 			</button>
 
-			<input type="button" class="mdl-button mdl-js-button" onclick="window.location='{{ URL::action('NewsController@page', [ 'slug', '=', $data->slug ]) }}'" value="Cancelar">
+			<input type="button" class="mdl-button mdl-js-button" onclick="window.location='{{ URL::action('show', [ 'slug', '=', $data->slug ]) }}'" value="Cancelar">
 
 			{!! Form::close() !!}
 

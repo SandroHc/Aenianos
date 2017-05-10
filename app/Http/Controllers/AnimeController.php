@@ -18,19 +18,19 @@ class AnimeController extends Controller {
 	 * @param  string $slug
 	 * @return View
 	 */
-	public function page($slug) {
+	public function show($slug) {
 		try {
 			// Collect all the needed information about the news article
 			$data = Anime::get($slug);
 
-			return view('anime.page.page', ['data' => $data]);
+			return view('anime.show', ['data' => $data]);
 		} catch(ModelNotFoundException $e) {
 			return App::abort(404);
 		}
 	}
 
-	public function list() {
-		return view('anime.list');
+	public function index() {
+		return view('anime.index');
 	}
 
 	public function admin() {
@@ -122,7 +122,7 @@ class AnimeController extends Controller {
 			// Save the changes to the DB
 			$data->save();
 
-			return Redirect::action('AnimeController@page', [ 'slug' => $data->slug ]);
+			return Redirect::action('AnimeController@show', [ 'slug' => $data->slug ]);
 		} else {
 			// Go back to the form and highlight the errors
 			return Redirect::back()->withErrors($validator);

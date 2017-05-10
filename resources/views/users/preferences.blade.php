@@ -11,7 +11,7 @@
 
 			<h4>Dados gerais</h4>
 
-			{!! Form::open([ 'url' => URL::action('UsersController@savePreferencesGeneral'), 'files' => true ]) !!}
+			{!! Form::open([ 'url' => URL::action('UserController'), 'files' => true ]) !!}
 
 			<div class="mdl-textfield mdl-js-textfield">
 				Nickname
@@ -42,7 +42,7 @@
 
 			<h4>Alterar password</h4>
 
-			{!! Form::open([ 'url' => URL::action('UsersController@savePreferencesPassword') ]) !!}
+			{!! Form::open([ 'url' => URL::action('UserController') ]) !!}
 
 			<div class="mdl-textfield mdl-js-textfield">
 				Password atual
@@ -77,7 +77,7 @@
 
 			<h4>Alterar e-mail</h4>
 
-			{!! Form::open([ 'url' => URL::action('UsersController@savePreferencesEmail') ]) !!}
+			{!! Form::open([ 'url' => URL::action('UserController') ]) !!}
 
 			<div class="mdl-textfield mdl-js-textfield">
 				Password atual

@@ -2,12 +2,12 @@
 
 /*
 |--------------------------------------------------------------------------
-| Application Routes
+| Web Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
 |
 */
 
@@ -17,17 +17,18 @@ Route::pattern('slug', '[a-z0-9-]+');
 
 
 Route::any('/', 'GeneralController@home');
-Route::any('home', function() {
-	return Redirect::guest('/');
-});
+
+Route::get('/logout', 'Auth\LoginController@logout');
+Auth::routes();
+
 
 // Anime-related routes
-Route::any('anime', 'AnimeController@list');
-Route::any('anime/{slug}', 'AnimeController@page');
+Route::any('anime', 'AnimeController@index');
+Route::any('anime/{slug}', 'AnimeController@show');
 
 // News-related routes
-Route::any('noticias', 'NewsController@list');
-Route::any('noticias/{slug}', 'NewsController@page');
+Route::any('noticias', 'NewsController@index');
+Route::any('noticias/{slug}', 'NewsController@show');
 Route::any('noticias/categoria/{slug}', 'NewsController@showNewsByCategory');
 
 // Administration routes
@@ -72,7 +73,7 @@ Route::group([ 'middleware' => 'admin', 'prefix' => 'admin' ], function() {
 	Route::post('anime/{slug}/raw', 'EpisodeController@parseRawEpisodeDownloads');
 
 	/** Users **/
-	Route::get('utilizadores', 'UsersController@list');
+	Route::get('utilizadores', 'UserController@index');
 
 	/** Notifications **/
 	Route::any('notificações', 'NotificationController@index');
@@ -90,13 +91,13 @@ Route::get('logout', 'Auth\AuthController@getLogout');
 Route::get('registar',  'Auth\AuthController@getRegister');
 Route::post('registar', 'Auth\AuthController@postRegister');
 
-Route::get('perfil', 'UsersController@preferences');
-Route::post('perfil/geral', 'UsersController@savePreferencesGeneral');
-Route::post('perfil/password', 'UsersController@savePreferencesPassword');
-Route::post('perfil/email', 'UsersController@savePreferencesEmail');
+Route::get('perfil', 'UserController@preferences');
+Route::post('perfil/geral', 'UserController@savePreferencesGeneral');
+Route::post('perfil/password', 'UserController@savePreferencesPassword');
+Route::post('perfil/email', 'UserController@savePreferencesEmail');
 
-Route::post('utilizador/{name}', 'UsersController@page');
-Route::post('utilizador/{name}/desativar', 'UsersController@disableUser');
+Route::post('utilizador/{name}', 'UserController@show');
+Route::post('utilizador/{name}/desativar', 'UserController@disableUser');
 
 // Password reset link request routes...
 Route::get('login/resetar',  'Auth\PasswordController@getEmail');
